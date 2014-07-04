@@ -20,17 +20,24 @@ shared_examples_for 'Order' do |api_path|
     order.id.should == 12345678
   end
   
-  it 'places a new one' do
+  it 'places for btc' do
     stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
-      {amount: 100.50, price: 1000.00})
-    order = subject.class.create!(100.50, 1000.00)
+      {amount: 100.50, price: 1000.00, specie: 1})
+    order = subject.class.create!(:btc, 100.50, 1000.00)
+    order.should be_a subject.class
+  end
+
+  it 'places for ltc' do
+    stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
+      {amount: 100.50, price: 1000.00, specie: 2})
+    order = subject.class.create!(:ltc, 100.50, 1000.00)
     order.should be_a subject.class
   end
   
   it 'cancels one' do
     stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
-      {amount: 100.50, price: 1000.00})
-    order = subject.class.create!(100.50, 1000.00)
+      {amount: 100.50, price: 1000.00, specie: 1})
+    order = subject.class.create!(:btc, 100.50, 1000.00)
     stub_private(:post, "/private/#{api_path}/cancel", "#{api_path}_cancel")
     order.cancel!
     order.status.should == :cancelling

@@ -86,9 +86,14 @@ module Bitex
 
     # Create a new Bid for spending Amount USD paying no more than
     # price per unit.
+    # @param specie [Symbol] :btc or :ltc, whatever you're buying.
     # @see https://bitex.la/developers#create-bid
-    def self.create!(amount, price)
-      params = {amount: amount, price: price}
+    def self.create!(specie, amount, price)
+      params = {
+        amount: amount,
+        price: price,
+        specie: {btc: 1, ltc: 2}[specie]
+      }
       from_json(Api.private(:post, "/private#{base_path}", params))
     end
     
@@ -139,9 +144,14 @@ module Bitex
 
     # Create a new Ask for selling a Quantity of specie charging no less than
     # Price per each.
+    # @param specie [Symbol] :btc or :ltc, whatever you're selling.
     # @see https://bitex.la/developers#create-ask
-    def self.create!(quantity, price)
-      params = {amount: quantity, price: price}
+    def self.create!(specie, quantity, price)
+      params = {
+        amount: quantity,
+        price: price,
+        specie: {btc: 1, ltc: 2}[specie]
+      }
       from_json(Api.private(:post, "/private#{base_path}", params))
     end
 

@@ -51,6 +51,26 @@ on that page. Once done you can start using it as follows:
     ruby > Bitex.api_key = 'your_api_key'
     => "your_api_key"
 
+### Get your balances, deposit addresses, fee
+
+    ruby > Bitex::Profile.get
+
+### Place a Bid
+
+    ruby > Bitex::Bid.create!(:btc, 1000, 500) # Spend 1000 USD in btc, paying up to 500 each
+
+### Place an Ask
+
+    ruby > Bitex::Ask.create!(:ltc, 2, 500) # Sell 2 LTC
+
+### List your pending or recently active orders
+
+    ruby > Bitex::Order.all
+
+### List your recent transactions
+
+    ruby > Bitex::Transaction.all
+
 
 ## Contributing
 
