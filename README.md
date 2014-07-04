@@ -71,6 +71,14 @@ on that page. Once done you can start using it as follows:
 
     ruby > Bitex::Transaction.all
 
+## Want more?
+
+Find the full API description at
+[https://bitex.la/developers](https://bitex.la/developers)
+
+Read this gems full documentation at
+[http://rubydoc.info/github/bitex-la/bitex-ruby/master/frames/file/README.md](http://rubydoc.info/github/bitex-la/bitex-ruby/master/frames/file/README.md)
+
 
 ## Contributing
 
