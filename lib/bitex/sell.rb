@@ -21,5 +21,16 @@ module Bitex
     
     # @!attribute price
     #   @return [BigDecimal] Price charged per unit
+
+    # @!attribute ask_id
+    #   @return [Integer] Unique ID for the Ask that resulted in this Sell
+    attr_accessor :ask_id
+
+    # @visibility private
+    def self.from_json(json)
+      super(json).tap do |thing|
+        thing.ask_id = json[8].to_i
+      end
+    end
   end
 end

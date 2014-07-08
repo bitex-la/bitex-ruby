@@ -37,7 +37,7 @@ shared_examples_for 'JSON deserializable order' do
     thing.should be_a BigDecimal
     thing.should == 1000.0
   end
-
+  
   { 1 => :received,
     2 => :executing,
     3 => :cancelling,
