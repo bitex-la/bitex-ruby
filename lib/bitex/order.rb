@@ -24,7 +24,7 @@ module Bitex
     # Find an order in your list of active orders.
     # Uses {Order.active} under the hood.
     def self.find(id)
-      all.select{|o| o.id == id}.first
+      active.select{|o| o.id == id}.first
     end
     
     def cancel!

@@ -14,7 +14,7 @@ shared_examples_for 'Order' do |api_path|
   end
   
   it 'gets one' do
-    stub_private(:get, "/private/orders", 'orders')
+    stub_private(:get, "/private/orders/active", 'orders')
     order = subject.class.find(12345678)
     order.should be_a subject.class
     order.id.should == 12345678
