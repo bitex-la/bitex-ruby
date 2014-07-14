@@ -26,6 +26,32 @@ module Bitex
     def self.find(id)
       active.select{|o| o.id == id}.first
     end
+
+    # @visibility private
+    def self.create!(specie, amount, price, wait=false)
+      params = {
+        amount: amount,
+        price: price,
+        specie: {btc: 1, ltc: 2}[specie]
+      }
+      order = from_json(Api.private(:post, "/private#{base_path}", params))
+      retries = 0
+      while wait && order.status == :received
+        new_order = all.select{|o| o.id == order.id}.first
+        if new_order.nil?
+          raise StandardError.new(
+            "Order #{base_path} ##{order.id} not found in list")
+        end
+        order = new_order
+        retries += 1
+        if retries > 100
+          raise StandardError.new(
+            "Timed out waiting for #{base_path} ##{order.id}")
+        end
+        sleep 0.2
+      end
+      return order
+    end
     
     def cancel!
       path = "/private#{self.class.base_path}/cancel"
@@ -87,14 +113,13 @@ module Bitex
     # Create a new Bid for spending Amount USD paying no more than
     # price per unit.
     # @param specie [Symbol] :btc or :ltc, whatever you're buying.
+    # @param amount [BigDecimal] Amount to spend buying.
+    # @param price [BigDecimal] Maximum price to pay per unit.
+    # @param wait [Boolean] Block the process and wait until this
+    #   bid moves out of the :received state, defaults to false.
     # @see https://bitex.la/developers#create-bid
-    def self.create!(specie, amount, price)
-      params = {
-        amount: amount,
-        price: price,
-        specie: {btc: 1, ltc: 2}[specie]
-      }
-      from_json(Api.private(:post, "/private#{base_path}", params))
+    def self.create!(specie, amount, price, wait=false)
+      super
     end
     
     # @visibility private
@@ -145,14 +170,13 @@ module Bitex
     # Create a new Ask for selling a Quantity of specie charging no less than
     # Price per each.
     # @param specie [Symbol] :btc or :ltc, whatever you're selling.
+    # @param quantity [BigDecimal] Quantity to sell.
+    # @param price [BigDecimal] Minimum price to charge when selling.
+    # @param wait [Boolean] Block the process and wait until this
+    #   ask moves out of the :received state, defaults to false.
     # @see https://bitex.la/developers#create-ask
-    def self.create!(specie, quantity, price)
-      params = {
-        amount: quantity,
-        price: price,
-        specie: {btc: 1, ltc: 2}[specie]
-      }
-      from_json(Api.private(:post, "/private#{base_path}", params))
+    def self.create!(specie, quantity, price, wait=false)
+      super
     end
 
     # @visibility private
