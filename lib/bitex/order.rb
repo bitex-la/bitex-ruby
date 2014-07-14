@@ -54,7 +54,7 @@ module Bitex
     end
     
     def cancel!
-      path = "/private#{self.class.base_path}/cancel"
+      path = "/private#{self.class.base_path}/#{self.id}/cancel"
       self.class.from_json(Api.private(:post, path), self)
     end
     

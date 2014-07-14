@@ -49,7 +49,7 @@ shared_examples_for 'Order' do |api_path|
     stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
       {amount: 100.50, price: 1000.00, specie: 1})
     order = subject.class.create!(:btc, 100.50, 1000.00)
-    stub_private(:post, "/private/#{api_path}/cancel", "#{api_path}_cancel")
+    stub_private(:post, "/private/#{api_path}/#{order.id}/cancel", "#{api_path}_cancel")
     order.cancel!
     order.status.should == :cancelling
   end
