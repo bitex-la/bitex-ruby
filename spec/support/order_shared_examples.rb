@@ -6,15 +6,8 @@ shared_examples_for 'Order' do |api_path|
     empty.should be_nil
   end
   
-  it 'lists all active' do
-    stub_private(:get, "/private/orders/active", 'orders')
-    order, empty = subject.class.active
-    order.should be_a subject.class
-    empty.should be_nil
-  end
-  
   it 'gets one' do
-    stub_private(:get, "/private/orders/active", 'orders')
+    stub_private(:get, "/private/#{api_path}/12345678", "#{api_path}_show")
     order = subject.class.find(12345678)
     order.should be_a subject.class
     order.id.should == 12345678
@@ -39,7 +32,7 @@ shared_examples_for 'Order' do |api_path|
   it 'places for btc and waits until processed by our matching engine' do
     stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
       {amount: 100.50, price: 1000.00, specie: 1})
-    stub_private(:get, "/private/orders", 'orders')
+    stub_private(:get, "/private/#{api_path}/12345678", "#{api_path}_show")
     order = subject.class.create!(:btc, 100.50, 1000.00, true)
     order.should be_a subject.class
     order.status.should == :executing

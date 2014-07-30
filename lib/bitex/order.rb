@@ -7,6 +7,7 @@ module Bitex
     attr_accessor :specie
     attr_accessor :price
     attr_accessor :status
+    attr_accessor :reason
 
     # Returns an array with all your active orders
     # of this type, and any other order of this type that was active in the
@@ -24,7 +25,7 @@ module Bitex
     # Find an order in your list of active orders.
     # Uses {Order.active} under the hood.
     def self.find(id)
-      active.select{|o| o.id == id}.first
+      from_json(Api.private(:get, "/private#{base_path}/#{id}"))
     end
 
     # @visibility private
@@ -37,7 +38,7 @@ module Bitex
       order = from_json(Api.private(:post, "/private#{base_path}", params))
       retries = 0
       while wait && order.status == :received
-        new_order = all.select{|o| o.id == order.id}.first
+        new_order = find(order.id)
         if new_order.nil?
           raise StandardError.new(
             "Order #{base_path} ##{order.id} not found in list")
@@ -67,9 +68,16 @@ module Bitex
         4 => :cancelled,
         5 => :completed,
       }
+      reason_lookup = {
+        0 => :not_cancelled,
+        1 => :not_enough_funds,
+        2 => :user_cancelled,
+        3 => :system_cancelled,
+      }
       Api.from_json(order || new, json, true) do |thing|
         thing.price = BigDecimal.new(json[6].to_s)
         thing.status = status_lookup[json[7]]
+        thing.reason = reason_lookup[json[8]]
       end   
     end
   end
@@ -104,6 +112,13 @@ module Bitex
     #  * :cancelling To be cancelled as soon as our trading engine unlocks it.
     #  * :cancelled no further executed. May have some Remaining Amount.
     #  * :completed Fully executed, Remaining Amount should be 0.
+
+    # @!attribute reason
+    #  The cancellation reason for this Bid, if any.
+    #  * :not_cancelled Has not been cancelled.
+    #  * :not_enough_funds Not enough funds to place this order.
+    #  * :user_cancelled Cancelled per user's request
+    #  * :system_cancelled Bitex cancelled this order, for a good reason.
 
     # @visibility private
     def self.base_path
@@ -161,6 +176,13 @@ module Bitex
     #  * :cancelling To be cancelled as soon as our trading engine unlocks it.
     #  * :cancelled no further executed. May have some Remaining Quantity.
     #  * :completed Fully executed, Remaining Quantity should be 0.
+
+    # @!attribute reason
+    #  The cancellation reason of this Ask.
+    #  * :not_cancelled Has not been cancelled.
+    #  * :not_enough_funds Not enough funds to place this order.
+    #  * :user_cancelled Cancelled per user's request
+    #  * :system_cancelled Bitex cancelled this order, for a good reason.
 
     # @visibility private
     def self.base_path

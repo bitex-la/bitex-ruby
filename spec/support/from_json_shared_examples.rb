@@ -49,4 +49,15 @@ shared_examples_for 'JSON deserializable order' do
       subject.class.from_json(as_json).status.should == symbol
     end
   end
+
+  { 0 => :not_cancelled,
+    1 => :not_enough_funds,
+    2 => :user_cancelled,
+    3 => :system_cancelled,
+  }.each do |code, symbol|
+    it "sets reason #{code} to #{symbol}" do
+      as_json[8] = code
+      subject.class.from_json(as_json).reason.should == symbol
+    end
+  end
 end

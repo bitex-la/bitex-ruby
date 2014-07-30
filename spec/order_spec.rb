@@ -12,12 +12,4 @@ describe Bitex::Order do
     ask.should be_a Bitex::Ask
     empty.should be_nil
   end
-
-  it 'gets active orders' do
-    stub_private(:get, "/private/orders/active", 'orders')
-    bid, ask, empty = Bitex::Order.active
-    bid.should be_a Bitex::Bid
-    ask.should be_a Bitex::Ask
-    empty.should be_nil
-  end
 end
