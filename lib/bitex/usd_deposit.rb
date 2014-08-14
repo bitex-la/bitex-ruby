@@ -9,6 +9,11 @@ module Bitex
     #   @return [Time] Time when this deposit was announced by you.
     attr_accessor :created_at
 
+    # @!attribute requested_amount
+    #   @return [BigDecimal] For pre-announced deposits, this is the amount you
+    #     requested to deposit.
+    attr_accessor :requested_amount
+
     # @!attribute amount
     #   @return [BigDecimal] Final amount credited to your bitex USD balance.
     attr_accessor :amount
@@ -55,10 +60,11 @@ module Bitex
         3 => :other,
       }
       Api.from_json(new, json) do |thing|
-        thing.amount = BigDecimal.new(json[3].to_s)
-        thing.deposit_method = deposit_method_lookup[json[4]]
-        thing.status = status_lookup[json[5]]
-        thing.reason = reason_lookup[json[6]]
+        thing.requested_amount = BigDecimal.new(json[3].to_s)
+        thing.amount = BigDecimal.new(json[4].to_s)
+        thing.deposit_method = deposit_method_lookup[json[5]]
+        thing.status = status_lookup[json[6]]
+        thing.reason = reason_lookup[json[7]]
       end
     end
   end

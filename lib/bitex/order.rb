@@ -38,18 +38,13 @@ module Bitex
       order = from_json(Api.private(:post, "/private#{base_path}", params))
       retries = 0
       while wait && order.status == :received
-        new_order = find(order.id)
-        if new_order.nil?
-          raise StandardError.new(
-            "Order #{base_path} ##{order.id} not found in list")
-        end
-        order = new_order
+        sleep 0.2
+        order = find(order.id)
         retries += 1
-        if retries > 100
+        if retries > 5000 # Wait 15 minutes for the order to be accepted.
           raise StandardError.new(
             "Timed out waiting for #{base_path} ##{order.id}")
         end
-        sleep 0.2
       end
       return order
     end

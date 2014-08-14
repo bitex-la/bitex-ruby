@@ -13,7 +13,7 @@ module Bitex
     #   @return [Symbol] :btc or :ltc
     attr_accessor :specie
 
-    # @!attribute amount
+    # @!attribute quantity
     #   @return [BigDecimal] Quantity deposited
     attr_accessor :quantity
     
@@ -33,6 +33,14 @@ module Bitex
     #  * :destination_invalid The destination address was invalid.
     attr_accessor :reason
 
+    # @!attribute to_address
+    #   @return [String] Address to wich you made this withdrawal.
+    attr_accessor :to_address
+
+    # @!attribute label
+    #   @return [String] A custom label you gave to this address.
+    attr_accessor :label
+
     # @visibility private
     def self.from_json(json)
       status_lookup = {
@@ -50,6 +58,8 @@ module Bitex
         thing.quantity = BigDecimal.new(json[4].to_s)
         thing.status = status_lookup[json[5]]
         thing.reason = reason_lookup[json[6]]
+        thing.to_address = json[7]
+        thing.label = json[8]
       end
     end
   end

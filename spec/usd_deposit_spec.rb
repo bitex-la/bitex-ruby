@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bitex::UsdDeposit do
   let(:as_json) do
-    [7,12345678,946685400,100.00000000,1,1,0]
+    [7,12345678,946685400,110.0000000, 100.00000000,1,1,0]
   end
 
   it_behaves_like 'API class'
@@ -13,11 +13,17 @@ describe Bitex::UsdDeposit do
     thing.should == 100.0
   end
 
+  it "sets amount as BigDecimal" do
+    thing = Bitex::UsdDeposit.from_json(as_json).requested_amount
+    thing.should be_a BigDecimal
+    thing.should == 110.0
+  end
+
   { 1 => :astropay,
     2 => :other,
   }.each do |code, symbol|
     it "sets status #{code} to #{symbol}" do
-      as_json[4] = code
+      as_json[5] = code
       Bitex::UsdDeposit.from_json(as_json).deposit_method.should == symbol
     end
   end
@@ -27,7 +33,7 @@ describe Bitex::UsdDeposit do
     3 => :cancelled,
   }.each do |code, symbol|
     it "sets status #{code} to #{symbol}" do
-      as_json[5] = code
+      as_json[6] = code
       Bitex::UsdDeposit.from_json(as_json).status.should == symbol
     end
   end
@@ -38,7 +44,7 @@ describe Bitex::UsdDeposit do
     3 => :other,
   }.each do |code, symbol|
     it "sets reason #{code} to #{symbol}" do
-      as_json[6] = code
+      as_json[7] = code
       Bitex::UsdDeposit.from_json(as_json).reason.should == symbol
     end
   end

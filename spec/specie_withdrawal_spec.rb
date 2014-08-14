@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bitex::SpecieWithdrawal do
   let(:as_json) do
-    [6,12345678,946685400,1,100.00000000,1,0]
+    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label']
   end
 
   it_behaves_like 'API class'
@@ -33,5 +33,15 @@ describe Bitex::SpecieWithdrawal do
       as_json[6] = code
       Bitex::SpecieWithdrawal.from_json(as_json).reason.should == symbol
     end
+  end
+
+  it "sets label" do
+    thing = Bitex::SpecieWithdrawal.from_json(as_json).label
+    thing.should == 'label'
+  end
+
+  it "sets to_addresses" do
+    thing = Bitex::SpecieWithdrawal.from_json(as_json).to_address
+    thing.should == "1helloworld"
   end
 end
