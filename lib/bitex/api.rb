@@ -1,5 +1,5 @@
 module Bitex
-  class ApiError < Exception; end
+  class ApiError < StandardError; end
   class Api
     def self.curl(verb, path, options={})
       verb = verb.upcase.to_sym
@@ -23,7 +23,7 @@ module Bitex
     
     def self.private(verb, path, options={})
       if Bitex.api_key.nil?
-        raise Exception.new("No api_key available to make private key calls")
+        raise StandardError.new("No api_key available to make private key calls")
       end
       JSON.parse(curl(verb, path, options.merge(api_key: Bitex.api_key)).body)
     end
