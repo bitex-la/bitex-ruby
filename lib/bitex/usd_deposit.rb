@@ -41,6 +41,31 @@ module Bitex
     #    sender.
     #  * :other we'll contact you regarding this deposit.
     attr_accessor :reason
+  
+    # @!attribute country
+    #  Country of origin for this deposit.
+    attr_accessor :country
+    
+    # @!attribute currency
+    #  Local currency for the country.
+    attr_accessor :currency
+  
+    # @!attribute kyc_profile_id
+    #  KYC profile on whose behalf this deposit is being created.
+    attr_accessor :kyc_profile_id
+  
+    # @!attribute request_details
+    #  Details for our account officers about this deposit.
+    attr_accessor :request_details
+  
+    # @!attribute astropay_response_body
+    #  Response from astropay if selected as the deposit method.
+    #  The 'url' field should be the astropay payment url for this deposit.
+    attr_accessor :astropay_response_body
+
+    # @!attribute third_party_reference
+    #  This deposit's id as issued by the third party payment processor, if any.
+    attr_accessor :third_party_reference
 
     # @visibility private
     def self.from_json(json)
@@ -65,7 +90,32 @@ module Bitex
         thing.deposit_method = deposit_method_lookup[json[5]]
         thing.status = status_lookup[json[6]]
         thing.reason = reason_lookup[json[7]]
+        thing.country = json[8]
+        thing.currency = json[9]
+        thing.kyc_profile_id = json[10]
+        thing.request_details = json[11]
+        thing.astropay_response_body = json[12]
+        thing.third_party_reference = json[13]
       end
+    end
+
+    def self.create!(country, amount, currency, method, details, profile=nil)
+      from_json(Api.private(:post, "/private/usd/deposits", {
+        country: country,
+        amount: amount,
+        currency: currency,
+        deposit_method: method,
+        request_details: details,
+        kyc_profile_id: profile,
+      }))
+    end
+  
+    def self.find(id)
+      from_json(Api.private(:get, "/private/usd/deposits/#{id}"))
+    end
+
+    def self.all
+      Api.private(:get, "/private/usd/deposits").collect{|x| from_json(x) }
     end
   end
 end

@@ -8,4 +8,5 @@ Dir[File.expand_path("../bitex/*.rb", __FILE__)].each {|f| require f}
 
 module Bitex
   mattr_accessor :api_key
+  mattr_accessor :sandbox
 end

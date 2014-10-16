@@ -23,5 +23,13 @@ module Bitex
         thing.quantity = BigDecimal.new(json[4].to_s)
       end
     end
+
+    def self.find(specie, id)
+      from_json(Api.private(:get, "/private/#{specie}/deposits/#{id}"))
+    end
+
+    def self.all(specie)
+      Api.private(:get, "/private/#{specie}/deposits").collect{|x| from_json(x) }
+    end
   end
 end

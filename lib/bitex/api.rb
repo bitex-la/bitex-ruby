@@ -1,17 +1,32 @@
 module Bitex
   class ApiError < StandardError; end
   class Api
-    def self.curl(verb, path, options={})
+    def self.curl(verb, path, options={}, files={})
       verb = verb.upcase.to_sym
       query = verb == :GET ? "?#{options.to_query}" : ''
+      prefix = Bitex.sandbox ? 'sandbox.' : ''
 
-      curl = Curl::Easy.new("https://bitex.la/api-v1/rest#{path}#{query}")
-      curl.post_body = options.to_query if verb == :POST
-      curl.http(verb)
+      curl = Curl::Easy.new("https://#{prefix}bitex.la/api-v1/rest#{path}#{query}")
+      if verb == :POST
+        fields = []
+        unless files.empty?
+          fields += files.collect{|k, v| Curl::PostField.file(k.to_s, v) }
+          curl.multipart_form_post = true
+        end
+        fields += options.collect do |k,v|
+          next unless v
+          Curl::PostField.content(k.to_s, v)
+        end.compact
+        curl.send("http_#{verb.downcase}", *fields)
+      else
+        curl.put_data = options.to_query if verb == :PUT
+        curl.http(verb)
+      end
       code = curl.response_code
 
       unless [200, 201, 202].include?(code)
-        raise ApiError.new("Got #{code} fetching #{path} with #{options}")
+        raise ApiError.new("Got #{code} fetching #{path} with
+#{options}\n\n#{curl.head}\n\n#{curl.body}")
       end
 
       return curl
@@ -21,11 +36,11 @@ module Bitex
       JSON.parse(curl(:GET, path).body)
     end
     
-    def self.private(verb, path, options={})
+    def self.private(verb, path, options={}, files={})
       if Bitex.api_key.nil?
         raise StandardError.new("No api_key available to make private key calls")
       end
-      JSON.parse(curl(verb, path, options.merge(api_key: Bitex.api_key)).body)
+      JSON.parse(curl(verb, path, options.merge(api_key: Bitex.api_key), files).body)
     end
     
     # Deserialize a single object from a json representation as specified on the

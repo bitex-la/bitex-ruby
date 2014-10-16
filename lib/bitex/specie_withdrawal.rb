@@ -28,8 +28,8 @@ module Bitex
     # @!attribute reason
     #  Returns the reason for cancellation of this withdrawal, if any.
     #  * :not_cancelled
-    #  * :insufficient_funds The instruction was received, but you didn't have enough
-    #    funds available
+    #  * :insufficient_funds The instruction was received, but you didn't have
+    #    enough funds available
     #  * :destination_invalid The destination address was invalid.
     attr_accessor :reason
 
@@ -40,6 +40,10 @@ module Bitex
     # @!attribute label
     #   @return [String] A custom label you gave to this address.
     attr_accessor :label
+  
+    # @!attribute kyc_profile_id
+    #   @return [Integer] Kyc profile id for which this request was made.
+    attr_accessor :kyc_profile_id
 
     # @visibility private
     def self.from_json(json)
@@ -60,7 +64,26 @@ module Bitex
         thing.reason = reason_lookup[json[6]]
         thing.to_address = json[7]
         thing.label = json[8]
+        thing.kyc_profile_id = json[9]
       end
+    end
+
+    def self.create!(specie, address, amount, label, kyc_profile_id=nil)
+      from_json(Api.private(:post, "/private/#{specie}/withdrawals", {
+        address: address,
+        amount: amount,
+        label: label,
+        kyc_profile_id: kyc_profile_id
+      }))
+    end
+
+    def self.find(specie, id)
+      from_json(Api.private(:get, "/private/#{specie}/withdrawals/#{id}"))
+    end
+
+    def self.all(specie)
+      Api.private(:get, "/private/#{specie}/withdrawals")
+        .collect{|x| from_json(x) }
     end
   end
 end

@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe Bitex::SpecieWithdrawal do
+  before :each do 
+    Bitex.api_key = 'valid_api_key'
+  end
+
   let(:as_json) do
-    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label']
+    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label', 1]
   end
 
   it_behaves_like 'API class'
@@ -40,8 +44,38 @@ describe Bitex::SpecieWithdrawal do
     thing.should == 'label'
   end
 
-  it "sets to_addresses" do
+  it "sets to_address" do
     thing = Bitex::SpecieWithdrawal.from_json(as_json).to_address
     thing.should == "1helloworld"
+  end
+
+  it "sets the kyc profile id" do
+    Bitex::SpecieWithdrawal.from_json(as_json).kyc_profile_id.should == 1
+  end
+
+  it 'creates a new withdrawal' do
+    stub_private(:post, "/private/ltc/withdrawals", 'specie_withdrawal', {
+      address: '1ADDR',
+      amount: 110,
+      label: 'thelabel',
+    })
+    deposit = Bitex::SpecieWithdrawal.create!(:ltc, '1ADDR', 110, 'thelabel')
+    deposit.should be_a Bitex::SpecieWithdrawal
+    deposit.status.should == :received
+  end
+  
+  it 'finds a single usd deposit' do
+    stub_private(:get, '/private/btc/withdrawals/1', 'specie_withdrawal')
+    deposit = Bitex::SpecieWithdrawal.find(:btc, 1)
+    deposit.should be_a Bitex::SpecieWithdrawal
+    deposit.status.should == :received
+  end
+  
+  it 'lists all usd deposits' do
+    stub_private(:get, '/private/btc/withdrawals', 'specie_withdrawals')
+    deposits = Bitex::SpecieWithdrawal.all(:btc)
+    deposits.should be_an Array
+    deposits.first.should be_an Bitex::SpecieWithdrawal
+    deposits.first.status.should == :received
   end
 end
