@@ -71,6 +71,14 @@ on that page. Once done you can start using it as follows:
 
     ruby > Bitex::Transaction.all
 
+## Sandbox
+
+Bitex.la has a sandbox environment available at https://sandbox.bitex.la, you
+can signup and create api keys there, and try this library on the sandbox
+enviornment by doing
+
+    ruby > Bitex.sandbox = true
+
 ## Want more?
 
 Find the full API description at
