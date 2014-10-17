@@ -17,7 +17,7 @@ module Bitex
         thing.personal_id_issuer = json[4]
         thing.personal_id_type = json[5]
         thing.tax_id = json[6]
-        thing.birth_date = Time.at(json[7])
+        thing.birth_date = json[7] ? Time.at(json[7]) : nil
         thing.nationality = json[8]
         thing.gender = json[9]
         thing.occupation = json[10]

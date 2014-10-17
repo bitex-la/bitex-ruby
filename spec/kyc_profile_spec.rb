@@ -135,4 +135,11 @@ describe Bitex::KycProfile do
     kyc_files.should be_an Array
     kyc_files.first.should be_a Bitex::KycFile
   end
+  
+  it 'can have a nil birth_date' do
+    json = as_json.dup
+    json[7] = nil
+    kyc_profile = Bitex::KycProfile.from_json(json)
+    kyc_profile.birth_date.should be_nil
+  end
 end
