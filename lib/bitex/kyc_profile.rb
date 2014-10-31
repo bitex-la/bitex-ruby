@@ -51,9 +51,9 @@ module Bitex
       self.class.from_json(Api.private(:put, "/private/kyc_profiles/#{id}", params))
     end
     
-    def add_kyc_file!(path)
+    def add_kyc_file!(path, content_type = nil)
       response = Api.private(:post, "/private/kyc_profiles/#{id}/kyc_files",
-        {}, {document: path})
+        {document_content_type: content_type}, {document: path})
       KycFile.from_json(response)
     end
   

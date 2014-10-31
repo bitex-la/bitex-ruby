@@ -122,6 +122,15 @@ describe Bitex::KycProfile do
   it 'creates a kyc file' do
     path =  File.expand_path('../fixtures/file.jpg', __FILE__)
     stub_private(:post, '/private/kyc_profiles/1/kyc_files', 'kyc_file',
+     {document: path, document_content_type: 'image/jpg'})
+    kyc_profile = Bitex::KycProfile.from_json(as_json)
+    kyc_file = kyc_profile.add_kyc_file!(path, 'image/jpg')
+    kyc_file.should be_a Bitex::KycFile
+  end
+
+  it 'creates a kyc file without specifying content type' do
+    path =  File.expand_path('../fixtures/file.jpg', __FILE__)
+    stub_private(:post, '/private/kyc_profiles/1/kyc_files', 'kyc_file',
      {document: path})
     kyc_profile = Bitex::KycProfile.from_json(as_json)
     kyc_file = kyc_profile.add_kyc_file!(path)
