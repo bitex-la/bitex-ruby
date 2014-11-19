@@ -60,4 +60,9 @@ shared_examples_for 'JSON deserializable order' do
       subject.class.from_json(as_json).reason.should == symbol
     end
   end
+  
+  it 'sets the issuer' do
+    as_json[10] = 'User#22'
+    subject.class.from_json(as_json).issuer.should == 'User#22'
+  end
 end

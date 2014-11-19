@@ -8,6 +8,7 @@ module Bitex
     attr_accessor :price
     attr_accessor :status
     attr_accessor :reason
+    attr_accessor :issuer
 
     # Returns an array with all your active orders
     # of this type, and any other order of this type that was active in the
@@ -73,6 +74,7 @@ module Bitex
         thing.price = BigDecimal.new(json[6].to_s)
         thing.status = status_lookup[json[7]]
         thing.reason = reason_lookup[json[8]]
+        thing.issuer = json[10]
       end   
     end
   end
@@ -115,6 +117,14 @@ module Bitex
     #  * :user_cancelled Cancelled per user's request
     #  * :system_cancelled Bitex cancelled this order, for a good reason.
 
+    # @!attribute produced_quantity
+    #   @return [BigDecimal] Quantity of specie produced by this bid so far.
+    attr_accessor :produced_quantity
+
+    # @!attribute issuer
+    #   @return [String] The issuer of this order, helps you tell 
+    #     apart orders created from the web UI and the API.
+
     # @visibility private
     def self.base_path
       '/bids'
@@ -137,6 +147,7 @@ module Bitex
       super(json, order).tap do |thing|
         thing.amount = BigDecimal.new(json[4].to_s)
         thing.remaining_amount = BigDecimal.new(json[5].to_s)
+        thing.produced_quantity = BigDecimal.new(json[9].to_s)
       end
     end
   end
@@ -179,6 +190,14 @@ module Bitex
     #  * :user_cancelled Cancelled per user's request
     #  * :system_cancelled Bitex cancelled this order, for a good reason.
 
+    # @!attribute produced_amount
+    #   @return [BigDecimal] Amount of USD produced from this sale
+    attr_accessor :produced_amount
+
+    # @!attribute issuer
+    #   @return [String] The issuer of this order, helps you tell 
+    #     apart orders created from the web UI and the API.
+
     # @visibility private
     def self.base_path
       '/asks'
@@ -201,6 +220,7 @@ module Bitex
       super(json, order).tap do |thing|
         thing.quantity = BigDecimal.new(json[4].to_s)
         thing.remaining_quantity = BigDecimal.new(json[5].to_s)
+        thing.produced_amount = BigDecimal.new(json[9].to_s)
       end
     end
   end

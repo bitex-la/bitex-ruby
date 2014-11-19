@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bitex::Bid do
   let(:as_json) do
-    [1,12345678,946685400,1,100.00000000,100.00000000,1000.00000000,1]
+    [1,12345678,946685400,1,100.00000000,100.00000000,1000.00000000,1,0,10.0,'User#1']
   end
   
   it_behaves_like 'API class'
@@ -14,7 +14,7 @@ describe Bitex::Bid do
     it_behaves_like 'Order', 'bids'
   end
 
-  { amount: 100.0, remaining_amount: 100.0}.each do |field, value|
+  { amount: 100.0, remaining_amount: 100.0, produced_quantity: 10.0}.each do |field, value|
     it "sets #{field} as BigDecimal" do
       thing = subject.class.from_json(as_json).send(field)
       thing.should be_a BigDecimal

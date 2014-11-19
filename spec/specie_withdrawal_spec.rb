@@ -6,7 +6,7 @@ describe Bitex::SpecieWithdrawal do
   end
 
   let(:as_json) do
-    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label', 1]
+    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label', 1, 'ABC1']
   end
 
   it_behaves_like 'API class'
@@ -47,6 +47,11 @@ describe Bitex::SpecieWithdrawal do
   it "sets to_address" do
     thing = Bitex::SpecieWithdrawal.from_json(as_json).to_address
     thing.should == "1helloworld"
+  end
+
+  it "sets transaction id" do
+    thing = Bitex::SpecieWithdrawal.from_json(as_json).transaction_id
+    thing.should == "ABC1"
   end
 
   it "sets the kyc profile id" do

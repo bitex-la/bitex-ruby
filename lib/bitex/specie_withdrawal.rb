@@ -45,6 +45,10 @@ module Bitex
     #   @return [Integer] Kyc profile id for which this request was made.
     attr_accessor :kyc_profile_id
 
+    # @!attribute transaction_id
+    #   @return [String] Network transaction id, if available. 
+    attr_accessor :transaction_id
+
     # @visibility private
     def self.from_json(json)
       status_lookup = {
@@ -65,6 +69,7 @@ module Bitex
         thing.to_address = json[7]
         thing.label = json[8]
         thing.kyc_profile_id = json[9]
+        thing.transaction_id = json[10]
       end
     end
 
