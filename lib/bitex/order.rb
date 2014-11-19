@@ -40,7 +40,10 @@ module Bitex
       retries = 0
       while wait && order.status == :received
         sleep 0.2
-        order = find(order.id)
+        begin
+          order = find(order.id)
+        rescue StandardError => e
+        end
         retries += 1
         if retries > 5000 # Wait 15 minutes for the order to be accepted.
           raise StandardError.new(
