@@ -74,6 +74,7 @@ describe Bitex::UsdDeposit do
     1 => :did_not_credit,
     2 => :sender_unknown,
     3 => :other,
+    4 => :user_cancelled,
   }.each do |code, symbol|
     it "sets reason #{code} to #{symbol}" do
       as_json[7] = code
@@ -101,6 +102,16 @@ describe Bitex::UsdDeposit do
     deposit = Bitex::UsdDeposit.find(1)
     deposit.should be_a Bitex::UsdDeposit
     deposit.status.should == :pending
+  end
+  
+  it 'cancels a deposit' do
+    stub_private(:get, '/private/usd/deposits/12345678', 'usd_deposit')
+    stub_private(:post, '/private/usd/deposits/12345678/cancel', 'cancelled_usd_deposit')
+    deposit = Bitex::UsdDeposit.find(12345678)
+    deposit.cancel!
+    deposit.should be_a Bitex::UsdDeposit
+    deposit.status.should == :cancelled
+    deposit.reason.should == :user_cancelled
   end
   
   it 'lists all usd deposits' do

@@ -40,6 +40,7 @@ module Bitex
     #  * :sender_unknown we could not accept these funds because you're not the
     #    sender.
     #  * :other we'll contact you regarding this deposit.
+    #  * :user_cancelled We cancelled this deposit per your request.
     attr_accessor :reason
   
     # @!attribute country
@@ -68,7 +69,7 @@ module Bitex
     attr_accessor :third_party_reference
 
     # @visibility private
-    def self.from_json(json)
+    def self.from_json(json, deposit = nil)
       deposit_method_lookup = {
         1 => :astropay,
         2 => :other,
@@ -83,8 +84,9 @@ module Bitex
         1 => :did_not_credit,
         2 => :sender_unknown,
         3 => :other,
+        4 => :user_cancelled,
       }
-      Api.from_json(new, json) do |thing|
+      Api.from_json(deposit || new, json) do |thing|
         thing.requested_amount = BigDecimal.new(json[3].to_s)
         thing.amount = BigDecimal.new(json[4].to_s)
         thing.deposit_method = deposit_method_lookup[json[5]]
@@ -112,6 +114,11 @@ module Bitex
   
     def self.find(id)
       from_json(Api.private(:get, "/private/usd/deposits/#{id}"))
+    end
+
+    def cancel!
+      path = "/private/usd/deposits/#{self.id}/cancel"
+      self.class.from_json(Api.private(:post, path), self)
     end
 
     def self.all
