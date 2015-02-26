@@ -21,14 +21,6 @@ shared_examples_for 'Order' do |api_path|
     order.status.should == :received
   end
 
-  it 'places for ltc' do
-    stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
-      {amount: 100.50, price: 1000.00, specie: 2})
-    order = subject.class.create!(:ltc, 100.50, 1000.00)
-    order.should be_a subject.class
-    order.status.should == :received
-  end
-  
   it 'places for btc and waits until processed by our matching engine' do
     stub_private(:post, "/private/#{api_path}", "#{api_path}_create",
       {amount: 100.50, price: 1000.00, specie: 1})

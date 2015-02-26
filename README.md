@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Use Public Market Data
 
-Bitex::BitcoinMarketData and Bitex::LitecoinMarketData classes have methods for
+Bitex::BitcoinMarketData has methods for
 fetching all public market data available.
 
 ### Ticker
@@ -61,7 +61,7 @@ on that page. Once done you can start using it as follows:
 
 ### Place an Ask
 
-    ruby > Bitex::Ask.create!(:ltc, 2, 500) # Sell 2 LTC
+    ruby > Bitex::Ask.create!(:btc, 2, 500) # Try to sell 2 Btc at $500 each.
 
 ### List your pending or recently active orders
 

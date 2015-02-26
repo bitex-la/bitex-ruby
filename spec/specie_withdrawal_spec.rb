@@ -59,14 +59,14 @@ describe Bitex::SpecieWithdrawal do
   end
 
   it 'creates a new withdrawal' do
-    stub_private(:post, "/private/ltc/withdrawals", 'specie_withdrawal', {
+    stub_private(:post, "/private/btc/withdrawals", 'specie_withdrawal', {
       address: '1ADDR',
       amount: 110,
       label: 'thelabel',
     })
-    deposit = Bitex::SpecieWithdrawal.create!(:ltc, '1ADDR', 110, 'thelabel')
-    deposit.should be_a Bitex::SpecieWithdrawal
-    deposit.status.should == :received
+    withdrawal = Bitex::SpecieWithdrawal.create!(:btc, '1ADDR', 110, 'thelabel')
+    withdrawal.should be_a Bitex::SpecieWithdrawal
+    withdrawal.status.should == :received
   end
   
   it 'finds a single usd deposit' do

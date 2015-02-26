@@ -12,12 +12,8 @@ describe Bitex::Profile do
       btc_balance: 20.0,
       btc_reserved: 5.0,
       btc_available: 15.0,
-      ltc_balance: 250.0,
-      ltc_reserved: 100.0,
-      ltc_available: 150.0,
       fee: 0.5,
       btc_deposit_address: "1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-      ltc_deposit_address: "LXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     }
   end
 end

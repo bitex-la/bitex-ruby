@@ -1,6 +1,6 @@
 module Bitex
   # Public market data for a specie, do not use directly, use
-  # {BitcoinMarketData} and {LitecoinMarketData} instead.
+  # {BitcoinMarketData} instead.
   class MarketData
 
     # The species currency ticker conveniently formatted as a ruby Hash with
@@ -55,13 +55,6 @@ module Bitex
   class BitcoinMarketData < MarketData
     def self.specie
       'btc'
-    end
-  end
-
-  # A {MarketData} for Litecoin.
-  class LitecoinMarketData < MarketData
-    def self.specie
-      'ltc'
     end
   end
 end
