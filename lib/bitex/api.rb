@@ -7,10 +7,13 @@ module Bitex
       prefix = Bitex.sandbox ? 'sandbox.' : ''
 
       curl = Curl::Easy.new("https://#{prefix}bitex.la/api-v1/rest#{path}#{query}")
+      curl.ssl_version = Curl::CURL_SSLVERSION_TLSv1
       
       if Bitex.debug
         curl.on_debug do |t,d|
-          puts "DEBUG SSL #{t}, #{d}"
+          if d.to_s.size < 300
+            puts "DEBUG SSL #{t}, #{d}"
+          end
         end
       end
 

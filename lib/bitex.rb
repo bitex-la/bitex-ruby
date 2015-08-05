@@ -10,4 +10,5 @@ module Bitex
   mattr_accessor :api_key
   mattr_accessor :sandbox
   mattr_accessor :debug
+  mattr_accessor :ssl_version
 end
