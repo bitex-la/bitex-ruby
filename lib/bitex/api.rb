@@ -7,6 +7,13 @@ module Bitex
       prefix = Bitex.sandbox ? 'sandbox.' : ''
 
       curl = Curl::Easy.new("https://#{prefix}bitex.la/api-v1/rest#{path}#{query}")
+      
+      if Bitex.debug
+        curl.on_debug do |t,d|
+          puts "DEBUG SSL #{t}, #{d}"
+        end
+      end
+
       if verb == :POST
         fields = []
         unless files.empty?
