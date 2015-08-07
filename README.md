@@ -40,6 +40,19 @@ fetching all public market data available.
     ruby > Bitex::BitcoinMarketData.transactions
     => [[1404501180, 1335, 632.0, 0.95], [1404501159, 1334, 632.0, 0.95], ...]
 
+## Exchange Rates 
+
+Learn more here: [https://sandbox.bitex.la/developers#rates](Rates docs)
+
+
+### From 1000 ARS in CASH to USD in my BITEX balance, via MORE_MT
+
+    ruby > Bitex::Rates.calculate_path(1000, [:ars, :cash, :usd, :bitex, :more_mt])
+
+### How many ARS in CASH should I deposit via MORE_MT to get 50 USD in BITEX?
+
+    ruby > Bitex::Rates.calculate_path_backwards([:ars, :cash, :usd, :bitex, :more_mt], 50)
+
 ## Use for Private Trading
 
 ### Authentication
@@ -70,6 +83,37 @@ on that page. Once done you can start using it as follows:
 ### List your recent transactions
 
     ruby > Bitex::Transaction.all
+
+# Payments
+
+Check the [https://sandbox.bitex.la/developers#payments-overview](Payaments Developer Docs)
+to learn more about payment processing with Bitex
+
+### Create a new payment for 4 USD in Bitcoin
+
+    ruby > Bitex::Payment.create!(
+      currency_id: 3,
+      amount: 5,
+      callback_url: "https://example.com/ipn",
+      keep: 25.0,
+      customer_reference: "An Alto latte, no sugar",
+      merchant_reference: "invoice#1234")
+
+### List all your payments
+
+    ruby > Bitex::Payment.all
+
+### Validate and deserialize payments from callbacks.
+
+    ruby > Bitex::Payment.from_callback(the_callback_json)
+
+###  Setup your Web Point of Sale
+  
+    ruby > Bitex::Payment.pos_setup!(
+      merchant_name: "Tierra Buena",
+      merchant_slug: "tierrabuena",
+      merchant_logo: "https://t.co/logo.png",
+      merchant_keep: 0)
 
 ## Sandbox
 

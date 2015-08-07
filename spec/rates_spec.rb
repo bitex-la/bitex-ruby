@@ -1,19 +1,29 @@
 require 'spec_helper'
 
 describe Bitex::Rates do
-  it "gets all rates" do
+  before(:each){ Bitex::Rates.clear_tree_cache }
+
+  it "gets the full exchange rates tree and caches for 1 minute" do
+    Bitex::Rates.clear_tree_cache
     Bitex.api_key = 'valid_api_key'
-    stub_private(:get, "/private/rates", 'rates')
-    Bitex::Rates.all.should == {
-      AR: {
-        astropay: {USDARS: [8.7592,nil,1412969688]}, 
-        reference:{USDARS: [nil,nil,0]}},
-      BR: {astropay:{USDBRL: [2.3779,nil,1412969689]}},
-      CL: {astropay:{USDCLP: [611.673,nil,1412969691]}},
-      CO: {astropay:{USDCOP: [2006.368,nil,1412969693]}},
-      PE: {astropay:{USDPEN: [2.9807,nil,1412969696]}},
-      UY: {astropay:{USDUYU: [24.751,nil,1412969698]}},
-      MX: {astropay:{USDMXN: [13.7471,nil,1412969700]}}
-   }
+    stub = stub_get("/rates/tree", 'rates_tree')
+    Bitex::Rates.tree.keys.should == 
+      %w(btc usd ars clp eur uyu brl cop pen mxn bob nio hnl dop gbp cad vef).collect(&:to_sym)
+    2.times{ Bitex::Rates.tree }
+    Timecop.travel 2.minutes.from_now
+    Bitex::Rates.tree
+    stub.should have_been_requested.twice
+  end
+  
+  it "calculates a given path using the tree" do
+    stub_get("/rates/tree", 'rates_tree')
+    Bitex::Rates.calculate_path(1000, [:ars, :cash, :usd, :bitex, :more_mt])
+      .should == '64.332439179'.to_d
+  end
+  
+  it "calculates backwards using a path" do
+    stub_get("/rates/tree", 'rates_tree')
+    Bitex::Rates.calculate_path_backwards([:ars, :cash, :usd, :bitex, :more_mt], 64)
+      .should == '994.832479799730206496'.to_d
   end
 end
