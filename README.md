@@ -93,7 +93,7 @@ to learn more about payment processing with Bitex
 
     ruby > Bitex::Payment.create!(
       currency_id: 3,
-      amount: 5,
+      amount: 4,
       callback_url: "https://example.com/ipn",
       keep: 25.0,
       customer_reference: "An Alto latte, no sugar",
