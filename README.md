@@ -45,11 +45,11 @@ fetching all public market data available.
 Learn more here: [https://sandbox.bitex.la/developers#rates](Rates docs)
 
 
-### From 1000 ARS in CASH to USD in my BITEX balance, via MORE_MT
+From 1000 ARS in CASH to USD in my BITEX balance, via MORE_MT
 
     ruby > Bitex::Rates.calculate_path(1000, [:ars, :cash, :usd, :bitex, :more_mt])
 
-### How many ARS in CASH should I deposit via MORE_MT to get 50 USD in BITEX?
+How many ARS in CASH should I deposit via MORE_MT to get 50 USD in BITEX?
 
     ruby > Bitex::Rates.calculate_path_backwards([:ars, :cash, :usd, :bitex, :more_mt], 50)
 
