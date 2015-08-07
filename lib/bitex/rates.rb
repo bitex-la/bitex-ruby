@@ -26,6 +26,7 @@ module Bitex
     def self.calculate_path(value, path)
       value = value.to_d
       path_to_calculator(path).each do |step|
+        step.symbolize_keys!
         case step[:type].to_sym
         when :exchange
           value *= step[:rate].to_d
@@ -43,6 +44,7 @@ module Bitex
     def self.calculate_path_backwards(path, value)
       value = value.to_d
       path_to_calculator(path).each do |step|
+        step.symbolize_keys!
         case step[:type].to_sym
         when :exchange
           value /= step[:rate].to_d
