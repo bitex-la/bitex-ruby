@@ -1,6 +1,5 @@
 module Bitex
   class Payment
-
     attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity,
       :previous_expected_quantity, :confirmed_quantity, :unconfirmed_quantity,
       :valid_until, :quote_valid_until, :last_quoted_on, :status, :address,

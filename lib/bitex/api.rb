@@ -43,14 +43,22 @@ module Bitex
     end
     
     def self.public(path, options={})
-      JSON.parse(curl(:GET, path).body)
+      c = curl(:GET, path)
+      body = c.body
+      c.close
+      GC.start
+      JSON.parse(body)
     end
     
     def self.private(verb, path, options={}, files={})
       if Bitex.api_key.nil?
         raise StandardError.new("No api_key available to make private key calls")
       end
-      JSON.parse(curl(verb, path, options.merge(api_key: Bitex.api_key), files).body)
+      c = curl(verb, path, options.merge(api_key: Bitex.api_key), files)
+      body = c.body
+      c.close
+      GC.start
+      JSON.parse(body)
     end
     
     # Deserialize a single object from a json representation as specified on the
