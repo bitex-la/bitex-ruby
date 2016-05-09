@@ -1,22 +1,33 @@
 module Bitex
   class ApiError < StandardError; end
   class Api
-    def self.curl(verb, path, options={}, files={})
-      verb = verb.upcase.to_sym
-      query = verb == :GET ? "?#{options.to_query}" : ''
-      prefix = Bitex.sandbox ? 'sandbox.' : ''
+    def self.grab_curl
+      if @curl
+        @curl.reset
+      else
+        @curl = Curl::Easy.new
+      end
 
-      curl = Curl::Easy.new("https://#{prefix}bitex.la/api-v1/rest#{path}#{query}")
-      curl.ssl_version = Curl::CURL_SSLVERSION_TLSv1
-      
+      @curl.ssl_version = Curl::CURL_SSLVERSION_TLSv1
       if Bitex.debug
-        curl.on_debug do |t,d|
+        @curl.on_debug do |t,d|
           if d.to_s.size < 300
             puts "DEBUG SSL #{t}, #{d}"
           end
         end
       end
 
+      @curl
+    end
+
+    def self.curl(verb, path, options={}, files={})
+      verb = verb.upcase.to_sym
+      query = verb == :GET ? "?#{options.to_query}" : ''
+      prefix = Bitex.sandbox ? 'sandbox.' : ''
+
+      curl = grab_curl
+      curl.url = "https://#{prefix}bitex.la/api-v1/rest#{path}#{query}"
+      
       if verb == :POST
         fields = []
         unless files.empty?
