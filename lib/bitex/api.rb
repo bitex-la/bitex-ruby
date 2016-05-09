@@ -17,6 +17,7 @@ module Bitex
         end
       end
 
+      @curl.connect_timeout = 30
       @curl
     end
 
