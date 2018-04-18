@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Bitex::Ask do
   let(:as_json) do
     [
-      1,         #  0 - TODO: que es esto?
+      1,         #  0 - API class reference
       12345678,  #  1 - id
       946685400, #  2 - created_at
       1,         #  3 - order_book

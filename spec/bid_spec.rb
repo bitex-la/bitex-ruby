@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Bitex::Bid do
   let(:as_json) do
     [
-      1,           #  0 -
+      1,           #  0 - API class reference
       12_345_678,  #  1 - id
       946_685_400, #  2 - created_at
       1,           #  3 - order_book
