@@ -9,7 +9,7 @@ shared_examples_for 'API class' do
   end
 end
 
-shared_examples_for 'API class with a order_book' do
+shared_examples_for 'API class with a specie' do
   it 'makes order_book 1 into btc_usd' do
     as_json[3] = 1
     subject.class.from_json(as_json).order_book.should == :btc_usd

@@ -12,7 +12,8 @@ module Bitex
 
     # The species order book as a Hash with two keys: bids and asks.
     # Each of them is a list of list consisting of [price, quantity]
-    # @see https://bitex.la/developers#order_book
+    # @see https://bitex.la/developers#orderbook
+    # TODO: standarize name for order-books: orderbook | order_book
     def self.order_book
       api_get('/market/order_book').symbolize_keys
     end

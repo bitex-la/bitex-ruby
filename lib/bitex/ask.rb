@@ -1,5 +1,5 @@
 module Bitex
-  # An Ask is an order to sell a given order_book.
+  # An Ask is an order to sell a given orderbook.
   # @see OrderBase
   class Ask < OrderBase
     # @!attribute id
@@ -8,7 +8,7 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Ask was created.
 
-    # @!attribute order_book
+    # @!attribute orderbook
     #   @return [Symbol] :btc_usd or :btc_ars
 
     # @!attribute quantity
@@ -53,12 +53,12 @@ module Bitex
 
     # TODO: rever esta documentacion
     # Create a new Ask for selling a Quantity of specie charging no less than Price per each.
-    # @param order_book [Symbol] :btc_usd or :btc_ars, whatever you're selling.
+    # @param orderbook [Symbol] :btc_usd or :btc_ars, whatever you're selling.
     # @param quantity [BigDecimal] Quantity to sell.
     # @param price [BigDecimal] Minimum price to charge when selling.
     # @param wait [Boolean] Block the process and wait until this ask moves out of the :received state, defaults to false.
     # @see https://bitex.la/developers#create-ask
-    def self.create!(order_book, quantity, price, wait = false)
+    def self.create!(orderbook, quantity, price, wait = false)
       super
     end
 
