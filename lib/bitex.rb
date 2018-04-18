@@ -5,7 +5,8 @@ require 'curl'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'bitex/match'
-Dir[File.expand_path("../bitex/*.rb", __FILE__)].each {|f| require f}
+require 'bitex/order_base'
+Dir[File.expand_path('../bitex/*.rb', __FILE__)].each { |f| require f }
 
 module Bitex
   mattr_accessor :api_key
