@@ -91,7 +91,6 @@ describe Bitex::KycProfile do
     accepted_usage_tier: 'micro',
   }.each do |field, value|
     it "sets #{field}" do
-      debugger
       subject.class.from_json(as_json).send(field).should == value
     end
   end
