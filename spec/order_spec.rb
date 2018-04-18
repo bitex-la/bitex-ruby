@@ -6,7 +6,7 @@ describe Bitex::Order do
   end
 
   it 'gets all orders' do
-    stub_private(:get, "/private/orders", 'orders')
+    stub_private(:get, '/private/orders', 'orders')
     bid, ask, empty = Bitex::Order.all
     bid.should be_a Bitex::Bid
     ask.should be_a Bitex::Ask
