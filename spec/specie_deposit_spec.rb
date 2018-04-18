@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bitex::SpecieDeposit do
-  before :each do 
+  before :each do
     Bitex.api_key = 'valid_api_key'
   end
 
@@ -10,9 +10,9 @@ describe Bitex::SpecieDeposit do
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a specie'
+  it_behaves_like 'API class with a orderbook'
 
-  it "sets quantity as BigDecimal" do
+  it 'sets quantity as BigDecimal' do
     thing = Bitex::SpecieDeposit.from_json(as_json).quantity
     thing.should be_a BigDecimal
     thing.should == 100.5
@@ -24,7 +24,7 @@ describe Bitex::SpecieDeposit do
     deposit.should be_a Bitex::SpecieDeposit
     deposit.specie.should == :btc
   end
-  
+
   it 'lists all btc deposits' do
     stub_private(:get, '/private/btc/deposits', 'specie_deposits')
     deposits = Bitex::SpecieDeposit.all(:btc)
