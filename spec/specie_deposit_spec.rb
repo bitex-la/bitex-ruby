@@ -6,7 +6,14 @@ describe Bitex::SpecieDeposit do
   end
 
   let(:as_json) do
-    [5,12345678,946685400,1,100.50000000]
+    # TODO: porque con tantos decimales en cero?
+    [
+      5,             # 0 - TODO: que seria?
+      12_345_678,    # 1 - id
+      946_685_400,   # 2 - created_at
+      1,             # 3 - orderbook
+      100.50_000_000 # 4 - quantity
+    ]
   end
 
   it_behaves_like 'API class'
@@ -18,16 +25,16 @@ describe Bitex::SpecieDeposit do
     thing.should == 100.5
   end
 
-  it 'finds a single btc deposit' do
-    stub_private(:get, '/private/btc/deposits/1', 'specie_deposit')
-    deposit = Bitex::SpecieDeposit.find(:btc, 1)
+  it 'finds a single btc_usd deposit' do
+    stub_private(:get, '/private/btc_usd/deposits/1', 'specie_deposit')
+    deposit = Bitex::SpecieDeposit.find(:btc_usd, 1)
     deposit.should be_a Bitex::SpecieDeposit
-    deposit.specie.should == :btc
+    deposit.orderbook.should == :btc_usd
   end
 
-  it 'lists all btc deposits' do
-    stub_private(:get, '/private/btc/deposits', 'specie_deposits')
-    deposits = Bitex::SpecieDeposit.all(:btc)
+  it 'lists all btc_usd deposits' do
+    stub_private(:get, '/private/btc_usd/deposits', 'specie_deposits')
+    deposits = Bitex::SpecieDeposit.all(:btc_usd)
     deposits.should be_an Array
     deposits.first.should be_an Bitex::SpecieDeposit
   end
