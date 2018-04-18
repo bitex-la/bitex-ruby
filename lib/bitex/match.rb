@@ -3,7 +3,7 @@ module Bitex
   # Both Buy and Sell are a kind of Match, they deserialize the same and have very similar fields, although their documentation
   # may differ.
   class Match
-    attr_accessor :id, :orderbook, :quantity, :amount, :fee, :price, :created_at
+    attr_accessor :id, :order_book, :quantity, :amount, :fee, :price, :created_at
 
     # @visibility private
     def self.from_json(json)

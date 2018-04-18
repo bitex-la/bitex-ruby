@@ -76,10 +76,10 @@ module Bitex
     end
 
     # @visibility private
-    def self.from_json(thing, json, with_orderbook = false, &block)
+    def self.from_json(thing, json, with_order_book = false, &block)
       thing.id = json[1]
       thing.created_at = Time.at(json[2])
-      thing.orderbook = { 1 => :btc_usd, 5 => :btc_ars }[json[3]] if with_orderbook
+      thing.order_book = { 1 => :btc_usd, 5 => :btc_ars }[json[3]] if with_order_book
       block.call(thing)
       thing
     end

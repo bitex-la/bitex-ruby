@@ -6,7 +6,7 @@ describe Bitex::Sell do
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a orderbook'
+  it_behaves_like 'API class with a order_book'
   it_behaves_like 'JSON deserializable match'
 
   it 'sets the ask id' do

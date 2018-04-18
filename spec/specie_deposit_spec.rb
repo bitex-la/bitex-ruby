@@ -11,13 +11,13 @@ describe Bitex::SpecieDeposit do
       5,             # 0 - TODO: que seria?
       12_345_678,    # 1 - id
       946_685_400,   # 2 - created_at
-      1,             # 3 - orderbook
+      1,             # 3 - order_book
       100.50_000_000 # 4 - quantity
     ]
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a orderbook'
+  it_behaves_like 'API class with a order_book'
 
   it 'sets quantity as BigDecimal' do
     thing = Bitex::SpecieDeposit.from_json(as_json).quantity
@@ -29,7 +29,7 @@ describe Bitex::SpecieDeposit do
     stub_private(:get, '/private/btc_usd/deposits/1', 'specie_deposit')
     deposit = Bitex::SpecieDeposit.find(:btc_usd, 1)
     deposit.should be_a Bitex::SpecieDeposit
-    deposit.orderbook.should == :btc_usd
+    deposit.order_book.should == :btc_usd
   end
 
   it 'lists all btc_usd deposits' do

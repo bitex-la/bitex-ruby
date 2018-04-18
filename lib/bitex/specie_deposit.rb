@@ -9,9 +9,9 @@ module Bitex
     #   @return [Time] Time when this deposit credited.
     attr_accessor :created_at
 
-    # @!attribute orderbook
+    # @!attribute order_book
     #   @return [Symbol] :btc_usd or :btc_ars
-    attr_accessor :orderbook
+    attr_accessor :order_book
 
     # @!attribute quantity
     #   @return [BigDecimal] Quantity deposited
@@ -22,12 +22,12 @@ module Bitex
       Api.from_json(new, json, true) { |thing| thing.quantity = json[4].to_s.to_d }
     end
 
-    def self.find(orderbook, id)
-      from_json(Api.private(:get, "/private/#{orderbook}/deposits/#{id}"))
+    def self.find(order_book, id)
+      from_json(Api.private(:get, "/private/#{order_book}/deposits/#{id}"))
     end
 
-    def self.all(orderbook)
-      Api.private(:get, "/private/#{orderbook}/deposits").map { |d| from_json(d) }
+    def self.all(order_book)
+      Api.private(:get, "/private/#{order_book}/deposits").map { |d| from_json(d) }
     end
   end
 end
