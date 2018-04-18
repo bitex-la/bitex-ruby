@@ -7,7 +7,7 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Sell happened.
 
-    # @!attribute order_book
+    # @!attribute orderbook
     #   @return [Symbol] :btc_usd or :btc_ars
 
     # @!attribute quantity

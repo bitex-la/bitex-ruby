@@ -2,11 +2,21 @@ require 'spec_helper'
 
 describe Bitex::Buy do
   let(:as_json) do
-    [4,12345678,946685400,1,100.50000000,201.0000000,0.05000000,2.00000000,456]
+    [
+      4,           #  0 - API class reference
+      12_345_678,  #  1 - id
+      946_685_400, #  2 - created_at
+      1,           #  3 - orderbook
+      100.5,       #  4 - quantity
+      201,         #  5 - amount
+      0.05,        #  6 - fee
+      2,           #  7 - price
+      456          #  8 - bid_id
+    ]
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a order_book'
+  it_behaves_like 'API class with a orderbook'
   it_behaves_like 'JSON deserializable match'
 
   it 'sets the bid id' do

@@ -10,14 +10,14 @@ shared_examples_for 'API class' do
 end
 
 shared_examples_for 'API class with a specie' do
-  it 'makes order_book 1 into btc_usd' do
+  it 'makes orderbook 1 into btc_usd' do
     as_json[3] = 1
-    subject.class.from_json(as_json).order_book.should == :btc_usd
+    subject.class.from_json(as_json).orderbook.should == :btc_usd
   end
 
   it 'makes specie 5 into btc_ars' do
     as_json[3] = 5
-    subject.class.from_json(as_json).order_book.should == :btc_ars
+    subject.class.from_json(as_json).orderbook.should == :btc_ars
   end
 end
 
