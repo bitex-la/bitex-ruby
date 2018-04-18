@@ -1,4 +1,5 @@
 module Bitex
+  # TODO: rever esta docu
   # A transaction in which you bought some quantity of specie.
   class Buy < Match
     # @!attribute id
@@ -7,18 +8,20 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Buy happened.
 
-    # @!attribute specie
-    #   @return [Symbol] :btc or :ltc
-    
+    # @!attribute orderbook
+    #   @return [Symbol] :btc_usd or :btc_ars
+
     # @!attribute quantity
+    #   TODO: rever esta docu
     #   @return [BigDecimal] Quantity of specie bought
-    
+
     # @!attribute amount
     #   @return [BigDecimal] Amount of USD spent
 
     # @!attribute fee
+    #   TODO: rever esta docu
     #   @return [BigDecimal] Quantity of specie paid as transaction fee.
-    
+
     # @!attribute price
     #   @return [BigDecimal] Price paid per unit
 

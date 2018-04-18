@@ -7,18 +7,18 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Sell happened.
 
-    # @!attribute specie
-    #   @return [Symbol] :btc or :ltc
-    
+    # @!attribute orderbook
+    #   @return [Symbol] :btc_usd or :btc_ars
+
     # @!attribute quantity
     #   @return [BigDecimal] Quantity of specie sold
-    
+
     # @!attribute amount
     #   @return [BigDecimal] Amount of USD earned
 
     # @!attribute fee
     #   @return [BigDecimal] USD amount paid as transaction fee.
-    
+
     # @!attribute price
     #   @return [BigDecimal] Price charged per unit
 
