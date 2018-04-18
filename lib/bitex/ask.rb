@@ -65,9 +65,9 @@ module Bitex
     # @visibility private
     def self.from_json(json, order = nil)
       super(json, order).tap do |thing|
-        thing.quantity = json[4].to_s.to_d
-        thing.remaining_quantity = json[5].to_s.to_d
-        thing.produced_amount = json[9].to_s.to_d
+        thing.quantity = (json[4].presence || 0).to_d
+        thing.remaining_quantity = (json[5].presence || 0).to_d
+        thing.produced_amount = (json[9].presence || 0).to_d
       end
     end
   end

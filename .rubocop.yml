@@ -28,3 +28,4 @@ AllCops:
     - 'Rakefile'
     - 'bitex.gemspec'
     - 'spec/**/*'
+    - 'vendor/**/*'
