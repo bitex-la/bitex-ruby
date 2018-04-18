@@ -32,7 +32,7 @@ describe Bitex::SpecieWithdrawal do
     end
   end
 
-  it 'sets labelr' do
+  it 'sets label' do
     thing = Bitex::SpecieWithdrawal.from_json(as_json).label
     thing.should == 'label'
   end
