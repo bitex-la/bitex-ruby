@@ -21,6 +21,13 @@ shared_examples_for 'API class with a orderbook' do
   end
 end
 
+shared_examples_for 'API class with a specie' do
+  it 'makes specie 1 into btc' do
+    as_json[3] = 1
+    subject.class.from_json(as_json).specie.should == :btc
+  end
+end
+
 shared_examples_for 'JSON deserializable match' do
   { quantity: 100.5, amount: 201, fee: 0.05, price: 2.0 }.each do |field, value|
     it "sets #{field} as BigDecimal" do
