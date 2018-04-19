@@ -17,7 +17,7 @@ module Bitex
     # @!attribute amount
     #   @return [BigDecimal] Final amount credited to your bitex USD balance.
     attr_accessor :amount
-    
+
     # @!attribute deposit_method
     #   The method used for this deposit
     #   * :astropay
@@ -42,23 +42,23 @@ module Bitex
     #  * :other we'll contact you regarding this deposit.
     #  * :user_cancelled We cancelled this deposit per your request.
     attr_accessor :reason
-  
+
     # @!attribute country
     #  Country of origin for this deposit.
     attr_accessor :country
-    
+
     # @!attribute currency
     #  Local currency for the country.
     attr_accessor :currency
-  
+
     # @!attribute kyc_profile_id
     #  KYC profile on whose behalf this deposit is being created.
     attr_accessor :kyc_profile_id
-  
+
     # @!attribute request_details
     #  Details for our account officers about this deposit.
     attr_accessor :request_details
-  
+
     # @!attribute astropay_response_body
     #  Response from astropay if selected as the deposit method.
     #  The 'url' field should be the astropay payment url for this deposit.
@@ -72,23 +72,26 @@ module Bitex
     def self.from_json(json, deposit = nil)
       deposit_method_lookup = {
         1 => :astropay,
-        2 => :other,
+        2 => :other
       }
+
       status_lookup = {
         1 => :pending,
         2 => :done,
-        3 => :cancelled,
+        3 => :cancelled
       }
+
       reason_lookup = {
         0 => :not_cancelled,
         1 => :did_not_credit,
         2 => :sender_unknown,
         3 => :other,
-        4 => :user_cancelled,
+        4 => :user_cancelled
       }
+
       Api.from_json(deposit || new, json) do |thing|
-        thing.requested_amount = BigDecimal.new(json[3].to_s)
-        thing.amount = BigDecimal.new(json[4].to_s)
+        thing.requested_amount = (json[3].presence || 0).to_d
+        thing.amount = (json[4].presence || 0).to_d
         thing.deposit_method = deposit_method_lookup[json[5]]
         thing.status = status_lookup[json[6]]
         thing.reason = reason_lookup[json[7]]
@@ -101,28 +104,32 @@ module Bitex
       end
     end
 
-    def self.create!(country, amount, currency, method, details, profile=nil)
-      from_json(Api.private(:post, "/private/usd/deposits", {
-        country: country,
-        amount: amount,
-        currency: currency,
-        deposit_method: method,
-        request_details: details,
-        kyc_profile_id: profile,
-      }))
+    def self.create!(country, amount, currency, method, details, profile = nil)
+      from_json(
+        Api.private(
+          :post,
+          '/private/usd/deposits',
+          country: country,
+          amount: amount,
+          currency: currency,
+          deposit_method: method,
+          request_details: details,
+          kyc_profile_id: profile
+        )
+      )
     end
-  
+
     def self.find(id)
       from_json(Api.private(:get, "/private/usd/deposits/#{id}"))
     end
 
     def cancel!
-      path = "/private/usd/deposits/#{self.id}/cancel"
+      path = "/private/usd/deposits/#{id}/cancel"
       self.class.from_json(Api.private(:post, path), self)
     end
 
     def self.all
-      Api.private(:get, "/private/usd/deposits").collect{|x| from_json(x) }
+      Api.private(:get, '/private/usd/deposits').map { |d| from_json(d) }
     end
   end
 end
