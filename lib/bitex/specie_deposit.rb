@@ -19,7 +19,10 @@ module Bitex
 
     # @visibility private
     def self.from_json(json)
-      Api.from_json(new, json, true) { |thing| thing.quantity = (json[4] || 0).to_d }
+      Api.from_json(new, json) do |thing|
+        thing.specie =  { 1 => :btc }[json[3]]
+        thing.quantity = (json[4] || 0).to_d
+      end
     end
 
     def self.find(specie, id)
@@ -27,7 +30,11 @@ module Bitex
     end
 
     def self.all(specie)
-      Api.private(:get, "/private/#{specie}/deposits").map { |d| from_json(d) }
+      Api.private(:get, "/private/#{specie}/deposits").map { |sd| from_json(sd) }
+    end
+
+    def self.species
+      { 0 => :btc }
     end
   end
 end

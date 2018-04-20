@@ -6,11 +6,23 @@ describe Bitex::SpecieWithdrawal do
   end
 
   let(:as_json) do
-    [6,12345678,946685400,1,100.00000000,1,0, '1helloworld', 'label', 1, 'ABC1']
+    [
+      6,             #  0 - API class reference
+      12_345_678,    #  1 - id
+      946_685_400,   #  2 - created_at
+      1,             #  3 - specie { 0 => :btc }
+      100.0,         #  4 - quantity
+      1,             #  5 - status { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }
+      0,             #  6 - reason { 0 => :not_cancelled, 1 => :insufficient_funds, 2 => :destination_invalid }
+      '1helloworld', #  7 - to_address
+      'label',       #  8 - label
+      1,             #  9 - kyc_profile_id
+      'ABC1'         # 10 - transaction_id
+    ]
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a orderbook'
+  it_behaves_like 'API class with a specie'
 
   it 'sets quantity as BigDecimal' do
     thing = Bitex::SpecieWithdrawal.from_json(as_json).quantity
@@ -18,14 +30,14 @@ describe Bitex::SpecieWithdrawal do
     thing.should == 100.0
   end
 
-  { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }.each do |code, symbol|
+  Bitex::SpecieWithdrawal.statuses.each do |code, symbol|
     it "sets status #{code} to #{symbol}" do
       as_json[5] = code
       Bitex::SpecieWithdrawal.from_json(as_json).status.should == symbol
     end
   end
 
-  { 0 => :not_cancelled, 1 => :insufficient_funds, 2 => :destination_invalid }.each do |code, symbol|
+  Bitex::SpecieWithdrawal.reasons.each do |code, symbol|
     it "sets reason #{code} to #{symbol}" do
       as_json[6] = code
       Bitex::SpecieWithdrawal.from_json(as_json).reason.should == symbol
@@ -52,11 +64,7 @@ describe Bitex::SpecieWithdrawal do
   end
 
   it 'creates a new withdrawal' do
-    stub_private(:post, '/private/btc/withdrawals', 'specie_withdrawal', {
-      address: '1ADDR',
-      amount: 110,
-      label: 'thelabel'
-    })
+    stub_private(:post, '/private/btc/withdrawals', 'specie_withdrawal', address: '1ADDR', amount: 110, label: 'thelabel')
     withdrawal = Bitex::SpecieWithdrawal.create!(:btc, '1ADDR', 110, 'thelabel')
     withdrawal.should be_a Bitex::SpecieWithdrawal
     withdrawal.status.should == :received

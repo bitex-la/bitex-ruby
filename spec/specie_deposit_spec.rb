@@ -10,7 +10,7 @@ describe Bitex::SpecieDeposit do
       5,          # 0 - API class reference
       12_345_678, # 1 - id
       9_466_854,  # 2 - created_at
-      1,          # 3 - specie
+      1,          # 3 - specie { 0 => :btc }
       100.5       # 4 - quantity
     ]
   end

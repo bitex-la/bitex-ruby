@@ -9,9 +9,9 @@ module Bitex
     #   @return [Time] Time when this withdrawal was requested by you.
     attr_accessor :created_at
 
-    # @!attribute orderbook
-    #   @return [Symbol] :btc_usd or :btc_ars
-    attr_accessor :orderbook
+    # @!attribute specie
+    #   @return [Symbol] :btc
+    attr_accessor :specie
 
     # @!attribute quantity
     #   @return [BigDecimal] Quantity deposited
@@ -51,23 +51,11 @@ module Bitex
 
     # @visibility private
     def self.from_json(json)
-      status_lookup = {
-        1 => :received,
-        2 => :pending,
-        3 => :done,
-        4 => :cancelled,
-      }
-
-      reason_lookup = {
-        0 => :not_cancelled,
-        1 => :insufficient_funds,
-        2 => :destination_invalid,
-      }
-
-      Api.from_json(new, json, true) do |thing|
+      Api.from_json(new, json) do |thing|
+        thing.specie =  { 1 => :btc }[json[3]]
         thing.quantity = (json[4].presence || 0).to_d
-        thing.status = status_lookup[json[5]]
-        thing.reason = reason_lookup[json[6]]
+        thing.status = statuses[json[5]]
+        thing.reason = reasons[json[6]]
         thing.to_address = json[7]
         thing.label = json[8]
         thing.kyc_profile_id = json[9]
@@ -75,21 +63,33 @@ module Bitex
       end
     end
 
-    def self.create!(orderbook, address, amount, label, kyc_profile_id=nil)
-      from_json(Api.private(:post, "/private/#{orderbook}/withdrawals", {
-        address: address,
-        amount: amount,
-        label: label,
-        kyc_profile_id: kyc_profile_id
-      }))
+    def self.create!(specie, address, amount, label, kyc_profile_id = nil)
+      from_json(
+        Api.private(
+          :post,
+          "/private/#{specie}/withdrawals",
+          address: address,
+          amount: amount,
+          label: label,
+          kyc_profile_id: kyc_profile_id
+        )
+      )
     end
 
-    def self.find(orderbook, id)
-      from_json(Api.private(:get, "/private/#{orderbook}/withdrawals/#{id}"))
+    def self.find(specie, id)
+      from_json(Api.private(:get, "/private/#{specie}/withdrawals/#{id}"))
     end
 
-    def self.all(orderbook)
-      Api.private(:get, "/private/#{specie}/withdrawals").map { |w| from_json(w) }
+    def self.all(specie)
+      Api.private(:get, "/private/#{specie}/withdrawals").map { |sw| from_json(sw) }
+    end
+
+    def self.statuses
+      { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }
+    end
+
+    def self.reasons
+      { 0 => :not_cancelled, 1 => :insufficient_funds, 2 => :destination_invalid }
     end
   end
 end
