@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe Bitex::UsdDeposit do
-  before :each do
-    Bitex.api_key = 'valid_api_key'
-  end
+  before(:each) { Bitex.api_key = 'valid_api_key' }
 
   let(:as_json) do
     [
