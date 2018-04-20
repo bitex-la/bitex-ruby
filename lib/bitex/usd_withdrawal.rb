@@ -61,16 +61,18 @@ module Bitex
         1 => :received,
         2 => :pending,
         3 => :done,
-        4 => :cancelled,
+        4 => :cancelled
       }
+
       reason_lookup = {
         0 => :not_cancelled,
         1 => :insufficient_funds,
         2 => :no_instructions,
-        3 => :recipient_unknown,
+        3 => :recipient_unknown
       }
+
       Api.from_json(new, json) do |thing|
-        thing.amount = BigDecimal.new(json[3].to_s)
+        thing.amount = (json[3].presence || 0).to_d
         thing.status = status_lookup[json[4]]
         thing.reason = reason_lookup[json[5]]
         thing.country = json[6]
@@ -82,16 +84,20 @@ module Bitex
       end
     end
 
-    def self.create!(country, amount, currency, method, instructions, label, profile=nil)
-      from_json(Api.private(:post, "/private/usd/withdrawals", {
-        country: country,
-        amount: amount,
-        currency: currency,
-        payment_method: method,
-        instructions: instructions,
-        label: label,
-        kyc_profile_id: profile,
-      }))
+    def self.create!(country, amount, currency, method, instructions, label, profile = nil)
+      from_json(
+        Api.private(
+          :post,
+          '/private/usd/withdrawals',
+          country: country,
+          amount: amount,
+          currency: currency,
+          payment_method: method,
+          instructions: instructions,
+          label: label,
+          kyc_profile_id: profile
+        )
+      )
     end
 
     def self.find(id)
@@ -99,7 +105,7 @@ module Bitex
     end
 
     def self.all
-      Api.private(:get, "/private/usd/withdrawals").collect{|x| from_json(x) }
+      Api.private(:get, '/private/usd/withdrawals').map { |sw| from_json(sw) }
     end
   end
 end

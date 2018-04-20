@@ -50,8 +50,8 @@ module Bitex
     end
 
     def self.public(path, options = {})
-      c = curl(:GET, path)
-      JSON.parse(c.body)
+      response = curl(:GET, path)
+      JSON.parse(response.body)
     end
 
     def self.private(verb, path, options = {}, files = {})
