@@ -11,8 +11,7 @@ module Bitex
     attr_accessor :created_at
 
     # @!attribute requested_amount
-    #   @return [BigDecimal] For pre-announced deposits, this is the amount you
-    #     requested to deposit.
+    #   @return [BigDecimal] For pre-announced deposits, this is the amount you requested to deposit.
     attr_accessor :requested_amount
 
     # @!attribute amount
@@ -27,10 +26,8 @@ module Bitex
 
     # @!attribute status
     #  The status of this deposit.
-    #  * :pending your deposit notice was received, we're waiting for the funds
-    #    to credit.
-    #  * :done your deposit credited correctly, the funds are available in your
-    #    balance.
+    #  * :pending your deposit notice was received, we're waiting for the funds to credit.
+    #  * :done your deposit credited correctly, the funds are available in your balance.
     #  * :cancelled your deposit did not credit, check the 'reason' field.
     attr_accessor :status
 
@@ -38,8 +35,7 @@ module Bitex
     #  The reason for cancellation of this deposit, if any.
     #  * :not_cancelled.
     #  * :did_not_credit funds never arrived to our end.
-    #  * :sender_unknown we could not accept these funds because you're not the
-    #    sender.
+    #  * :sender_unknown we could not accept these funds because you're not the sender.
     #  * :other we'll contact you regarding this deposit.
     #  * :user_cancelled We cancelled this deposit per your request.
     attr_accessor :reason
