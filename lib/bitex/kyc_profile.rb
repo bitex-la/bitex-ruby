@@ -1,40 +1,108 @@
 module Bitex
+  ##
+  # Documentation here!
+  #
   class KycProfile
+    # @!attribute id
+    #   @return [Integer] This KycProfile's unique ID.
+    attr_accessor :id
 
-    attr_accessor :id, :first_name, :last_name, :personal_id_number,
-      :personal_id_issuer, :personal_id_type, :tax_id, :birth_date,
-      :nationality, :gender, :occupation, :home_address, :work_address,
-      :phone_numbers, :legal_entity, :politically_exposed_person,
-      :usage_tier, :accepted_usage_tier
+    # @!attribute first_name
+    #   @return [String] Name.
+    attr_accessor :first_name
+
+    # @!attribute last_name
+    #   @return [String] Last Name.
+    attr_accessor :last_name
+
+    # @!attribute personal_id_number
+    #   @return [String] Personal ID Number.
+    attr_accessor :personal_id_number
+
+    # @!attribute personal_id_issuer
+    #   @return [String] ISO country code for the issuer of this ID.
+    attr_accessor :personal_id_issuer
+
+    # @!attribute personal_id_type
+    #   @return [symbol] Type of ID. [:passport]
+    attr_accessor :personal_id_type
+
+    # @!attribute tax_id
+    #   @return [Intger] Tax ID.
+    attr_accessor :tax_id
+
+    # @!attribute birth_date
+    #   @return [Time] Birth date.
+    attr_accessor :birth_date
+
+    # @!attribute nationality
+    #   @return [String] Nationality.
+    attr_accessor :nationality
+
+    # @!attribute gender
+    #   @return [Symbol] Gender.
+    attr_accessor :gender
+
+    # @!attribute occupation
+    #   @return [String]
+    attr_accessor :occupation
+
+    # @!attribute home_address
+    #   @return [String] Home address.
+    attr_accessor :home_address
+
+    # @!attribute work_address
+    #   @return [String] Work address.
+    attr_accessor :work_address
+
+    # @!attribute phone_numbers
+    #   @return [String] Phone numbers.
+    attr_accessor :phone_numbers
+
+    # @!attribute legal_entity
+    #   @return [Boolean] Is legal entity.
+    attr_accessor :legal_entity
+
+    # @!attribute politically_exposed_person
+    #   @return [Boolean] Is politically exposed.
+    attr_accessor :politically_exposed_person
+
+    # @!attribute usage_tier
+    #   @return [Symbol] Requested usage tier.
+    attr_accessor :usage_tier
+
+    # @!attribute accepted_usage_tier
+    #   @return [Symbol] Current usage tier as accepted by our compliance officers.
+    attr_accessor :accepted_usage_tier
 
     # @visibility private
+    # rubocop:disable Metrics/AbcSize
     def self.from_json(json)
-      new.tap do |thing|
-        thing.id = json[0]
-        thing.first_name = json[1]
-        thing.last_name = json[2]
-        thing.personal_id_number = json[3]
-        thing.personal_id_issuer = json[4]
-        thing.personal_id_type = json[5]
-        thing.tax_id = json[6]
-        thing.birth_date = json[7] ? Time.at(json[7]) : nil
-        thing.nationality = json[8]
-        thing.gender = json[9]
-        thing.occupation = json[10]
-        thing.home_address = json[11]
-        thing.work_address = json[12]
-        thing.phone_numbers = json[13]
-        thing.legal_entity = json[14]
-        thing.politically_exposed_person = json[15]
-        thing.usage_tier = json[16]
-        thing.accepted_usage_tier = json[17]
+      new.tap do |profile|
+        profile.id = json[0]
+        profile.first_name = json[1]
+        profile.last_name = json[2]
+        profile.personal_id_number = json[3]
+        profile.personal_id_issuer = json[4]
+        profile.personal_id_type = json[5].to_sym
+        profile.tax_id = json[6].to_i
+        profile.birth_date = json[7] ? Time.at(json[7]) : nil
+        profile.nationality = json[8]
+        profile.gender = json[9].to_sym
+        profile.occupation = json[10]
+        profile.home_address = json[11]
+        profile.work_address = json[12]
+        profile.phone_numbers = json[13]
+        profile.legal_entity = json[14]
+        profile.politically_exposed_person = json[15]
+        profile.usage_tier = json[16].to_sym
+        profile.accepted_usage_tier = json[17].to_sym
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.create!(params)
-      params = params.dup
-        .merge(birth_date: params[:birth_date].strftime('%Y/%m/%d'))
-      from_json(Api.private(:post, "/private/kyc_profiles", params))
+      from_json(Api.private(:post, '/private/kyc_profiles', sanitize(params)))
     end
 
     def self.find(id)
@@ -42,25 +110,32 @@ module Bitex
     end
 
     def self.all
-      Api.private(:get, "/private/kyc_profiles").collect{|x| from_json(x) }
+      Api.private(:get, '/private/kyc_profiles').map { |kyc| from_json(kyc) }
+    end
+
+    private_class_method
+
+    def self.sanitize(params)
+      params.merge(birth_date: params[:birth_date].strftime('%Y/%m/%d'))
     end
 
     def update!(params)
-      params = params.dup
-        .merge(birth_date: params[:birth_date].strftime('%Y/%m/%d'))
-      self.class.from_json(Api.private(:put, "/private/kyc_profiles/#{id}", params))
+      self.class.from_json(Api.private(:put, "/private/kyc_profiles/#{id}", self.class.sanitize(params)))
     end
-    
+
     def add_kyc_file!(path, content_type = nil)
-      response = Api.private(:post, "/private/kyc_profiles/#{id}/kyc_files",
-        {document_content_type: content_type}, {document: path})
+      response = Api.private(
+        :post,
+        "/private/kyc_profiles/#{id}/kyc_files",
+        { document_content_type: content_type },
+        document: path
+      )
+
       KycFile.from_json(response)
     end
-  
+
     def kyc_files
-      Api.private(:get, "/private/kyc_profiles/#{id}/kyc_files")
-        .collect{|x| KycFile.from_json(x)}
+      Api.private(:get, "/private/kyc_profiles/#{id}/kyc_files").map { |kyc| KycFile.from_json(kyc) }
     end
   end
 end
-

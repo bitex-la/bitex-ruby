@@ -25,7 +25,7 @@ describe Bitex::UsdDeposit do
 
   it_behaves_like 'API class'
 
-  context 'Deserializing from json' do
+  context 'deserializing from json' do
     let(:deposit) { Bitex::UsdDeposit.from_json(as_json) }
 
     it 'sets amount as BigDecimal' do
