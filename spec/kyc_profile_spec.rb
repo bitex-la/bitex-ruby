@@ -39,7 +39,7 @@ describe Bitex::KycProfile do
      accepted_usage_tier]
   end
 
-  let(:kyc_profile) { Bitex::KycProfile.from_json(as_json) }
+  let(:kyc_profile) { subject.class.from_json(as_json) }
 
   context 'deserializing from json' do
     it 'sets first name as String' do
@@ -184,7 +184,7 @@ describe Bitex::KycProfile do
 
     kyc_profile.kyc_files do |kyc_files|
       kyc_files.should be_an Array
-      kyc_files.any.should be_a Bitex::KycFile
+      kyc_files.sample.should be_a Bitex::KycFile
     end
   end
 end

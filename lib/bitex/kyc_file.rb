@@ -1,18 +1,40 @@
 module Bitex
+  ##
+  # Documentation here!
+  #
   class KycFile
-    attr_accessor :id, :kyc_profile_id, :url, :file_name,
-      :content_type, :file_size
+    # @!attribute id
+    #   @return [Integer] This KycFile's unique ID.
+    attr_accessor :id
+
+    # @!attribute id
+    #   @return [Integer] This KycProfile's unique ID.
+    attr_accessor :kyc_profile_id
+
+    # @!attribute url
+    #   @return [String] url to photo file.
+    attr_accessor :url
+
+    # @!attribute file_name
+    #   @return [String] file name.
+    attr_accessor :file_name
+
+    # @!attribute file_size
+    #   @return [Integer] file size.
+    attr_accessor :file_size
+
+    # @!attribute content_type
+    #   @return [String] Content type.
+    attr_accessor :content_type
 
     def self.from_json(json)
-      t = new
-      t.id, t.kyc_profile_id, t.url, t.file_name, t.content_type, t.file_size =
-        json
-      t
+      new.tap do |file|
+        file.id, file.kyc_profile_id, file.url, file.file_name, file.content_type, file.file_size = json
+      end
     end
-    
+
     def self.all
-      Api.private(:get, "/private/kyc_files").collect{|x| from_json(x) }
+      Api.private(:get, '/private/kyc_files').map { |file| from_json(file) }
     end
   end
 end
-
