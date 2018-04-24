@@ -1,7 +1,7 @@
 module Bitex
   # Base class for Bids and Asks
   class OrderBase
-    attr_accessor :id, :specie, :price, :status, :reason, :issuer, :created_at
+    attr_accessor :id, :orderbook, :price, :status, :reason, :issuer, :created_at
 
     # Returns an array with all your active orders of this type,
     # and any other order of this type that was active in the last 2 hours.
@@ -23,11 +23,11 @@ module Bitex
     end
 
     # @visibility private
-    def self.create!(specie, amount, price, wait = false)
+    def self.create!(orderbook, amount, price, wait = false)
       params = {
         amount: amount,
         price: price,
-        specie: { btc: 1, ltc: 2 }[specie]
+        orderbook: { btc_usd: 1, btc_ars: 5 }[orderbook]
       }
 
       order = from_json(Api.private(:post, "/private#{base_path}", params))

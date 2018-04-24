@@ -1,5 +1,5 @@
 module Bitex
-  # A Bid is an order to buy a given specie.
+  # A Bid is an order to buy a given orderbook.
   # @see OrderBase
   class Bid < OrderBase
     # @!attribute id
@@ -8,8 +8,8 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Bid was created.
 
-    # @!attribute specie
-    #   @return [Symbol] :btc or :ltc
+    # @!attribute orderbook
+    #   @return [Symbol] :btc_usd or :btc_ars
 
     # @!attribute amount
     #   @return [BigDecimal] Amount of USD to spend in this Bid.
@@ -38,6 +38,7 @@ module Bitex
     #  * :system_cancelled Bitex cancelled this order, for a good reason.
 
     # @!attribute produced_quantity
+    #   TODO: rever esta documentacion
     #   @return [BigDecimal] Quantity of specie produced by this bid so far.
     attr_accessor :produced_quantity
 
@@ -48,24 +49,22 @@ module Bitex
       '/bids'
     end
 
-    # Create a new Bid for spending Amount USD paying no more than
-    # price per unit.
-    # @param specie [Symbol] :btc or :ltc, whatever you're buying.
+    # Create a new Bid for spending Amount USD paying no more than price per unit.
+    # @param orderbook [Symbol] :btc_usd or :btc_ars, whatever you're buying.
     # @param amount [BigDecimal] Amount to spend buying.
     # @param price [BigDecimal] Maximum price to pay per unit.
-    # @param wait [Boolean] Block the process and wait until this
-    #   bid moves out of the :received state, defaults to false.
+    # @param wait [Boolean] Block the process and wait until this bid moves out of the :received state, defaults to false.
     # @see https://bitex.la/developers#create-bid
-    def self.create!(specie, amount, price, wait = false)
+    def self.create!(orderbook, amount, price, wait = false)
       super
     end
 
     # @visibility private
     def self.from_json(json, order = nil)
       super(json, order).tap do |thing|
-        thing.amount = json[4].to_s.to_d
-        thing.remaining_amount = json[5].to_s.to_d
-        thing.produced_quantity = json[9].to_s.to_d
+        thing.amount = (json[4].presence || 0).to_d
+        thing.remaining_amount = (json[5].presence || 0).to_d
+        thing.produced_quantity = (json[9].presence || 0).to_d
       end
     end
   end

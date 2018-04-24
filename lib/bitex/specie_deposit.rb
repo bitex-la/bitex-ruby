@@ -10,7 +10,7 @@ module Bitex
     attr_accessor :created_at
 
     # @!attribute specie
-    #   @return [Symbol] :btc or :ltc
+    #   @return [Symbol] :btc
     attr_accessor :specie
 
     # @!attribute quantity
@@ -19,8 +19,9 @@ module Bitex
 
     # @visibility private
     def self.from_json(json)
-      Api.from_json(new, json, true) do |thing|
-        thing.quantity = BigDecimal.new(json[4].to_s)
+      Api.from_json(new, json) do |thing|
+        thing.specie =  { 1 => :btc }[json[3]]
+        thing.quantity = (json[4] || 0).to_d
       end
     end
 
@@ -29,7 +30,11 @@ module Bitex
     end
 
     def self.all(specie)
-      Api.private(:get, "/private/#{specie}/deposits").collect{|x| from_json(x) }
+      Api.private(:get, "/private/#{specie}/deposits").map { |sd| from_json(sd) }
+    end
+
+    def self.species
+      { 0 => :btc }
     end
   end
 end
