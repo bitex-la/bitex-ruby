@@ -74,7 +74,8 @@ module Bitex
 
     # @visibility private
     def self.from_json(json, order = nil)
-      Api.from_json(order || new, json, true) do |thing|
+      Api.from_json(order || new, json) do |thing|
+        thing.orderbook = orderbooks[json[3]]
         thing.price = json[6].to_s.to_d
         thing.status = statuses[json[7]]
         thing.reason = reasons[json[8]]
@@ -90,12 +91,16 @@ module Bitex
       order
     end
 
-    def self.statuses
-      { 1 => :received, 2 => :executing, 3 => :cancelling, 4 => :cancelled, 5 => :completed }
+    def self.orderbooks
+      { 1 => :btc_usd, 5 => :btc_ars }
     end
 
     def self.reasons
       { 0 => :not_cancelled, 1 => :not_enough_funds, 2 => :user_cancelled, 3 => :system_cancelled }
+    end
+
+    def self.statuses
+      { 1 => :received, 2 => :executing, 3 => :cancelling, 4 => :cancelled, 5 => :completed }
     end
   end
 end

@@ -72,14 +72,13 @@ module Bitex
         6 => SpecieWithdrawal,
         7 => UsdDeposit,
         8 => UsdWithdrawal
-      }[object.first].from_json(object)
+      }[object[0]].from_json(object)
     end
 
     # @visibility private
-    def self.from_json(thing, json, with_orderbook = false, &block)
+    def self.from_json(thing, json, &block)
       thing.id = json[1]
       thing.created_at = Time.at(json[2])
-      thing.orderbook = { 1 => :btc_usd, 5 => :btc_ars }[json[3]] if with_orderbook
       block.call(thing)
       thing
     end
