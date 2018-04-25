@@ -1,7 +1,7 @@
 module Bitex
   # An Ask is an order to sell a given orderbook.
-  # @see OrderBase
-  class Ask < OrderBase
+  # @see BaseOrder
+  class Ask < BaseOrder
     # @!attribute id
     #   @return [Integer] This Ask's unique ID.
 
