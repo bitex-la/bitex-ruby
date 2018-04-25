@@ -33,7 +33,7 @@ module Bitex
     #   @return [String] The issuer of this order, helps you tell apart orders created from the web UI and the API.
     attr_accessor :issuer
 
-    # Returns an array with all your active orders of this type, and any other order of this type that was active in the last 2 hours.
+    # Returns an array with all your active orders of this type and another order of this type that was active the last 2 hours.
     # Uses {Order.all} under the hood.
     def self.all
       Order.all.select { |o| o.is_a?(self) }
