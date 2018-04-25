@@ -1,6 +1,6 @@
 module Bitex
-  # Utility class for fetching an heterogeneous list of objects that
-  # compose your transaction history.
+  # Utility class for fetching an heterogeneous list of objects that compose your transaction history.
+  #
   class Transaction
     # @return
     #   [Array<Bitex::Bid, Bitex::Ask, Bitex::SpecieDeposit, Bitex::SpecieWithdrawal, Bitex::UsdDeposit, Bitex::UsdWithdrawal>]
