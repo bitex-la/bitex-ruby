@@ -1,101 +1,111 @@
 require 'spec_helper'
 
 describe Bitex::UsdWithdrawal do
-  before :each do 
-    Bitex.api_key = 'valid_api_key'
-  end
+  before(:each) { Bitex.api_key = 'valid_api_key' }
+
+  let(:api_class_id) { 8 }
+  let(:id) { 12_345_678 }
+  let(:created_at) { 946_685_400 }
+  let(:amount) { 100.0 }
+  let(:status) { 1 }
+  let(:reason) { 0 }
+  let(:country) { 'UY' }
+  let(:currency) { 'UYU' }
+  let(:payment_method) { 1 }
+  let(:label) { 'billy bob' }
+  let(:kyc_profile_id) { 1 }
+  let(:instructions) { 'instructions' }
 
   let(:as_json) do
-    [8,12345678,946685400,100.00000000,1,0,'UY','UYU', 'bb', 'billy bob', 1, 'las instrucciones']
+    [api_class_id, id, created_at, amount, status, reason, country, currency, payment_method, label, kyc_profile_id, instructions]
   end
 
   it_behaves_like 'API class'
 
-  it "sets amount as BigDecimal" do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).amount
-    thing.should be_a BigDecimal
-    thing.should == 100.0
-  end
+  context 'Deserializing from json' do
+    let(:withdrawal) { Bitex::UsdWithdrawal.from_json(as_json) }
 
-  it 'sets country' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).country
-    thing.should == 'UY'
-  end
-
-  it 'sets currency' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).currency
-    thing.should == 'UYU'
-  end
-
-  it 'sets payment method' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).payment_method
-    thing.should == 'bb'
-  end
-
-  it 'sets label' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).label
-    thing.should == 'billy bob'
-  end
-
-  it 'sets kyc profile id' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).kyc_profile_id
-    thing.should == 1
-  end
-
-  it 'sets instructions' do
-    thing = Bitex::UsdWithdrawal.from_json(as_json).instructions
-    thing.should == 'las instrucciones'
-  end
-
-  { 1 => :received,
-    2 => :pending,
-    3 => :done,
-    4 => :cancelled,
-  }.each do |code, symbol|
-    it "sets status #{code} to #{symbol}" do
-      as_json[4] = code
-      Bitex::UsdWithdrawal.from_json(as_json).status.should == symbol
+    it 'sets amount as BigDecimal' do
+      withdrawal.amount.should be_an BigDecimal
+      withdrawal.amount.should eq amount
     end
-  end
 
-  { 0 => :not_cancelled,
-    1 => :insufficient_funds,
-    2 => :no_instructions,
-    3 => :recipient_unknown,
-  }.each do |code, symbol|
-    it "sets reason #{code} to #{symbol}" do
-      as_json[5] = code
-      Bitex::UsdWithdrawal.from_json(as_json).reason.should == symbol
+    it 'sets country' do
+      withdrawal.country.should be_an String
+      withdrawal.country.should eq country
     end
-  end
 
-  it 'creates a new withdrawal' do
-    stub_private(:post, "/private/usd/withdrawals", 'usd_withdrawal', {
-      country: 'UY',
-      amount: 110,
-      currency: 'UYU',
-      payment_method: 'bb',
-      instructions: 'bank of new york mellon',
-      label: 'a label',
-    })
-    deposit = Bitex::UsdWithdrawal.create!('UY', 110, 'UYU', 'bb',
-      'bank of new york mellon', 'a label') 
-    deposit.should be_a Bitex::UsdWithdrawal
-    deposit.status.should == :received
-  end
-  
-  it 'finds a single usd deposit' do
-    stub_private(:get, '/private/usd/withdrawals/1', 'usd_withdrawal')
-    deposit = Bitex::UsdWithdrawal.find(1)
-    deposit.should be_a Bitex::UsdWithdrawal
-    deposit.status.should == :received
-  end
-  
-  it 'lists all usd deposits' do
-    stub_private(:get, '/private/usd/withdrawals', 'usd_withdrawals')
-    deposits = Bitex::UsdWithdrawal.all
-    deposits.should be_an Array
-    deposits.first.should be_an Bitex::UsdWithdrawal
-    deposits.first.status.should == :received
+    it 'sets currency' do
+      withdrawal.currency.should be_an String
+      withdrawal.currency.should eq currency
+    end
+
+    it 'sets payment method' do
+      withdrawal.payment_method.should be_an Symbol
+      withdrawal.payment_method.should be Bitex::UsdWithdrawal.payment_methods[payment_method]
+    end
+
+    it 'sets label' do
+      withdrawal.label.should be_an String
+      withdrawal.label.should eq label
+    end
+
+    it 'sets kyc profile id' do
+      withdrawal.kyc_profile_id.should be_an Integer
+      withdrawal.kyc_profile_id.should be kyc_profile_id
+    end
+
+    it 'sets instructions' do
+      withdrawal.instructions.should be_an String
+      withdrawal.instructions.should eq instructions
+    end
+
+    Bitex::UsdWithdrawal.statuses.each do |code, status|
+      it "sets status #{code} to #{status}" do
+        as_json[4] = code
+        withdrawal.status.should be status
+      end
+    end
+
+    Bitex::UsdWithdrawal.reasons.each do |code, reason|
+      it "sets reason #{code} to #{reason}" do
+        as_json[5] = code
+        withdrawal.reason.should be reason
+      end
+    end
+
+    it 'creates a new withdrawal' do
+      stub_private(
+        :post,
+        '/private/usd/withdrawals',
+        :usd_withdrawal,
+        country: country, amount: amount, currency: currency, payment_method: payment_method, instructions: instructions,
+        label: label
+      )
+
+      withdrawal = Bitex::UsdWithdrawal.create!(country, amount, currency, payment_method, instructions, label)
+
+      withdrawal.should be_an Bitex::UsdWithdrawal
+      withdrawal.status.should == :received
+    end
+
+    it 'finds a single usd withdrawal' do
+      stub_private(:get, "/private/usd/withdrawals/#{id}", :usd_withdrawal)
+
+      withdrawal = Bitex::UsdWithdrawal.find(id)
+
+      withdrawal.should be_an Bitex::UsdWithdrawal
+      withdrawal.status.should == :received
+    end
+
+    it 'lists all usd withdrawals' do
+      stub_private(:get, '/private/usd/withdrawals', :usd_withdrawals)
+
+      withdrawals = Bitex::UsdWithdrawal.all
+
+      withdrawals.should be_an Array
+      withdrawals.all? { |withdrawal| withdrawal.should be_an Bitex::UsdWithdrawal }
+      withdrawals.all? { |withdrawal| withdrawal.status.should be :received }
+    end
   end
 end
