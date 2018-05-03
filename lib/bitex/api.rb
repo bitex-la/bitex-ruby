@@ -76,12 +76,12 @@ module Bitex
     end
 
     # @visibility private
-    def self.from_json(thing, json, with_orderbook = false, &block)
-      thing.id = json[1]
-      thing.created_at = Time.at(json[2])
-      thing.orderbook = { 1 => :btc_usd, 5 => :btc_ars }[json[3]] if with_orderbook
-      block.call(thing)
-      thing
+    def self.from_json(thing, json, &block)
+      thing.tap do |t|
+        t.id = json[1]
+        t.created_at = Time.at(json[2])
+        block.call(t)
+      end
     end
   end
 end
