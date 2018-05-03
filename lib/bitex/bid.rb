@@ -1,7 +1,7 @@
 module Bitex
   # A Bid is an order to buy a given orderbook.
-  # @see OrderBase
-  class Bid < OrderBase
+  # @see BaseOrder
+  class Bid < BaseOrder
     # @!attribute id
     #   @return [Integer] This Bid's unique ID.
 
@@ -44,6 +44,7 @@ module Bitex
 
     # @!attribute issuer
     #   @return [String] The issuer of this order, helps you tell apart orders created from the web UI and the API.
+
     # @visibility private
     def self.base_path
       '/bids'

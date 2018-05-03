@@ -5,7 +5,7 @@ require 'curl'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'bitex/match'
-require 'bitex/order_base'
+require 'bitex/base_order'
 
 Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 
