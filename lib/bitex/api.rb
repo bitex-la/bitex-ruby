@@ -77,10 +77,11 @@ module Bitex
 
     # @visibility private
     def self.from_json(thing, json, &block)
-      thing.id = json[1]
-      thing.created_at = Time.at(json[2])
-      block.call(thing)
-      thing
+      thing.tap do |t|
+        t.id = json[1]
+        t.created_at = Time.at(json[2])
+        block.call(t)
+      end
     end
   end
 end

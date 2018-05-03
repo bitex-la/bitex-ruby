@@ -21,5 +21,19 @@ module Bitex
     def self.orderbooks
       { 1 => :btc_usd, 5 => :btc_ars }
     end
+
+    def base_coin
+      base_quote[0]
+    end
+
+    def quote_coin
+      base_quote[1]
+    end
+
+    private
+
+    def base_quote
+      orderbook.upcase.to_s.split('_')
+    end
   end
 end
