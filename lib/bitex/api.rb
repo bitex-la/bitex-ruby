@@ -72,7 +72,7 @@ module Bitex
         6 => SpecieWithdrawal,
         7 => UsdDeposit,
         8 => UsdWithdrawal
-      }[object.first].from_json(object)
+      }[object[0]].from_json(object)
     end
 
     # @visibility private

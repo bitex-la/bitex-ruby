@@ -44,6 +44,7 @@ module Bitex
 
     # @!attribute issuer
     #   @return [String] The issuer of this order, helps you tell apart orders created from the web UI and the API.
+
     # @visibility private
     def self.base_path
       '/bids'

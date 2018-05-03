@@ -1,124 +1,139 @@
 require 'spec_helper'
 
 describe Bitex::UsdDeposit do
-  before :each do 
-    Bitex.api_key = 'valid_api_key'
-  end
+  before(:each) { Bitex.api_key = 'valid_api_key' }
+
+  let(:api_class_id) { 7 }
+  let(:id) { 12_345_678 }
+  let(:created_at) { 946_685_400 }
+  let(:requested_amount) { 110.0 }
+  let(:amount) { 100.0 }
+  let(:deposit_method) { 1 }
+  let(:status) { 1 }
+  let(:reason) { 0 }
+  let(:country) { 'UY' }
+  let(:currency) { 'UYU' }
+  let(:kyc_profile_id) { 1 }
+  let(:request_details) { 'bank of new york mellon' }
+  let(:astropay_response_body) { { 'status' => 'OK', 'link' => 'https://astr.com' } }
+  let(:third_party_reference) { 'REFERENCE' }
 
   let(:as_json) do
-    [ 7,12345678,946685400,110.0000000, 100.00000000,1,1,0,
-      'UY', 'UYU', 1, 'bank of new york mellon',
-      {"status" => "OK","link" => "https://astr.com"}, 'ABABABABA']
+    [api_class_id, id, created_at, requested_amount, amount, deposit_method, status, reason, country,
+     currency, kyc_profile_id, request_details, astropay_response_body, third_party_reference]
   end
 
   it_behaves_like 'API class'
 
-  it "sets amount as BigDecimal" do
-    thing = Bitex::UsdDeposit.from_json(as_json).amount
-    thing.should be_a BigDecimal
-    thing.should == 100.0
-  end
+  context 'deserializing from json' do
+    let(:deposit) { Bitex::UsdDeposit.from_json(as_json) }
 
-  it "sets amount as BigDecimal" do
-    thing = Bitex::UsdDeposit.from_json(as_json).requested_amount
-    thing.should be_a BigDecimal
-    thing.should == 110.0
-  end
-  
-  it "sets country" do
-    Bitex::UsdDeposit.from_json(as_json).country.should == 'UY'
-  end
-  
-  it "sets currency" do
-    Bitex::UsdDeposit.from_json(as_json).currency.should == 'UYU'
-  end
-  
-  it "sets kyc profile" do
-    Bitex::UsdDeposit.from_json(as_json).kyc_profile_id.should == 1
-  end
-  
-  it "sets details" do
-    Bitex::UsdDeposit.from_json(as_json).request_details.should ==
-      'bank of new york mellon'
-  end
-  
-  it "sets the astropay_response_body" do
-    Bitex::UsdDeposit.from_json(as_json).astropay_response_body.should ==
-      {"status" => "OK","link" => "https://astr.com"}
-  end
-
-  it "sets the third party reference" do
-    Bitex::UsdDeposit.from_json(as_json).third_party_reference.should == 'ABABABABA'
-  end
-
-  { 1 => :astropay,
-    2 => :other,
-  }.each do |code, symbol|
-    it "sets status #{code} to #{symbol}" do
-      as_json[5] = code
-      Bitex::UsdDeposit.from_json(as_json).deposit_method.should == symbol
+    it 'sets amount as BigDecimal' do
+      deposit.amount.should be_an BigDecimal
+      deposit.amount.should eq amount
     end
-  end
 
-  { 1 => :pending,
-    2 => :done,
-    3 => :cancelled,
-  }.each do |code, symbol|
-    it "sets status #{code} to #{symbol}" do
-      as_json[6] = code
-      Bitex::UsdDeposit.from_json(as_json).status.should == symbol
+    it 'sets requested amount as BigDecimal' do
+      deposit.requested_amount.should be_an BigDecimal
+      deposit.requested_amount.should eq requested_amount
     end
-  end
 
-  { 0 => :not_cancelled,
-    1 => :did_not_credit,
-    2 => :sender_unknown,
-    3 => :other,
-    4 => :user_cancelled,
-  }.each do |code, symbol|
-    it "sets reason #{code} to #{symbol}" do
-      as_json[7] = code
-      Bitex::UsdDeposit.from_json(as_json).reason.should == symbol
+    it 'sets country' do
+      deposit.country.should be_an String
+      deposit.country.should eq country
     end
-  end
-  
-  it 'creates a new deposit' do
-    stub_private(:post, "/private/usd/deposits", 'usd_deposit', {
-      country: 'UY',
-      amount: 110,
-      currency: 'UYU',
-      deposit_method: 'astropay',
-      request_details: 'bank of new york mellon',
-    })
-    deposit = Bitex::UsdDeposit.create!('UY', 110, 'UYU', 'astropay',
-      'bank of new york mellon') 
-    deposit.should be_a Bitex::UsdDeposit
-    deposit.astropay_response_body.should be_a Hash
-    deposit.status.should == :pending
-  end
-  
-  it 'finds a single usd deposit' do
-    stub_private(:get, '/private/usd/deposits/1', 'usd_deposit')
-    deposit = Bitex::UsdDeposit.find(1)
-    deposit.should be_a Bitex::UsdDeposit
-    deposit.status.should == :pending
-  end
-  
-  it 'cancels a deposit' do
-    stub_private(:get, '/private/usd/deposits/12345678', 'usd_deposit')
-    stub_private(:post, '/private/usd/deposits/12345678/cancel', 'cancelled_usd_deposit')
-    deposit = Bitex::UsdDeposit.find(12345678)
-    deposit.cancel!
-    deposit.should be_a Bitex::UsdDeposit
-    deposit.status.should == :cancelled
-    deposit.reason.should == :user_cancelled
-  end
-  
-  it 'lists all usd deposits' do
-    stub_private(:get, '/private/usd/deposits', 'usd_deposits')
-    deposits = Bitex::UsdDeposit.all
-    deposits.should be_an Array
-    deposits.first.should be_an Bitex::UsdDeposit
-    deposits.first.status.should == :pending
+
+    it 'sets currency' do
+      deposit.currency.should be_an String
+      deposit.currency.should eq currency
+    end
+
+    it 'sets kyc profile' do
+      deposit.kyc_profile_id.should be_an Integer
+      deposit.kyc_profile_id.should be kyc_profile_id
+    end
+
+    it 'sets details' do
+      deposit.request_details.should be_an String
+      deposit.request_details.should eq request_details
+    end
+
+    it 'sets the astropay_response_body' do
+      deposit.astropay_response_body.should be_an Hash
+      deposit.astropay_response_body.keys.all? { |key| key.should be_an String }
+      deposit.astropay_response_body.values.all? { |value| value.should be_an String }
+      deposit.astropay_response_body.should eq astropay_response_body
+    end
+
+    it 'sets the third party reference' do
+      deposit.third_party_reference.should be_an String
+      deposit.third_party_reference.should eq third_party_reference
+    end
+
+    Bitex::UsdDeposit.deposit_methods.each do |code, deposit_method|
+      it "sets deposit_method #{code} to #{deposit_method}" do
+        as_json[5] = code
+        deposit.deposit_method.should be deposit_method
+      end
+    end
+
+    Bitex::UsdDeposit.statuses.each do |code, status|
+      it "sets status #{code} to #{status}" do
+        as_json[6] = code
+        deposit.status.should be status
+      end
+    end
+
+    Bitex::UsdDeposit.reasons.each do |code, reason|
+      it "sets reason #{code} to #{reason}" do
+        as_json[7] = code
+        deposit.reason.should be reason
+      end
+    end
+
+    it 'creates a new deposit' do
+      stub_private(
+        :post,
+        '/private/usd/deposits',
+        :usd_deposit,
+        country: country, amount: amount, currency: currency, deposit_method: deposit_method, request_details: request_details
+      )
+
+      deposit = Bitex::UsdDeposit.create!(country, amount, currency, deposit_method, request_details)
+
+      deposit.should be_an Bitex::UsdDeposit
+      deposit.astropay_response_body.should be_an Hash
+      deposit.status.should be :pending
+    end
+
+    it 'finds a single usd deposit' do
+      stub_private(:get, "/private/usd/deposits/#{id}", :usd_deposit)
+
+      deposit = Bitex::UsdDeposit.find(id)
+
+      deposit.should be_an Bitex::UsdDeposit
+      deposit.status.should be :pending
+    end
+
+    it 'cancels a deposit' do
+      stub_private(:get, "/private/usd/deposits/#{id}", :usd_deposit)
+      stub_private(:post, "/private/usd/deposits/#{id}/cancel", :cancelled_usd_deposit)
+
+      deposit = Bitex::UsdDeposit.find(id).cancel!
+
+      deposit.should be_an Bitex::UsdDeposit
+      deposit.status.should be :cancelled
+      deposit.reason.should be :user_cancelled
+    end
+
+    it 'lists all usd deposits' do
+      stub_private(:get, '/private/usd/deposits', :usd_deposits)
+
+      deposits = Bitex::UsdDeposit.all
+
+      deposits.should be_an Array
+      deposits.all? { |deposit| deposit.should be_an Bitex::UsdDeposit }
+      deposits.all? { |deposit| deposit.status.should be :pending }
+    end
   end
 end

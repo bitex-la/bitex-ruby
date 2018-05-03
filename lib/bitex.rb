@@ -6,8 +6,12 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 require 'bitex/match'
 require 'bitex/base_order'
-Dir[File.expand_path('../bitex/*.rb', __FILE__)].each { |f| require f }
 
+Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
+
+##
+# Documentation here!
+#
 module Bitex
   mattr_accessor :api_key
   mattr_accessor :sandbox
