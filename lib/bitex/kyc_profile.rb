@@ -85,7 +85,7 @@ module Bitex
         profile.personal_id_number = json[3]
         profile.personal_id_issuer = json[4]
         profile.personal_id_type = json[5].to_sym
-        profile.tax_id = json[6].to_i
+        profile.tax_id = json[6]
         profile.birth_date = json[7] ? Time.at(json[7]) : nil
         profile.nationality = json[8]
         profile.gender = json[9].to_sym
