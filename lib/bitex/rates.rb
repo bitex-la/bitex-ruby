@@ -52,8 +52,7 @@ module Bitex
         when :fixed_fee
           value += step[:amount].to_d
         when :minimum_fee
-          value = [value + step[:minimum].to_d,
-            value / (1 - (step[:percentage].to_d / 100.to_d))].max
+          value = [value + step[:minimum].to_d, value / (1 - (step[:percentage].to_d / 100.to_d))].max
         end
       end
       value
