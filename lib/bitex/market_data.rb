@@ -24,7 +24,7 @@ module Bitex
     def self.transactions
       api_get('/market/transactions')
     end
-    
+
     # Returns a list of lists with aggregated transaction data for each hour
     # from the last 24 hours.
     # @see https://bitex.la/developers#last_24_hours

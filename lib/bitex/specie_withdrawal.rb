@@ -46,7 +46,7 @@ module Bitex
     attr_accessor :kyc_profile_id
 
     # @!attribute transaction_id
-    #   @return [String] Network transaction id, if available. 
+    #   @return [String] Network transaction id, if available.
     attr_accessor :transaction_id
 
     # @visibility private

@@ -17,9 +17,9 @@ module Bitex
       end
       @tree
     end
-    
+
     def self.clear_tree_cache
-      @tree = nil 
+      @tree = nil
       @last_tree_fetch = nil
     end
 
@@ -40,7 +40,7 @@ module Bitex
       end
       value
     end
-    
+
     def self.calculate_path_backwards(path, value)
       value = value.to_d
       path_to_calculator(path).each do |step|
@@ -59,7 +59,7 @@ module Bitex
       end
       value
     end
-  
+
     def self.path_to_calculator(path)
       steps = tree
       begin

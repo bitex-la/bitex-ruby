@@ -33,7 +33,7 @@ module Bitex
     def self.all
       Api.private(:get, "/private/payments").collect{|x| from_json(x) }
     end
-    
+
     # Validate a callback and parse the given payment from it.
     # Returns nil if the callback was invalid.
     def self.from_callback(callback_params)
