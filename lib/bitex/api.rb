@@ -49,7 +49,7 @@ module Bitex
       curl
     end
 
-    def self.public(path, options = {})
+    def self.public(path, _options = {})
       response = curl(:GET, path)
       JSON.parse(response.body)
     end
