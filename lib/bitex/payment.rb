@@ -26,26 +26,32 @@ module Bitex
     end
 
     def self.create!(params)
-      from_json(Api.private(:post, "/private/payments", params))
+      from_json(Api.private(:post, base_uri, params))
     end
 
     def self.find(id)
-      from_json(Api.private(:get, "/private/payments/#{id}"))
+      from_json(Api.private(:get, "#{base_uri}/#{id}"))
     end
 
     def self.all
-      Api.private(:get, "/private/payments").collect{|x| from_json(x) }
+      Api.private(:get, base_uri).collect{|x| from_json(x) }
     end
     
     # Validate a callback and parse the given payment from it.
     # Returns nil if the callback was invalid.
     def self.from_callback(callback_params)
-      from_json(callback_params["payment"]) if callback_params["api_key"] == Bitex.api_key
+      from_json(callback_params['payment']) if callback_params['api_key'] == Bitex.api_key
     end
 
     # Sets up the web-pos
     def self.pos_setup!(params)
-      Api.private(:post, "/private/payments/pos_setup", params)
+      Api.private(:post, "#{base_uri}/pos_setup", params)
+    end
+
+    private_class_method
+
+    def self.base_uri
+      '/private/payments'
     end
   end
 end
