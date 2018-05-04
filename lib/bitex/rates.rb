@@ -8,7 +8,6 @@ module Bitex
   #     Bitex::Rates.calculate_back([:ars, :cash, :usd, :bitex, :more_mt], 200)
   # @see https://bitex.la/developers#rates
   class Rates
-
     # Full exchange rates tree, gets cached locally for 60 seconds.
     def self.tree
       if @tree.nil? || @last_tree_fetch.to_i < (Time.now.to_i - 60)

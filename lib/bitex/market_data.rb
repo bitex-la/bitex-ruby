@@ -2,7 +2,6 @@ module Bitex
   # Public market data for a specie, do not use directly, use
   # {BitcoinMarketData} instead.
   class MarketData
-
     # The species currency ticker conveniently formatted as a ruby Hash with
     # symbolized keys.
     # @see https://bitex.la/developers#ticker
