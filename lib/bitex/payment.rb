@@ -9,7 +9,7 @@ module Bitex
     # @visibility private
     def self.from_json(json)
       new.tap do |thing|
-        json.each do |key,raw_value|
+        json.each do |key, raw_value|
           next if raw_value.nil?
 
           value = if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
