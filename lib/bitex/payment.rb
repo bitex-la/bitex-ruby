@@ -12,11 +12,13 @@ module Bitex
         json.each do |key, raw_value|
           next if raw_value.nil?
 
-          value = if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
-            Time.at(raw_value)
-          else
-            raw_value
-          end
+          value =
+            if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
+              Time.at(raw_value)
+            else
+              raw_value
+            end
+
           thing.send("#{key}=", value) rescue nil
         end
       end
