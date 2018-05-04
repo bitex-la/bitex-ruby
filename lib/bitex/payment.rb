@@ -20,7 +20,11 @@ module Bitex
           else
             raw_value
           end
-          thing.send("#{key}=", value) rescue nil
+          begin
+            thing.send("#{key}=", value)
+          rescue StandarError
+            nil
+          end
         end
       end
     end
