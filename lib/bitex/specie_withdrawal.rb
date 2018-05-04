@@ -52,7 +52,7 @@ module Bitex
     # @visibility private
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
-        thing.specie =  { 1 => :btc }[json[3]]
+        thing.specie = { 1 => :btc }[json[3]]
         thing.quantity = (json[4].presence || 0).to_d
         thing.status = statuses[json[5]]
         thing.reason = reasons[json[6]]

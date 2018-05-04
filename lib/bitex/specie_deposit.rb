@@ -20,7 +20,7 @@ module Bitex
     # @visibility private
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
-        thing.specie =  { 1 => :btc }[json[3]]
+        thing.specie = { 1 => :btc }[json[3]]
         thing.quantity = (json[4] || 0).to_d
       end
     end
