@@ -1,4 +1,7 @@
 module Bitex
+  ##
+  # Documentation here!
+  #
   class Payment
     attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity,
       :previous_expected_quantity, :confirmed_quantity, :unconfirmed_quantity,
