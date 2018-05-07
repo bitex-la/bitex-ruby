@@ -20,9 +20,10 @@ module Bitex
           else
             raw_value
           end
+
           begin
             thing.send("#{key}=", value)
-          rescue StandarError
+          rescue NoMethodError
             nil
           end
         end
