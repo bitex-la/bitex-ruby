@@ -1,10 +1,8 @@
 module Bitex
   class Payment
-    attr_accessor %i[
-      id user_id amount currency_id expected_quantity previous_expected_quantity confirmed_quantity unconfirmed_quantity
-      valid_until quote_valid_until last_quoted_on status address settlement_currency_id settlement_amount keep
-      merchant_reference customer_reference
-    ]
+    attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity, :previous_expected_quantity, :confirmed_quantity,
+                  :unconfirmed_quantity, :valid_until, :quote_valid_until, :last_quoted_on, :status, :address,
+                  :settlement_currency_id, :settlement_amount, :keep, :merchant_reference, :customer_reference
 
     # @visibility private
     def self.from_json(json)
