@@ -11,7 +11,7 @@ module Bitex
     # Full exchange rates tree, gets cached locally for 60 seconds.
     def self.tree
       if @tree.nil? || @last_tree_fetch.to_i < (Time.now.to_i - 60)
-        @tree = Api.public("/rates/tree").deep_symbolize_keys
+        @tree = Api.public('/rates/tree').deep_symbolize_keys
         @last_tree_fetch = Time.now.to_i
       end
       @tree
