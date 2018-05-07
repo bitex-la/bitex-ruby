@@ -40,11 +40,7 @@ module Bitex
     end
 
     def self.all
-<<<<<<< HEAD
-      Api.private(:get, "/private/payments").map { |p| from_json(p) }
-=======
       Api.private(:get, base_uri).collect{|x| from_json(x) }
->>>>>>> 89326889afaa8ebee4e30c340da2d8b1166d99f6
     end
 
     # Validate a callback and parse the given payment from it.
