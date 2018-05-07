@@ -1,4 +1,7 @@
 module Bitex
+  ##
+  # Documentation here!
+  #
   class Payment
     attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity,
       :previous_expected_quantity, :confirmed_quantity, :unconfirmed_quantity,
@@ -12,37 +15,48 @@ module Bitex
         json.each do |key,raw_value|
           next if raw_value.nil?
 
-          value = if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
+          value = if %i[valid_until quote_valid_until last_quoted_on].include?(key.to_sym)
             Time.at(raw_value)
           else
             raw_value
           end
-          thing.send("#{key}=", value) rescue nil
+
+          begin
+            thing.send("#{key}=", value)
+          rescue NoMethodError
+            nil
+          end
         end
       end
     end
 
     def self.create!(params)
-      from_json(Api.private(:post, "/private/payments", params))
+      from_json(Api.private(:post, base_uri, params))
     end
 
     def self.find(id)
-      from_json(Api.private(:get, "/private/payments/#{id}"))
+      from_json(Api.private(:get, "#{base_uri}/#{id}"))
     end
 
     def self.all
-      Api.private(:get, "/private/payments").collect{|x| from_json(x) }
+      Api.private(:get, base_uri).collect{|x| from_json(x) }
     end
     
     # Validate a callback and parse the given payment from it.
     # Returns nil if the callback was invalid.
     def self.from_callback(callback_params)
-      from_json(callback_params["payment"]) if callback_params["api_key"] == Bitex.api_key
+      from_json(callback_params['payment']) if callback_params['api_key'] == Bitex.api_key
     end
 
     # Sets up the web-pos
     def self.pos_setup!(params)
-      Api.private(:post, "/private/payments/pos_setup", params)
+      Api.private(:post, "#{base_uri}/pos_setup", params)
+    end
+
+    private_class_method
+
+    def self.base_uri
+      '/private/payments'
     end
   end
 end
