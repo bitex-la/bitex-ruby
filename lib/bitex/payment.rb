@@ -20,8 +20,6 @@ module Bitex
               raw_value
             end
 
-          thing.send("#{key}=", value) rescue nil
-
           begin
             thing.send("#{key}=", value)
           rescue NoMethodError
