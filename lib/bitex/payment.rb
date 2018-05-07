@@ -3,23 +3,22 @@ module Bitex
   # Documentation here!
   #
   class Payment
-    attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity,
-      :previous_expected_quantity, :confirmed_quantity, :unconfirmed_quantity,
-      :valid_until, :quote_valid_until, :last_quoted_on, :status, :address,
-      :settlement_currency_id, :settlement_amount, :keep, :merchant_reference,
-      :customer_reference
+    attr_accessor :id, :user_id, :amount, :currency_id, :expected_quantity, :previous_expected_quantity, :confirmed_quantity,
+                  :unconfirmed_quantity, :valid_until, :quote_valid_until, :last_quoted_on, :status, :address,
+                  :settlement_currency_id, :settlement_amount, :keep, :merchant_reference, :customer_reference
 
     # @visibility private
     def self.from_json(json)
       new.tap do |thing|
-        json.each do |key,raw_value|
+        json.each do |key, raw_value|
           next if raw_value.nil?
 
-          value = if %i[valid_until quote_valid_until last_quoted_on].include?(key.to_sym)
-            Time.at(raw_value)
-          else
-            raw_value
-          end
+          value =
+            if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
+              Time.at(raw_value)
+            else
+              raw_value
+            end
 
           begin
             thing.send("#{key}=", value)
@@ -41,7 +40,7 @@ module Bitex
     def self.all
       Api.private(:get, base_uri).collect{|x| from_json(x) }
     end
-    
+
     # Validate a callback and parse the given payment from it.
     # Returns nil if the callback was invalid.
     def self.from_callback(callback_params)
@@ -60,4 +59,3 @@ module Bitex
     end
   end
 end
-
