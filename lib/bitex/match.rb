@@ -22,11 +22,11 @@ module Bitex
       { 1 => :btc_usd, 5 => :btc_ars }
     end
 
-    def base_coin
+    def base_currency
       base_quote[0]
     end
 
-    def quote_coin
+    def quote_currency
       base_quote[1]
     end
 
