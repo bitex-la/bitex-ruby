@@ -14,7 +14,7 @@ module Bitex
           next if raw_value.nil?
 
           value =
-            if [:valid_until, :quote_valid_until, :last_quoted_on].include?(key.to_sym)
+            if %i[valid_until quote_valid_until last_quoted_on].include?(key)
               Time.at(raw_value)
             else
               raw_value
@@ -38,7 +38,7 @@ module Bitex
     end
 
     def self.all
-      Api.private(:get, base_uri).collect{|x| from_json(x) }
+      Api.private(:get, base_uri).map { |payment| from_json(payment) }
     end
 
     # Validate a callback and parse the given payment from it.
