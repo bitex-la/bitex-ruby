@@ -46,13 +46,13 @@ module Bitex
     attr_accessor :kyc_profile_id
 
     # @!attribute transaction_id
-    #   @return [String] Network transaction id, if available. 
+    #   @return [String] Network transaction id, if available.
     attr_accessor :transaction_id
 
     # @visibility private
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
-        thing.specie =  { 1 => :btc }[json[3]]
+        thing.specie = { 1 => :btc }[json[3]]
         thing.quantity = (json[4].presence || 0).to_d
         thing.status = statuses[json[5]]
         thing.reason = reasons[json[6]]

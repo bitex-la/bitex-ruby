@@ -2,7 +2,6 @@ module Bitex
   # Public market data for a specie, do not use directly, use
   # {BitcoinMarketData} instead.
   class MarketData
-
     # The species currency ticker conveniently formatted as a ruby Hash with
     # symbolized keys.
     # @see https://bitex.la/developers#ticker
@@ -24,7 +23,7 @@ module Bitex
     def self.transactions
       api_get('/market/transactions')
     end
-    
+
     # Returns a list of lists with aggregated transaction data for each hour
     # from the last 24 hours.
     # @see https://bitex.la/developers#last_24_hours

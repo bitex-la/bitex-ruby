@@ -8,7 +8,6 @@ module Bitex
   #     Bitex::Rates.calculate_back([:ars, :cash, :usd, :bitex, :more_mt], 200)
   # @see https://bitex.la/developers#rates
   class Rates
-
     # Full exchange rates tree, gets cached locally for 60 seconds.
     def self.tree
       if @tree.nil? || @last_tree_fetch.to_i < (Time.now.to_i - 60)
@@ -17,9 +16,9 @@ module Bitex
       end
       @tree
     end
-    
+
     def self.clear_tree_cache
-      @tree = nil 
+      @tree = nil
       @last_tree_fetch = nil
     end
 
@@ -40,7 +39,7 @@ module Bitex
       end
       value
     end
-    
+
     def self.calculate_path_backwards(path, value)
       value = value.to_d
       path_to_calculator(path).each do |step|
@@ -53,13 +52,12 @@ module Bitex
         when :fixed_fee
           value += step[:amount].to_d
         when :minimum_fee
-          value = [value + step[:minimum].to_d,
-            value / (1 - (step[:percentage].to_d / 100.to_d))].max
+          value = [value + step[:minimum].to_d, value / (1 - (step[:percentage].to_d / 100.to_d))].max
         end
       end
       value
     end
-  
+
     def self.path_to_calculator(path)
       steps = tree
       begin
