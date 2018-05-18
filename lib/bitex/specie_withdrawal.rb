@@ -1,5 +1,5 @@
 module Bitex
-  # A withdrawal of some specie from your bitex.la balance
+  # A withdrawal of some specie from your bitex.la balance.
   class SpecieWithdrawal
     # @!attribute id
     #   @return [Integer] This SpecieWithdrawal's unique ID.
@@ -18,19 +18,18 @@ module Bitex
     attr_accessor :quantity
 
     # @!attribute status
-    #  Returns the status of this withdrawal.
-    #  * :received Our engine is checking if you have enough funds.
-    #  * :pending your withdrawal was accepted and is being processed.
-    #  * :done your withdrawal was processed and published to the network.
-    #  * :cancelled your withdrawal could not be processed.
+    #   @return [Symbol] The status of this withdrawal.
+    #   * :received Our engine is checking if you have enough funds.
+    #   * :pending your withdrawal was accepted and is being processed.
+    #   * :done your withdrawal was processed and published to the network.
+    #   * :cancelled your withdrawal could not be processed.
     attr_accessor :status
 
     # @!attribute reason
-    #  Returns the reason for cancellation of this withdrawal, if any.
-    #  * :not_cancelled
-    #  * :insufficient_funds The instruction was received, but you didn't have
-    #    enough funds available
-    #  * :destination_invalid The destination address was invalid.
+    #   @return [Symbol] The reason for cancellation of this withdrawal, if any.
+    #   * :not_cancelled
+    #   * :insufficient_funds The instruction was received, but you didn't have enough funds available
+    #   * :destination_invalid The destination address was invalid.
     attr_accessor :reason
 
     # @!attribute to_address
@@ -50,24 +49,26 @@ module Bitex
     attr_accessor :transaction_id
 
     # @visibility private
+    # rubocop:disable Metrics/AbcSize
     def self.from_json(json)
-      Api.from_json(new, json) do |thing|
-        thing.specie = { 1 => :btc }[json[3]]
-        thing.quantity = (json[4].presence || 0).to_d
-        thing.status = statuses[json[5]]
-        thing.reason = reasons[json[6]]
-        thing.to_address = json[7]
-        thing.label = json[8]
-        thing.kyc_profile_id = json[9]
-        thing.transaction_id = json[10]
+      Api.from_json(new, json) do |specie_withdrawal|
+        specie_withdrawal.specie = { 1 => :btc }[json[3]]
+        specie_withdrawal.quantity = (json[4].presence || 0).to_d
+        specie_withdrawal.status = statuses[json[5]]
+        specie_withdrawal.reason = reasons[json[6]]
+        specie_withdrawal.to_address = json[7]
+        specie_withdrawal.label = json[8]
+        specie_withdrawal.kyc_profile_id = json[9]
+        specie_withdrawal.transaction_id = json[10]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.create!(specie, address, amount, label, kyc_profile_id = nil)
       from_json(
         Api.private(
           :post,
-          "/private/#{specie}/withdrawals",
+          base_url(specie),
           address: address,
           amount: amount,
           label: label,
@@ -77,19 +78,25 @@ module Bitex
     end
 
     def self.find(specie, id)
-      from_json(Api.private(:get, "/private/#{specie}/withdrawals/#{id}"))
+      from_json(Api.private(:get, "#{base_url(specie)}/#{id}"))
     end
 
     def self.all(specie)
-      Api.private(:get, "/private/#{specie}/withdrawals").map { |sw| from_json(sw) }
+      Api.private(:get, base_url(specie)).map { |sw| from_json(sw) }
     end
 
-    def self.statuses
-      { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }
+    private_class_method
+
+    def self.base_url(specie)
+      "/private/#{specie}/withdrawals"
     end
 
     def self.reasons
       { 0 => :not_cancelled, 1 => :insufficient_funds, 2 => :destination_invalid }
+    end
+
+    def self.statuses
+      { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }
     end
   end
 end
