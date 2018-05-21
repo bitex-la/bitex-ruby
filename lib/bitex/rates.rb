@@ -22,6 +22,7 @@ module Bitex
       @last_tree_fetch = nil
     end
 
+    # rubocop:disable Metrics/AbcSize
     def self.calculate_path(value, path)
       value = value.to_d
       path_to_calculator(path).each do |step|
@@ -57,6 +58,7 @@ module Bitex
       end
       value
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.path_to_calculator(path)
       steps = tree

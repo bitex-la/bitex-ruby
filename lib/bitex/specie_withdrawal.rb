@@ -50,6 +50,7 @@ module Bitex
     attr_accessor :transaction_id
 
     # @visibility private
+    # rubocop:disable Metrics/AbcSize
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
         thing.specie = { 1 => :btc }[json[3]]
@@ -62,6 +63,7 @@ module Bitex
         thing.transaction_id = json[10]
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.create!(specie, address, amount, label, kyc_profile_id = nil)
       from_json(

@@ -6,6 +6,7 @@ module Bitex
     attr_accessor :id, :order_book, :quantity, :amount, :fee, :price, :created_at
 
     # @visibility private
+    # rubocop:disable Metrics/AbcSize
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
         thing.order_book = order_books[json[3]]
@@ -15,6 +16,7 @@ module Bitex
         thing.price = json[7].to_s.to_d
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private_class_method
 

@@ -20,6 +20,7 @@ module Bitex
       @curl
     end
 
+    # rubocop:disable Metrics/AbcSize
     def self.curl(verb, path, options = {}, files = {})
       verb = verb.upcase.to_sym
       query = verb == :GET ? "?#{options.to_query}" : ''
@@ -51,6 +52,7 @@ module Bitex
 
       curl
     end
+    # rubocop:enable Metrics/AbcSize
 
     def self.public(path, _options = {})
       response = curl(:GET, path)
