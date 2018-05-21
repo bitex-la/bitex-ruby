@@ -3,12 +3,12 @@ module Bitex
   # Both Buy and Sell are a kind of Match, they deserialize the same and have very similar fields, although their documentation
   # may differ.
   class Match
-    attr_accessor :id, :orderbook, :quantity, :amount, :fee, :price, :created_at
+    attr_accessor :id, :order_book, :quantity, :amount, :fee, :price, :created_at
 
     # @visibility private
     def self.from_json(json)
       Api.from_json(new, json) do |thing|
-        thing.orderbook = orderbooks[json[3]]
+        thing.order_book = order_books[json[3]]
         thing.quantity = json[4].to_s.to_d
         thing.amount = json[5].to_s.to_d
         thing.fee = json[6].to_s.to_d
@@ -18,7 +18,7 @@ module Bitex
 
     private_class_method
 
-    def self.orderbooks
+    def self.order_books
       { 1 => :btc_usd, 5 => :btc_ars }
     end
 
@@ -33,7 +33,7 @@ module Bitex
     private
 
     def base_quote
-      orderbook.upcase.to_s.split('_')
+      order_book.upcase.to_s.split('_')
     end
   end
 end
