@@ -64,7 +64,7 @@ module Bitex
       steps = tree
       begin
         path.each { |step| steps = steps[step] }
-      rescue StandardError => e
+      rescue StandardError
         raise "InvalidPath: #{path}"
       end
       steps
