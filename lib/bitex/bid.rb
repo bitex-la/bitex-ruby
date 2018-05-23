@@ -1,5 +1,5 @@
 module Bitex
-  # A Bid is an order to buy a given orderbook.
+  # A Bid is an order to buy a given order book.
   # @see BaseOrder
   class Bid < BaseOrder
     # @!attribute id
@@ -8,7 +8,7 @@ module Bitex
     # @!attribute created_at
     #   @return [Time] Time when this Bid was created.
 
-    # @!attribute orderbook
+    # @!attribute order_book
     #   @return [Symbol] :btc_usd or :btc_ars
 
     # @!attribute amount
@@ -51,12 +51,12 @@ module Bitex
     end
 
     # Create a new Bid for spending Amount USD paying no more than price per unit.
-    # @param orderbook [Symbol] :btc_usd or :btc_ars, whatever you're buying.
+    # @param order_book [Symbol] :btc_usd or :btc_ars, whatever you're buying.
     # @param amount [BigDecimal] Amount to spend buying.
     # @param price [BigDecimal] Maximum price to pay per unit.
     # @param wait [Boolean] Block the process and wait until this bid moves out of the :received state, defaults to false.
     # @see https://bitex.la/developers#create-bid
-    def self.create!(orderbook, amount, price, wait = false)
+    def self.create!(order_book, amount, price, wait = false)
       super
     end
 

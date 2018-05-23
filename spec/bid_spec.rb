@@ -6,7 +6,7 @@ describe Bitex::Bid do
       1,           #  0 - API class reference
       12_345_678,  #  1 - id
       946_685_400, #  2 - created_at
-      1,           #  3 - orderbook
+      1,           #  3 - order_book
       100.0,       #  4 - quantity
       100.0,       #  5 - remaining_quantity
       1_000.0,     #  6 - price
@@ -18,7 +18,7 @@ describe Bitex::Bid do
   end
 
   it_behaves_like 'API class'
-  it_behaves_like 'API class with a orderbook'
+  it_behaves_like 'API class with a order book'
   it_behaves_like 'JSON deserializable order'
 
   describe 'Api calls' do

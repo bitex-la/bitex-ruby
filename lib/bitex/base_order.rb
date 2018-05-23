@@ -9,9 +9,9 @@ module Bitex
     #   @return [Time] Time when this Bid was created.
     attr_accessor :created_at
 
-    # @!attribute orderbook
+    # @!attribute order_book
     #   @return [Symbol] :btc_usd or :btc_ars
-    attr_accessor :orderbook
+    attr_accessor :order_book
 
     # @!attribute price
     #   @return [BigDecimal] Maximum price to pay per unit.
@@ -52,8 +52,8 @@ module Bitex
     end
 
     # @visibility private
-    def self.create!(orderbook, amount, price, wait = false)
-      params = { amount: amount, price: price, orderbook: { btc_usd: 1, btc_ars: 5 }[orderbook] }
+    def self.create!(order_book, amount, price, wait = false)
+      params = { amount: amount, price: price, orderbook: { btc_usd: 1, btc_ars: 5 }[order_book] }
 
       order = from_json(Api.private(:post, "/private#{base_path}", params))
       retries = 0
@@ -75,7 +75,7 @@ module Bitex
     # @visibility private
     def self.from_json(json, order = nil)
       Api.from_json(order || new, json) do |thing|
-        thing.orderbook = orderbooks[json[3]]
+        thing.order_book = order_books[json[3]]
         thing.price = json[6].to_s.to_d
         thing.status = statuses[json[7]]
         thing.reason = reasons[json[8]]
@@ -91,7 +91,7 @@ module Bitex
       order
     end
 
-    def self.orderbooks
+    def self.order_books
       { 1 => :btc_usd, 5 => :btc_ars }
     end
 
