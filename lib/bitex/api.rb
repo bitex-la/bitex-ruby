@@ -2,9 +2,7 @@ module Bitex
   class ApiError < StandardError
   end
 
-  ##
   # Documentation here!
-  #
   class Api
     def self.grab_curl
       if @curl

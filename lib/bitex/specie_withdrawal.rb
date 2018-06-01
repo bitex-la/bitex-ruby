@@ -51,15 +51,15 @@ module Bitex
     # @visibility private
     # rubocop:disable Metrics/AbcSize
     def self.from_json(json)
-      Api.from_json(new, json) do |specie_withdrawal|
-        specie_withdrawal.specie = { 1 => :btc }[json[3]]
-        specie_withdrawal.quantity = (json[4].presence || 0).to_d
-        specie_withdrawal.status = statuses[json[5]]
-        specie_withdrawal.reason = reasons[json[6]]
-        specie_withdrawal.to_address = json[7]
-        specie_withdrawal.label = json[8]
-        specie_withdrawal.kyc_profile_id = json[9]
-        specie_withdrawal.transaction_id = json[10]
+      Api.from_json(new, json) do |withdrawal|
+        withdrawal.specie = species[json[3]]
+        withdrawal.quantity = (json[4].presence || 0).to_d
+        withdrawal.status = statuses[json[5]]
+        withdrawal.reason = reasons[json[6]]
+        withdrawal.to_address = json[7]
+        withdrawal.label = json[8]
+        withdrawal.kyc_profile_id = json[9]
+        withdrawal.transaction_id = json[10]
       end
     end
     # rubocop:enable Metrics/AbcSize
@@ -97,6 +97,10 @@ module Bitex
 
     def self.statuses
       { 1 => :received, 2 => :pending, 3 => :done, 4 => :cancelled }
+    end
+
+    def self.species
+      { 1 => :btc }
     end
   end
 end
