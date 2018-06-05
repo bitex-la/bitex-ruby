@@ -21,10 +21,10 @@ module Bitex
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
-    def self.curl(verb, path, options = {}, files = {})
+    def self.curl(verb, path, options = {}, files = {}, client)
       verb = verb.upcase.to_sym
       query = verb == :GET ? "?#{options.to_query}" : ''
-      prefix = Bitex.sandbox ? 'sandbox.' : ''
+      prefix = client.sandbox ? 'sandbox.' : ''
 
       curl = grab_curl
       curl.url = "https://#{prefix}bitex.la/api-v1/rest#{path}#{query}"
@@ -54,14 +54,16 @@ module Bitex
     end
     # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
-    def self.public(path, _options = {})
-      response = curl(:GET, path)
+    def self.public(path, options = {})
+      client = yield
+      response = curl(:GET, path, options, {}, client)
       JSON.parse(response.body)
     end
 
     def self.private(verb, path, options = {}, files = {})
-      raise StandardError, 'No api_key available to make private key calls' if Bitex.api_key.nil?
-      response = curl(verb, path, options.merge(api_key: Bitex.api_key), files)
+      client = yield
+      raise StandardError, 'No api_key available to make private key calls' if client.api_key.nil?
+      response = curl(verb, path, options.merge(api_key: client.api_key), files, client)
       JSON.parse(response.body)
     end
 
