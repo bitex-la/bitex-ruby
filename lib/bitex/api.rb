@@ -6,7 +6,7 @@ module Bitex
   # Documentation here!
   #
   class Api
-    def self.grab_curl
+    def self.grab_curl(client)
       if @curl
         @curl.reset
       else
@@ -14,7 +14,7 @@ module Bitex
       end
 
       @curl.ssl_version = Curl::CURL_SSLVERSION_TLSv1
-      @curl.on_debug { |t, d| puts "DEBUG SSL #{t}, #{d}" if d.to_s.size < 300 } if Bitex.debug
+      @curl.on_debug { |t, d| puts "DEBUG SSL #{t}, #{d}" if d.to_s.size < 300 } if client.debug
       @curl.connect_timeout = 30
       @curl.timeout = 30
       @curl
@@ -26,7 +26,7 @@ module Bitex
       query = verb == :GET ? "?#{options.to_query}" : ''
       prefix = client.sandbox ? 'sandbox.' : ''
 
-      curl = grab_curl
+      curl = grab_curl(client)
       curl.url = "https://#{prefix}bitex.la/api-v1/rest#{path}#{query}"
 
       if verb == :POST
@@ -55,8 +55,7 @@ module Bitex
     # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
 
     def self.public(path, options = {})
-      client = yield
-      response = curl(:GET, path, options, {}, client)
+      response = curl(:GET, path, options, {}, yield)
       JSON.parse(response.body)
     end
 
