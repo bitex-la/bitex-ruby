@@ -48,14 +48,14 @@ module Bitex
     # Find an order in your list of active orders.
     # Uses {Order.active} under the hood.
     def self.find(id)
-      from_json(Api.private(:get, "/private#{base_path}/#{id}"))
+      from_json(Api.private(:get, "#{base_path}/#{id}"))
     end
 
     # @visibility private
     def self.create!(order_book, amount, price, wait = false)
       params = { amount: amount, price: price, orderbook: { btc_usd: 1, btc_ars: 5 }[order_book] }
 
-      order = from_json(Api.private(:post, "/private#{base_path}", params))
+      order = from_json(Api.private(:post, base_path, params))
       retries = 0
       while wait && order.status == :received
         sleep(0.2)
@@ -68,7 +68,7 @@ module Bitex
     end
 
     def cancel!
-      path = "/private#{self.class.base_path}/#{id}/cancel"
+      path = "#{self.class.base_path}/#{id}/cancel"
       self.class.from_json(Api.private(:post, path), self)
     end
 

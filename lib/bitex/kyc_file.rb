@@ -34,7 +34,7 @@ module Bitex
     end
 
     def self.all
-      Api.private(:get, '/private/kyc_files').map { |file| from_json(file) }
+      Api.private(:get, '/kyc_files').map { |file| from_json(file) }
     end
   end
 end

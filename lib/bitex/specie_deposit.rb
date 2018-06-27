@@ -26,11 +26,11 @@ module Bitex
     end
 
     def self.find(specie, id)
-      from_json(Api.private(:get, "/private/#{specie}/deposits/#{id}"))
+      from_json(Api.private(:get, "/#{specie}/deposits/#{id}"))
     end
 
     def self.all(specie)
-      Api.private(:get, "/private/#{specie}/deposits").map { |sd| from_json(sd) }
+      Api.private(:get, "/#{specie}/deposits").map { |sd| from_json(sd) }
     end
 
     def self.species

@@ -7,7 +7,7 @@ module Bitex
     #   Returns an heterogeneous array with all your transactions for the past 15 days sorted by descending date.
     # @see https://bitex.la/developers#user-account-summary
     def self.all
-      Api.private(:GET, '/private/account_summary').map { |t| Api.deserialize(t) }
+      Api.private(:GET, '/account_summary').map { |t| Api.deserialize(t) }
     end
   end
 end

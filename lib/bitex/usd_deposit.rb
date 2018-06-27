@@ -88,7 +88,7 @@ module Bitex
       from_json(
         Api.private(
           :post,
-          '/private/usd/deposits',
+          '/usd/deposits',
           country: country,
           amount: amount,
           currency: currency,
@@ -100,16 +100,15 @@ module Bitex
     end
 
     def self.find(id)
-      from_json(Api.private(:get, "/private/usd/deposits/#{id}"))
+      from_json(Api.private(:get, "/usd/deposits/#{id}"))
     end
 
     def cancel!
-      path = "/private/usd/deposits/#{id}/cancel"
-      self.class.from_json(Api.private(:post, path), self)
+      self.class.from_json(Api.private(:post, "/usd/deposits/#{id}/cancel"), self)
     end
 
     def self.all
-      Api.private(:get, '/private/usd/deposits').map { |d| from_json(d) }
+      Api.private(:get, '/usd/deposits').map { |d| from_json(d) }
     end
 
     def self.deposit_methods

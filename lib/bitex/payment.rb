@@ -55,7 +55,7 @@ module Bitex
     private_class_method
 
     def self.base_uri
-      '/private/payments'
+      '/payments'
     end
   end
 end

@@ -69,7 +69,7 @@ module Bitex
       from_json(
         Api.private(
           :post,
-          "/private/#{specie}/withdrawals",
+          "/#{specie}/withdrawals",
           address: address,
           amount: amount,
           label: label,
@@ -79,11 +79,11 @@ module Bitex
     end
 
     def self.find(specie, id)
-      from_json(Api.private(:get, "/private/#{specie}/withdrawals/#{id}"))
+      from_json(Api.private(:get, "/#{specie}/withdrawals/#{id}"))
     end
 
     def self.all(specie)
-      Api.private(:get, "/private/#{specie}/withdrawals").map { |sw| from_json(sw) }
+      Api.private(:get, "/#{specie}/withdrawals").map { |sw| from_json(sw) }
     end
 
     def self.statuses

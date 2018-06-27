@@ -6,7 +6,7 @@ module Bitex
     #   Returns an heterogeneous array with all your transactions for the past 30 days sorted by descending date.
     # @see https://bitex.la/developers#user-trades
     def self.all
-      Api.private(:GET, '/private/trades').map { |t| Api.deserialize(t) }
+      Api.private(:GET, '/trades').map { |t| Api.deserialize(t) }
     end
   end
 end

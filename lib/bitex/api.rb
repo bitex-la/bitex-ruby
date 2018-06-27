@@ -61,7 +61,7 @@ module Bitex
 
     def self.private(verb, path, options = {}, files = {})
       raise StandardError, 'No api_key available to make private key calls' if Bitex.api_key.nil?
-      response = curl(verb, path, options.merge(api_key: Bitex.api_key), files)
+      response = curl(verb, "/private#{path}", options.merge(api_key: Bitex.api_key), files)
       JSON.parse(response.body)
     end
 

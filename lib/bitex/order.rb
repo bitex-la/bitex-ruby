@@ -5,13 +5,13 @@ module Bitex
     #   was active in the last 2 hours.
     # @see https://bitex.la/developers#orders
     def self.all
-      Api.private(:GET, '/private/orders').map { |response| Api.deserialize(response) }
+      Api.private(:GET, '/orders').map { |response| Api.deserialize(response) }
     end
 
     # @return [Array<Bitex::Bid, Bitex::Ask>] Returns an heterogeneous array with all your active orders.
     # @see https://bitex.la/developers#active-orders
     def self.active
-      Api.private(:GET, '/private/orders/active').map { |response| Api.deserialize(response) }
+      Api.private(:GET, '/orders/active').map { |response| Api.deserialize(response) }
     end
   end
 end

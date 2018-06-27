@@ -74,7 +74,7 @@ module Bitex
       from_json(
         Api.private(
           :post,
-          '/private/usd/withdrawals',
+          '/usd/withdrawals',
           country: country, amount: amount, currency: currency, payment_method: method, instructions: instructions, label: label,
           kyc_profile_id: profile
         )
@@ -82,11 +82,11 @@ module Bitex
     end
 
     def self.find(id)
-      from_json(Api.private(:get, "/private/usd/withdrawals/#{id}"))
+      from_json(Api.private(:get, "/usd/withdrawals/#{id}"))
     end
 
     def self.all
-      Api.private(:get, '/private/usd/withdrawals').map { |sw| from_json(sw) }
+      Api.private(:get, '/usd/withdrawals').map { |sw| from_json(sw) }
     end
 
     def self.payment_methods

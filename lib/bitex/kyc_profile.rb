@@ -102,15 +102,15 @@ module Bitex
     # rubocop:enable Metrics/AbcSize
 
     def self.create!(params)
-      from_json(Api.private(:post, '/private/kyc_profiles', sanitize(params)))
+      from_json(Api.private(:post, '/kyc_profiles', sanitize(params)))
     end
 
     def self.find(id)
-      from_json(Api.private(:get, "/private/kyc_profiles/#{id}"))
+      from_json(Api.private(:get, "/kyc_profiles/#{id}"))
     end
 
     def self.all
-      Api.private(:get, '/private/kyc_profiles').map { |kyc| from_json(kyc) }
+      Api.private(:get, '/kyc_profiles').map { |kyc| from_json(kyc) }
     end
 
     private_class_method
@@ -120,22 +120,17 @@ module Bitex
     end
 
     def update!(params)
-      self.class.from_json(Api.private(:put, "/private/kyc_profiles/#{id}", self.class.sanitize(params)))
+      self.class.from_json(Api.private(:put, "/kyc_profiles/#{id}", self.class.sanitize(params)))
     end
 
     def add_kyc_file!(path, content_type = nil)
-      response = Api.private(
-        :post,
-        "/private/kyc_profiles/#{id}/kyc_files",
-        { document_content_type: content_type },
-        document: path
-      )
+      response = Api.private(:post, "/kyc_profiles/#{id}/kyc_files", { document_content_type: content_type }, document: path)
 
       KycFile.from_json(response)
     end
 
     def kyc_files
-      Api.private(:get, "/private/kyc_profiles/#{id}/kyc_files").map { |kyc| KycFile.from_json(kyc) }
+      Api.private(:get, "/kyc_profiles/#{id}/kyc_files").map { |kyc| KycFile.from_json(kyc) }
     end
   end
 end
