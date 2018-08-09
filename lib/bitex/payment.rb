@@ -52,10 +52,10 @@ module Bitex
       Api.private(:post, "#{base_uri}/pos_setup", params)
     end
 
-    private_class_method
-
     def self.base_uri
       '/private/payments'
     end
+
+    private_class_method :base_uri
   end
 end

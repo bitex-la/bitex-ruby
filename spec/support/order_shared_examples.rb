@@ -35,4 +35,10 @@ shared_examples_for 'Order' do |api_path|
     order.cancel!
     order.status.should == :cancelling
   end
+
+  it 'blows up when unknown order book is requested' do
+    expect do
+      subject.class.create!(:bogus_order_book, 100.50, 1_000.00)
+    end.to raise_error Bitex::UnknownOrderBook
+  end
 end
