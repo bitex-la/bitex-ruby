@@ -113,8 +113,6 @@ module Bitex
       Api.private(:get, '/private/kyc_profiles').map { |kyc| from_json(kyc) }
     end
 
-    private_class_method
-
     def self.sanitize(params)
       params.merge(birth_date: params[:birth_date].strftime('%Y/%m/%d'))
     end

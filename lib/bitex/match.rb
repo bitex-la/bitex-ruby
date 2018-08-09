@@ -18,11 +18,11 @@ module Bitex
     end
     # rubocop:enable Metrics/AbcSize
 
-    private_class_method
-
     def self.order_books
       ORDER_BOOKS.invert
     end
+
+    private_class_method :order_books
 
     def base_currency
       base_quote[0]

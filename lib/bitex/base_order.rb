@@ -86,8 +86,6 @@ module Bitex
       end
     end
 
-    private_class_method
-
     def self.find_order(order)
       find(order.id)
     rescue StandardError
@@ -105,5 +103,7 @@ module Bitex
     def self.statuses
       { 1 => :received, 2 => :executing, 3 => :cancelling, 4 => :cancelled, 5 => :completed }
     end
+
+    private_class_method :find_order, :order_books, :reasons, :statuses
   end
 end
