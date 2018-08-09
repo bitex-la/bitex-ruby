@@ -53,7 +53,10 @@ module Bitex
 
     # @visibility private
     def self.create!(order_book, amount, price, wait = false)
-      params = { amount: amount, price: price, orderbook: { btc_usd: 1, btc_ars: 5 }[order_book] }
+      order_book_id = ORDER_BOOKS[order_book]
+      raise UnknownOrderBook, "Could not find order book #{order_book}" unless order_book_id
+
+      params = { amount: amount, price: price, orderbook: order_book_id }
 
       order = from_json(Api.private(:post, "/private#{base_path}", params))
       retries = 0
@@ -92,7 +95,7 @@ module Bitex
     end
 
     def self.order_books
-      { 1 => :btc_usd, 5 => :btc_ars }
+      ORDER_BOOKS.invert
     end
 
     def self.reasons

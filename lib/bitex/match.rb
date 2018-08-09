@@ -21,7 +21,7 @@ module Bitex
     private_class_method
 
     def self.order_books
-      { 1 => :btc_usd, 5 => :btc_ars }
+      ORDER_BOOKS.invert
     end
 
     def base_currency

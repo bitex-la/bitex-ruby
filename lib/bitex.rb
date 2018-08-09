@@ -17,4 +17,8 @@ module Bitex
   mattr_accessor :sandbox
   mattr_accessor :debug
   mattr_accessor :ssl_version
+
+  ORDER_BOOKS = { btc_usd: 1, btc_ars: 5, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }
+  class UnknownOrderBook < StandardError
+  end
 end
