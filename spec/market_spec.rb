@@ -1,39 +1,54 @@
 require 'spec_helper'
 
-describe Bitex::MarketData do
-  it "gets the ticker" do
-    stub_get("/btc/market/ticker", 'market_ticker')
-    Bitex::BitcoinMarketData.ticker.should == {
-      last: 639.0, high: 659.0, low: 639.0, vwap: 647.195852839369,
-      volume: 4.80579022, bid: 637.0, ask: 638.5
-    }
+describe Bitex::JsonApi::Market do
+  let(:client) { build(:client) }
+  let(:markets) { client.markets }
+  let(:order_book_code) { :btc_usd }
+
+  describe '#find' do
+    subject(:market) { VCR.use_cassette('market') { described_class.find(order_book_code) } }
+
+    it { should be_a(described_class) }
+    its(:type) { should eq 'markets'}
+    its(:id) { should eq order_book_code.to_s }
+    it { subject.relationships.attributes.keys.should eq %w[candles transactions bids asks] }
   end
-  
-  it "gets the order book" do
-    stub_get("/btc/market/order_book", 'order_book')
-    Bitex::BitcoinMarketData.order_book.should == {
-      bids: [[639.21,1.95],[637.0,0.47],[630.0,1.58]],
-      asks: [[642.4,0.4],[643.3,0.95],[644.3,0.25]]
-    }
+
+  context '#transactions' do
+    let(:transactions) { VCR.use_cassette('market/transaction') { described_class.transactions(order_book_code) } }
+    subject(:transaction) { transactions.sample }
+
+    it { transactions.should be_a(Array) }
+    it { subject.type.should eq 'transactions' }
+    it { subject.attributes.keys.should eq %w[type id timestamp price amount] }
   end
-  
-  it "gets the transactions" do
-    stub_get("/btc/market/transactions", 'transactions')
-    Bitex::BitcoinMarketData.transactions.should == [
-      [1404259180, 1272, 650.0, 0.5],
-      [1404259179, 1271, 639.0, 0.46948356]
-    ]
+
+  describe '#candles' do
+    let(:candles) { VCR.use_cassette('market/candle') { described_class.candles(order_book_code) } }
+    subject(:candle) { candles.sample }
+
+    it { candles.should be_a(Array) }
+    it { subject.type.should eq 'candles' }
+    it { subject.attributes.keys.should eq %w[type id timestamp low open close high volume price_before_last vwap] }
   end
-  
-  %w(last_24_hours last_7_days last_30_days).each do |method|
-    it "gets aggregated data for #{method}" do
-      stub_get("/btc/market/#{method}", 'aggregated_data')
-      Bitex::BitcoinMarketData.send(method).should == [
-        [1403668800, 570.0, 574.0, 570.0, 574.0, 1.06771929, 571.0, 570.917848641659],
-        [1403683200, 560.0, 570.0, 560.0, 570.0, 1.14175147, 565.0, 565.753596095655],
-        [1403697600, 560.0, 560.0, 560.0, 560.0, 0.0, 565.0, 0.0],
-        [1403712000, 560.0, 560.0, 560.0, 560.0, 0.0, 565.0, 0.0]
-      ]
-    end
+
+  describe '#asks' do
+    let(:market) { VCR.use_cassette('market') { described_class.find(order_book_code) } }
+    let(:asks) { market.asks }
+    subject(:ask) { asks.sample }
+
+    it { asks.should be_a(Array) }
+    it { should be_a(Bitex::JsonApi::OrderGroup) }
+    its(:type) { should eq 'order_groups' }
+  end
+
+  describe '#bids' do
+    let(:market) { VCR.use_cassette('market') { described_class.find(order_book_code) } }
+    let(:bids) { market.bids }
+    subject(:bid) { bids.sample }
+
+    it { bids.should be_a(Array) }
+    it { should be_a(Bitex::JsonApi::OrderGroup) }
+    its(:type) { should eq 'order_groups' }
   end
 end
