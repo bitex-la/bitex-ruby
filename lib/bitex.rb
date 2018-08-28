@@ -8,7 +8,6 @@ require 'json_api_client'
 
 require 'bitex/client'
 require 'bitex/json_api/base'
-require 'bitex/json_api/order_bot'
 require 'bitex/json_api/order_group'
 Dir[File.expand_path('bitex/json_api/order_group/*.rb', __dir__)].each { |f| require f }
 Dir[File.expand_path('bitex/json_api/*.rb', __dir__)].each { |f| require f }
