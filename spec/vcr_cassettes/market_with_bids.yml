@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd?include=bids
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"c42de1bf22fcc618cd50967891fd7641"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 92d58660-7e6e-4e21-ba1c-5c7ce9a8cfb5
+      X-Runtime:
+      - '0.522892'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":[]},"transactions":{"data":[]},"bids":{"data":[{"id":"4000.0","type":"order_groups"},{"id":"1.0","type":"order_groups"}]},"asks":{"data":[]}}},"included":[{"id":"4000.0","type":"order_groups","attributes":{"price":4000.0,"amount":1.0}},{"id":"1.0","type":"order_groups","attributes":{"price":1.0,"amount":5000.0}}]}'
+    http_version: 
+  recorded_at: Tue, 28 Aug 2018 13:32:03 GMT
+recorded_with: VCR 4.0.0

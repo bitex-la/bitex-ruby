@@ -1,8 +1,9 @@
 module Bitex
+  # This client connects via API to Bitex resources.
   class Client
     attr_accessor :api_key, :sandbox, :debug, :ssl_version
 
-    def initiliaze(api_key:, sandbox: false, debug: false, ssl_version: nil)
+    def initialize(api_key:, sandbox: false, debug: false, ssl_version: nil)
       @api_key = api_key
       @sandbox = sandbox
       @debug = debug
@@ -17,4 +18,3 @@ module Bitex
   class ClientError < StandardError
   end
 end
-
