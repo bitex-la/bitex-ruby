@@ -13,6 +13,7 @@ require 'webmock/rspec'
 FactoryBot.find_definitions
 Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
 
+OpenSSL::SSL::VERIFY_PEER = 0
 RSpec.configure do |config|
   config.include(FactoryBot::Syntax::Methods)
   config.include(RequestStubs)
