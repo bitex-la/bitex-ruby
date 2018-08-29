@@ -2,6 +2,13 @@ module Bitex
   module JsonApi
     # Overview of current market prices and trade volume, including Volume-Weighted Average Price.
     class Ticker < Base
+      # GET /api/tickers
+      #
+      # Get Tickers of all available markets
+      #
+      # @return JsonApiClient::ResultSet. It has the server response.
+      # self.all
+
       # GET /api/tickers/:orderbook_code
       #
       # Get the ticker of a market.
