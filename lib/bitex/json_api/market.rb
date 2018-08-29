@@ -82,9 +82,8 @@ module Bitex
       def self.valid_argument?(arg)
         return true unless arg.present?
         return false unless arg.is_a?(Numeric)
-        arg > 0
+        arg.positive?
       end
-
 
       # @param [Array<Symbol>] resources. values: [:asks, :bids, :candles, :transactions]
       #
