@@ -14,9 +14,14 @@ module Bitex
       #   /api/markets/:orderbook_code/transactions and /api/markets/:orderbook_code/candles respectively.
       # To get all possible orderbook_codes check Orderbooks.
       #
-      # @param order_book_code[Symbol] [:btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu]
-      # @param resources[Symbol] [:bids, :asks, :candles, :transactions]
+      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu.
+      # @param [Array<Symbol>] resources. Values:  [:bids, :asks, :candles, :transactions]
+      #
+      # @return JsonApiClient::ResultSet. It has the server response data, and in its only element, market parsed to json api.
       def self.find(order_book_code, *resources)
+        raise UnknownOrderBook unless valid_code?(order_book_code)
+        raise InvalidResourceArgument unless valid_resources?(*resources)
+
         request(:public) { includes(*resources).find(order_book_code) }
       end
 
@@ -27,9 +32,14 @@ module Bitex
       # filter:
       #   from: number of hours from where you want the transactions to be retrieved. default = 1
       #
-      # @param order_book_code[Symbol] [:btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu]
-      # @param from[Integer] [1..+]
+      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu.
+      # @param [Integer] from. Values: 1..+
+      #
+      # @return JsonApiClient::ResultSet. It has the server response data, and all transactions parsed to json api.
       def self.transactions(order_book_code, from: nil)
+        raise UnknownOrderBook unless valid_code?(order_book_code)
+        raise InvalidArgument unless valid_argument?(from)
+
         params = { market_id: order_book_code }.tap { |hash| hash.merge!(from: from) if from.present? }
         request(:public) { Transaction.where(params).all }
       end
@@ -43,16 +53,47 @@ module Bitex
       #   Query param:
       #     span: timespan for each candle. default = 1
       #
-      # @param order_book_code[Symbol] [:btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu]
-      # @param from[Integer] [1..+]
-      # @param span[Integer] [1..+]
+      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu
+      # @param [Integer] from. Values: 1..+
+      # @param [Integer] span. Values: 1..+
+      #
+      # @return JsonApiClient::ResultSet. It has the server response data, and all candles parsed to json api.
       def self.candles(order_book_code, from: nil, span: nil)
+        raise UnknownOrderBook unless valid_code?(order_book_code)
+        raise InvalidArgument unless valid_argument?(from) && valid_argument?(span)
+
         params = { market_id: order_book_code }.tap { |hash| hash.merge!(from: from) if from.present? }
         request(:public) do
           query = Candle.where(params)
           (span.present? ? query.with_params(span: span) : query).all
         end
       end
+
+      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu
+      #
+      # @return [true] if order book code is valid.
+      def self.valid_code?(order_book_code)
+        ORDER_BOOKS.include?(order_book_code)
+      end
+
+      # @param [Integer|Float] arg. values: 0..+
+      #
+      # @return [true] if the argument is not present or if it is numeric and greater than zero.
+      def self.valid_argument?(arg)
+        return true unless arg.present?
+        return false unless arg.is_a?(Numeric)
+        arg > 0
+      end
+
+
+      # @param [Array<Symbol>] resources. values: [:asks, :bids, :candles, :transactions]
+      #
+      # @return [true] if the argument is not present or if it is numeric and greater than zero.
+      def self.valid_resources?(*resources)
+        (resources - %i[asks bids candles transactions]).empty?
+      end
+
+      private_class_method :valid_code?, :valid_argument?, :valid_resources?
     end
   end
 end

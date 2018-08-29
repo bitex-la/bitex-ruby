@@ -5,6 +5,28 @@ describe Bitex::JsonApi::Market do
   let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
 
   describe '#find' do
+    context 'with invalid order book code' do
+      let(:response) { described_class.find('invalid_order_book_code') }
+
+      it { expect { response }.to raise_exception(Bitex::UnknownOrderBook) }
+    end
+
+    context 'with invalid resources' do
+      let(:response) { described_class.find(order_book_code, from: from) }
+
+      context 'with no numeric value' do
+        let(:from) { '1234' }
+
+        it { expect { response }.to raise_exception(Bitex::InvalidResourceArgument) }
+      end
+
+      context 'with negative number' do
+        let(:from) { -3 }
+
+        it { expect { response }.to raise_exception(Bitex::InvalidResourceArgument) }
+      end
+    end
+
     let(:response) { VCR.use_cassette('market') { described_class.find(order_book_code) } }
 
     subject { response[0] }
@@ -33,9 +55,8 @@ describe Bitex::JsonApi::Market do
 
       subject { response[0] }
 
-      shared_examples_for 'market with included' do |rsc|
-        let(:resources) { %i[asks bids candles transactions].reject { |r| r == rsc } }
-        let(:resource) { rsc.to_s }
+      shared_examples_for 'market with included' do |resource|
+        let(:resources) { %i[asks bids candles transactions].reject { |rsc| rsc == resource } }
 
         it_behaves_like 'founded market'
 

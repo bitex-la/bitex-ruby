@@ -1,9 +1,11 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'json'
-require 'curl'
+
 require 'bigdecimal'
 require 'bigdecimal/util'
+
+require 'curl'
+require 'json'
 require 'json_api_client'
 
 require 'bitex/client'
@@ -27,5 +29,11 @@ module Bitex
   mattr_accessor :ssl_version
 
   class UnknownOrderBook < StandardError
+  end
+
+  class InvalidArgument < StandardError
+  end
+
+  class InvalidResourceArgument < StandardError
   end
 end
