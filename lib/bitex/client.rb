@@ -15,7 +15,11 @@ module Bitex
     end
 
     def tickers
-      @tickers ||= Json::Ticker
+      @tickers ||= JsonApi::Ticker
+    end
+
+    def order_books
+      @order_books ||= JsonApi::OrderBook
     end
   end
 

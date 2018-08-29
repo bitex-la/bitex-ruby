@@ -14,7 +14,7 @@ module Bitex
       #   /api/markets/:orderbook_code/transactions and /api/markets/:orderbook_code/candles respectively.
       # To get all possible orderbook_codes check Orderbooks.
       #
-      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu.
+      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Array<Symbol>] resources. Values:  [:bids, :asks, :candles, :transactions]
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and in its only element, market parsed to json api.
@@ -32,7 +32,7 @@ module Bitex
       # filter:
       #   from: number of hours from where you want the transactions to be retrieved. default = 1
       #
-      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu.
+      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Integer] from. Values: 1..+
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and all transactions parsed to json api.
@@ -53,7 +53,7 @@ module Bitex
       #   Query param:
       #     span: timespan for each candle. default = 1
       #
-      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu
+      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Integer] from. Values: 1..+
       # @param [Integer] span. Values: 1..+
       #
@@ -69,7 +69,7 @@ module Bitex
         end
       end
 
-      # @param [Symbol] order_book_code. Values: :btc_ars, :btc_clp, :btc_pyg, :btc_usd, :btc_uyu
+      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
       # @return [true] if order book code is valid.
       def self.valid_code?(order_book_code)
