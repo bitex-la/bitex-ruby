@@ -13,6 +13,10 @@ module Bitex
     def markets
       @markets ||= JsonApi::Market
     end
+
+    def tickers
+      @tickers ||= Json::Ticker
+    end
   end
 
   class ClientError < StandardError
