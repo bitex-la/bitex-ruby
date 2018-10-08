@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bitex.la/api/tickers/btc_usd
+    uri: https://dev.bitex.la:3000/api/tickers/btc_usd
     body:
       encoding: US-ASCII
       string: ''
@@ -20,19 +20,6 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 08 Oct 2018 14:35:59 GMT
-      Content-Type:
-      - application/vnd.api+json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dbadd9f2221ee94ccbac8374d06cac2641539009358; expires=Tue, 08-Oct-19
-        14:35:58 GMT; path=/; domain=.bitex.la; HttpOnly
-      - _bitex_la_session=RGxuWDZTZGxkRVMwLzdtUTdMM05qTE9sckZWdUp3ZlR5RExaMjl4Y1BYTVVUR2JNemlzOTJhU1JEV3h1Y2tUVXFFK3FMNFFac2I5bXU3eFVlMC9LcmFtZGozc2R2blFQeHRVejdKTTA0cWw3WDZ3L2w0aXJycllOTnN4bXhpN2ZIeEhqYm1LcEF2K1JuSzAxdHVkUUpCcStkYVVncWUvL0FWUzRqRmJrbldBRno5QndURjNTR1hVWmVNb1lMRE1sLS02NWUzclpsejZiK1BmbGc2TVcwRHBRPT0%3D--8be6a3dda4cc947f9ca68d5cd0a3ad169e8a2d26;
-        path=/; secure; HttpOnly
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -42,22 +29,21 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Csrf-Token:
-      - ELvW/kJ+RTKsRFc0cTh0AHL0NoSO6po7g8tq+Hlq3oqHLEYHCQ4rnynQUmfPANQErPJXWx3wEYn1yxWJ/m4zIQ==
+      - rceSnQdMVt0hxMBJVaAl2raiLG9yjI9/WqeblL8RGjWAmvvrckcK7ayWwPTbptx4awPouO5jFBh1mP7VSLK82Q==
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Set-Cookie:
+      - _bitex_la_session=eWFKWG8yYXc1a2IzTnpqeFAxS3hTT3VSa2JvK3BKR2ZHNU81U2h6Tjg3TUgxaTBoZ0hLaVM1TkI3K3VaaUorcWo3UVJDeXllWmFpYjJDNU5MY0xWMS8xMW5JZXR2UStWMDgyY2VSTUs1SUZCOEJMdDI3UVY4dEQyaFZ0N0RjOXlyRlcrWGdhS0JqWi9jNXVRVVdOQk5RRWFldHNkTEJobVJacVFEUmY1U1hXeE14QXVRaEpYQk9IUkpGVlhYUkRILS1BaGx6YWZyOHppcjM3SVo3OW5Kb3dBPT0%3D--b093cfa21ad9362646ddabd1386688c693372ed8;
+        path=/; HttpOnly
       X-Request-Id:
-      - 97501c2d-706a-46ad-859b-450e3d5c52c9
+      - ac5be53b-e9ea-4858-9720-0b3256fff145
       X-Runtime:
-      - '0.011968'
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 4669564dbdb967eb-EZE
+      - '0.444374'
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: '{"data":{"id":"","type":"tickers","attributes":{"last":6615.0,"open":6537.0,"high":6688.19910553,"low":6522.144024,"vwap":6649.711045936794,"volume":3.57762947,"bid":6603.81696,"ask":6640.0,"price_before_last":6615.0}}}'
     http_version: 
-  recorded_at: Mon, 08 Oct 2018 14:35:59 GMT
+  recorded_at: Mon, 08 Oct 2018 17:32:10 GMT
 recorded_with: VCR 4.0.0
