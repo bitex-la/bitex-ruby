@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitex.la/api/markets/btc_usd/transactions
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 09 Oct 2018 18:59:21 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d32a1e09e6fa8986983c8102932aa90841539111561; expires=Wed, 09-Oct-19
+        18:59:21 GMT; path=/; domain=.bitex.la; HttpOnly
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"a064c4255ef30359a3d9dcc157855648"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c1048754-a44c-497f-832f-3c5db6a1fa71
+      X-Runtime:
+      - '0.010719'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 467315798a5e679d-EZE
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":null},"transactions":{"data":[{"id":"79","type":"transactions"},{"id":"78","type":"transactions"},{"id":"77","type":"transactions"},{"id":"76","type":"transactions"}]},"bids":{"data":null},"asks":{"data":null}}},"included":[{"id":"79","type":"transactions","attributes":{"timestamp":1535380533,"price":10000.0,"amount":1.49999999}},{"id":"78","type":"transactions","attributes":{"timestamp":1535423733,"price":10000.0,"amount":0.50000001}},{"id":"77","type":"transactions","attributes":{"timestamp":1535445333,"price":10000.0,"amount":0.49999999}},{"id":"76","type":"transactions","attributes":{"timestamp":1535456133,"price":9000.0,"amount":0.55555556}}]}'
+    http_version: 
+  recorded_at: Tue, 28 Aug 2018 14:35:33 GMT
+recorded_with: VCR 4.0.0

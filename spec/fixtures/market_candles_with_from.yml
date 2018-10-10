@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitex.la/api/markets/btc_usd/candles?filter%5Bfrom%5D=7
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 Oct 2018 13:36:26 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d45050cf577dc7361213b6e99e84b3a741539178586; expires=Thu, 10-Oct-19
+        13:36:26 GMT; path=/; domain=.bitex.la; HttpOnly
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"5fe95ba97f310ceda70ea82b317e3c82"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 10838640-d5e9-4f18-8440-2073d6979634
+      X-Runtime:
+      - '0.014967'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 467979d2db8b6785-EZE
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":[{"id":"1539090000","type":"candles"},{"id":"1539093600","type":"candles"},{"id":"1539097200","type":"candles"},{"id":"1539108000","type":"candles"},{"id":"1539111600","type":"candles"},{"id":"1539115200","type":"candles"},{"id":"1539122400","type":"candles"},{"id":"1539129600","type":"candles"},{"id":"1539140400","type":"candles"},{"id":"1539144000","type":"candles"},{"id":"1539147600","type":"candles"},{"id":"1539169200","type":"candles"}]},"transactions":{"data":null},"bids":{"data":null},"asks":{"data":null}}},"included":[{"id":"1539090000","type":"candles","attributes":{"timestamp":1539090000,"low":6580.0,"open":6590.0,"close":6580.0,"high":6590.0,"volume":2.18516763,"price_before_last":6580.0,"vwap":6580.868040178684140584674503897}},{"id":"1539093600","type":"candles","attributes":{"timestamp":1539093600,"low":6578.16175881,"open":6578.16175881,"close":6586.78846154,"high":6586.78846154,"volume":1.75280831,"price_before_last":6586.78846154,"vwap":6585.551788027813471400075687683155723971}},{"id":"1539097200","type":"candles","attributes":{"timestamp":1539097200,"low":6580.0,"open":6580.0,"close":6580.0,"high":6580.0,"volume":0.93588,"price_before_last":6580.0,"vwap":6580.0}},{"id":"1539108000","type":"candles","attributes":{"timestamp":1539108000,"low":6591.75,"open":6591.75,"close":6606.04961954,"high":6606.04961954,"volume":1.42739833,"price_before_last":6596.11,"vwap":6600.74770308728709651776039278398202974}},{"id":"1539111600","type":"candles","attributes":{"timestamp":1539111600,"low":6607.85448538,"open":6607.85448538,"close":6612.38670404,"high":6615.0,"volume":0.53959914,"price_before_last":6615.0,"vwap":6612.797670914743176573632048413}},{"id":"1539115200","type":"candles","attributes":{"timestamp":1539115200,"low":6571.56864,"open":6603.40248298,"close":6571.56864,"high":6603.40248298,"volume":0.24665807,"price_before_last":6580.0,"vwap":6577.136778860122632922571720439}},{"id":"1539122400","type":"candles","attributes":{"timestamp":1539122400,"low":6579.804748,"open":6579.804748,"close":6579.804748,"high":6579.804748,"volume":0.01448399,"price_before_last":6571.56864,"vwap":6579.804748}},{"id":"1539129600","type":"candles","attributes":{"timestamp":1539129600,"low":6603.14178014,"open":6603.14178014,"close":6603.66318582,"high":6604.79624049,"volume":1.78446569,"price_before_last":6604.79624049,"vwap":6603.752555611787885930157614854449793317}},{"id":"1539140400","type":"candles","attributes":{"timestamp":1539140400,"low":6537.98,"open":6573.8,"close":6537.98,"high":6573.8,"volume":0.03769092,"price_before_last":6550.0,"vwap":6548.258470804108788005174721126}},{"id":"1539144000","type":"candles","attributes":{"timestamp":1539144000,"low":6526.239104,"open":6528.78,"close":6526.239104,"high":6528.78,"volume":1.9974751,"price_before_last":6526.239104,"vwap":6526.252543910968562261426938438431597971}},{"id":"1539147600","type":"candles","attributes":{"timestamp":1539147600,"low":6480.0,"open":6520.0,"close":6480.0,"high":6520.0,"volume":5.0990007,"price_before_last":6480.0,"vwap":6485.057682764938628072751588365147704333}},{"id":"1539169200","type":"candles","attributes":{"timestamp":1539169200,"low":6491.0,"open":6495.0,"close":6491.0,"high":6495.0,"volume":0.15538033,"price_before_last":6495.0,"vwap":6494.965813175966353013}}]}'
+    http_version: 
+  recorded_at: Wed, 10 Oct 2018 13:36:26 GMT
+recorded_with: VCR 4.0.0

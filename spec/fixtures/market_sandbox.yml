@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://dev.bitex.la:3000/api/markets/btc_usd
+    uri: https://sandbox.bitex.la/api/markets/btc_usd
     body:
       encoding: US-ASCII
       string: ''
@@ -20,27 +20,42 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Tue, 09 Oct 2018 17:17:36 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=da3b4e4e1e56e28869fcd3e274c9d475a1539105456; expires=Wed, 09-Oct-19
+        17:17:36 GMT; path=/; domain=.bitex.la; HttpOnly
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
       - 1; mode=block
       X-Content-Type-Options:
       - nosniff
-      Content-Type:
-      - application/vnd.api+json; charset=utf-8
       Etag:
-      - W/"729d6dbdf66c4450b496d522152e15b2"
+      - W/"ecc7b83e535db0041c661f25fada2547"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 46d50a88-5671-4431-85ac-12bc7ace9db1
+      - 4957d83c-407a-40b8-8946-5a69955ba53f
       X-Runtime:
-      - '0.702221'
-      Transfer-Encoding:
-      - chunked
+      - '0.098352'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 4672806d9d16680f-EZE
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":[{"id":"1535378400","type":"candles"},{"id":"1535392800","type":"candles"},{"id":"1535396400","type":"candles"},{"id":"1535461200","type":"candles"}]},"transactions":{"data":[{"id":"79","type":"transactions"},{"id":"78","type":"transactions"},{"id":"77","type":"transactions"},{"id":"76","type":"transactions"}]},"bids":{"data":[{"id":"4000.0","type":"order_groups"},{"id":"1.0","type":"order_groups"}]},"asks":{"data":[{"id":"10000.0","type":"order_groups"},{"id":"30000.0","type":"order_groups"}]}}},"included":[{"id":"1535378400","type":"candles","attributes":{"timestamp":1535378400,"low":6000.0,"open":6000.0,"close":30000.0,"high":30000.0,"volume":2.01213333,"price_before_last":6000.0,"vwap":29819.097435257930944367389411516}},{"id":"1535392800","type":"candles","attributes":{"timestamp":1535392800,"low":10000.0,"open":10000.0,"close":10000.0,"high":10000.0,"volume":2.0,"price_before_last":30000.0,"vwap":10000.0}},{"id":"1535396400","type":"candles","attributes":{"timestamp":1535396400,"low":5000.0,"open":5000.0,"close":9000.0,"high":9000.0,"volume":1.44444444,"price_before_last":5000.0,"vwap":6230.769222248520683841602104129}},{"id":"1535461200","type":"candles","attributes":{"timestamp":1535461200,"low":9000.0,"open":9000.0,"close":10000.0,"high":10000.0,"volume":3.05555555,"price_before_last":10000.0,"vwap":9818.181816396694211630353112056}},{"id":"79","type":"transactions","attributes":{"timestamp":1535463097,"price":10000.0,"amount":1.49999999}},{"id":"78","type":"transactions","attributes":{"timestamp":1535463097,"price":10000.0,"amount":0.50000001}},{"id":"77","type":"transactions","attributes":{"timestamp":1535463097,"price":10000.0,"amount":0.49999999}},{"id":"76","type":"transactions","attributes":{"timestamp":1535463097,"price":9000.0,"amount":0.55555556}},{"id":"4000.0","type":"order_groups","attributes":{"price":4000.0,"amount":1.0}},{"id":"1.0","type":"order_groups","attributes":{"price":1.0,"amount":5000.0}},{"id":"10000.0","type":"order_groups","attributes":{"price":10000.0,"amount":0.50000001}},{"id":"30000.0","type":"order_groups","attributes":{"price":30000.0,"amount":0.00303334}}]}'
     http_version: 
-  recorded_at: Tue, 28 Aug 2018 13:32:02 GMT
+  recorded_at: Tue, 09 Oct 2018 17:17:35 GMT
 recorded_with: VCR 4.0.0
