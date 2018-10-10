@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://dev.bitex.la:3000/api/tickers
+    uri: https://bitex.la/api/tickers
     body:
       encoding: US-ASCII
       string: ''
@@ -20,6 +20,19 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 10 Oct 2018 14:15:19 GMT
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d13648e8eec6c0cdf6b3e5756a3f87c461539180919; expires=Thu, 10-Oct-19
+        14:15:19 GMT; path=/; domain=.bitex.la; HttpOnly
+      - _bitex_la_session=eDZzUDZFMkFYU3Jpc2taUm00dHkxSlZFYXVtc2w5ekZNVmpQdDR1SlFubnBlcDBjZjAwS1docUJweTRHeENaWVh5U21TL2xhRWhpaUVaQTRiMWxWSWZyMUdXS3hsbktuaDFORkloa1drWXpRMVVuN1A0emtOUDVJZnh4Ly9JOXg5cS9VbTdtMitqb08vNU52UmJuUmNMeFV2cVhqd2JicFhVQTVWZGN5WmYybHQ2QVhCQnZMUG5jMmw5UWoyKzM4LS1ZdFdxeFpLZmF5LytCS0FSQTM3WTNRPT0%3D--bd5974d6ce2ffe1e22bbe4791e3707c7ef216306;
+        path=/; secure; HttpOnly
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -29,21 +42,22 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Csrf-Token:
-      - SbCc5G6OsptkllRBrFov/KNJ5wWzfqZKo1K1R4MTju2oLvKerPsIJbpZ4QZahmXrwH+jGwPyb4L4yqeu3yX17w==
-      Content-Type:
-      - application/vnd.api+json; charset=utf-8
-      Set-Cookie:
-      - _bitex_la_session=ZHFnaXdiT2xhSW4wNldPdHBNbTUyckFLL2FXMG1PelBLbVE2USszZUs2NHM3eC9reFp5dWtueXd1ZW9yN2s2RENDT1A4bnp1RXZwQm16Q3d1YlV0eE9xQ3paaWhRVWo1VG0rWnFIc3YrOFhRbVNEcnNlSEVSOU5LKzFxNk9neHZjd09hMm1ETjhUKzc0QUw3QTMvYTFjdVg1bWlCOTNQYUk3RWtmYXBObGhqcjhkYnFXbXVJMnlOTlVBOThCNmNwLS1pcWZOZTVkS2FGNWxZS2lLL0FidVd3PT0%3D--ecfae2a741c116160e74ae2348b3aa8cbc4f4f34;
-        path=/; HttpOnly
+      - zIDyxVIOa3izg33LPt6m35r+iGxrB1Rs8pLxB9RSekebOaPKciApQzNguI6FT4ykAncUrRfXHZjUB+a7dpJ/fw==
       X-Request-Id:
-      - b1d8d5e8-b91e-464e-aaac-b8fa3b219009
+      - b1911f1b-7d9b-4652-ad53-a27979e232cf
       X-Runtime:
-      - '0.455327'
-      Transfer-Encoding:
-      - chunked
+      - '0.003943'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 4679b2c80d666839-EZE
     body:
-      encoding: UTF-8
-      string: '{"data":[{"type":"ticker","id":"btc_usd","attributes":{"price":6615.0}}]}'
+      encoding: ASCII-8BIT
+      string: '{"data":[{"type":"ticker","id":"btc_usd","attributes":{"price":6491.0}}]}'
     http_version: 
-  recorded_at: Mon, 08 Oct 2018 17:32:10 GMT
+  recorded_at: Wed, 10 Oct 2018 14:15:19 GMT
 recorded_with: VCR 4.0.0
