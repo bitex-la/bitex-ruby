@@ -6,6 +6,8 @@ describe Bitex::JsonApi::Market do
   let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
 
   describe '.find' do
+    subject { response[0] }
+
     context 'with invalid orderbook code' do
       let(:response) { client.markets.find('invalid_orderbook_code') }
 
@@ -29,48 +31,27 @@ describe Bitex::JsonApi::Market do
     end
 
     context 'with valid resources' do
-      let(:response) { client.markets.find(orderbook_code) }
-
-      subject { response[0] }
-
-      shared_examples_for 'founded market' do
-        it { expect(response.uri.path).to eq("/api/#{resource_name}/#{orderbook_code}") }
-        it { expect(response).to be_a(JsonApiClient::ResultSet) }
-
+      shared_examples_for 'Market responses' do
         it { is_expected.to be_a(described_class) }
 
+        its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
         its(:id) { is_expected.to eq(orderbook_code.to_s) }
         its(:type) { is_expected.to eq(resource_name) }
-        its(:'relationships.attributes.keys') { is_expected.to eq(%w[candles transactions bids asks]) }
       end
 
-      context 'without resources parametes', vcr: { cassette_name: 'market' } do
-        it_behaves_like 'founded market'
+      context 'without resources parameters', vcr: { cassette_name: 'market' } do
+        let(:response) { client.markets.find(orderbook_code) }
 
-        its(:'asks.sample.type') { is_expected.to eq('order_groups') }
-        its(:'bids.sample.type') { is_expected.to eq('order_groups') }
-        its(:'candles.sample.type') { is_expected.to eq('candles') }
-        its(:'transactions.sample.type') { is_expected.to eq('transactions') }
+        it_behaves_like 'Market responses'
       end
 
-      context 'only some of the fields provided' do
+      context 'about included resources' do
         let(:response) { client.markets.find(orderbook_code, resource) }
-
-        subject { response[0] }
-
-        shared_examples_for 'market with included' do |resource|
-          it_behaves_like 'founded market'
-
-          it { expect(response.uri.query).to eq("include=#{resource}") }
-
-          it { expect(subject.send(resource)).to be_any }
-          it { expect(subject.send(resource)).to be_an(Array) }
-        end
 
         context 'asks', vcr: { cassette_name: 'market_with_asks' } do
           let(:resource) { :asks }
 
-          it_behaves_like 'market with included', :asks
+          it_behaves_like 'Market responses'
 
           its(:'asks.sample.type') { is_expected.to eq('order_groups') }
         end
@@ -78,31 +59,31 @@ describe Bitex::JsonApi::Market do
         context 'bids', vcr: { cassette_name: 'market_with_bids' } do
           let(:resource) { :bids }
 
-          it_behaves_like 'market with included', :bids
+          it_behaves_like 'Market responses'
 
-          it { subject.bids.sample.type.should eq 'order_groups' }
+          its(:'bids.sample.type') { is_expected.to eq('order_groups') }
         end
 
         context 'candles', vcr: { cassette_name: 'market_with_candles' } do
           let(:resource) { :candles }
 
-          it_behaves_like 'market with included', :candles
+          it_behaves_like 'Market responses'
 
-          it { subject.candles.sample.type.should eq 'candles' }
+          its(:'candles.sample.type') { is_expected.to eq('candles') }
         end
 
         context 'transactions', vcr: { cassette_name: 'market_with_transactions' } do
           let(:resource) { :transactions }
 
-          it_behaves_like 'market with included', :transactions
+          it_behaves_like 'Market responses'
 
-          it { subject.transactions.sample.type.should eq 'transactions' }
+          its(:'transactions.sample.type') { is_expected.to eq('transactions') }
         end
       end
     end
   end
 
-  describe '.transsactions' do
+  describe '.transactions' do
     before(:each) { Timecop.freeze(time) }
     after(:each) { Timecop.return }
 
@@ -110,19 +91,28 @@ describe Bitex::JsonApi::Market do
 
     subject { response[0].transactions }
 
-    shared_examples_for 'market transactions' do
-      it { expect(response.uri.path).to eq("/api/markets/#{orderbook_code}/transactions") }
-      it { expect(response).to be_a(JsonApiClient::ResultSet) }
+    shared_examples_for 'Market responses' do
+      subject { response[0] }
 
+      it { is_expected.to be_a(Bitex::JsonApi::Transaction) }
+
+      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
+      its(:id) { is_expected.to eq(orderbook_code.to_s) }
+      its(:type) { is_expected.to eq(resource_name) }
+    end
+
+    shared_examples_for 'Market transactions' do
+      it { is_expected.to be_a(Array) }
+
+      its(:'sample.attributes.keys') { is_expected.to contain_exactly(*%w[type id timestamp price amount]) }
       its(:'sample.type') { is_expected.to eq('transactions') }
     end
 
     context 'without filter', vcr: { cassette_name: 'market_transactions' } do
       let(:response) { client.markets.transactions(orderbook_code) }
 
-      it { expect(response.uri.query).to be_nil }
-
-      it_behaves_like 'market transactions'
+      it_behaves_like 'Market responses'
+      it_behaves_like 'Market transactions'
 
       it 'has all transactions' do
         expect(Time.at(subject[0].timestamp)).to eq(24.hours.ago)
@@ -136,9 +126,8 @@ describe Bitex::JsonApi::Market do
       let(:response) { client.markets.transactions(orderbook_code, from: from) }
       let(:from) { 6 }
 
-      it { expect(URI.unescape(response.uri.query)).to eq("filter[from]=#{from}") }
-
-      it_behaves_like 'market transactions'
+      it_behaves_like 'Market responses'
+      it_behaves_like 'Market transactions'
 
       it 'has reducted to last 6 hours' do
         expect(Time.at(subject[0].timestamp)).to eq(6.hours.ago)
@@ -148,40 +137,44 @@ describe Bitex::JsonApi::Market do
   end
 
   describe '.candles' do
-    subject { response[0] }
+    subject { response[0].candles }
 
-    shared_examples_for 'market candles' do
-      it { expect(response.uri.path).to eq("/api/markets/#{orderbook_code}/candles") }
-      it { expect(response).to be_a(JsonApiClient::ResultSet) }
+    shared_examples_for 'Market responses' do
+      subject { response[0] }
 
-      its(:'candles.sample.type') { is_expected.to eq('candles') }
+      it { is_expected.to be_a(Bitex::JsonApi::Candle) }
+
+      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
+      its(:id) { is_expected.to eq(orderbook_code.to_s) }
+      its(:type) { is_expected.to eq(resource_name) }
+    end
+
+    shared_examples_for 'Market candles' do
+      it { is_expected.to be_a(Array) }
+
+      its(:'sample.attributes.keys') { is_expected.to contain_exactly(*%w[type id timestamp low open close high volume price_before_last vwap]) }
+      its(:'sample.type') { is_expected.to eq('candles') }
     end
 
     context 'without filter', vcr: { cassette_name: 'market_candles' } do
       let(:response) { client.markets.candles(orderbook_code) }
 
-      it_behaves_like 'market candles'
-
-      it { response.uri.query.should be_nil }
+      it_behaves_like 'Market responses'
+      it_behaves_like 'Market candles'
     end
 
     context 'with from filter', vcr: { cassette_name: 'market_candles_with_from' } do
+      let(:response) { client.markets.candles(orderbook_code, from: from) }
       let(:from) { 7 }
 
-      let(:response) { client.markets.candles(orderbook_code, from: from) }
-
-      it_behaves_like 'market candles'
-
-      it { URI.unescape(response.uri.query).should eq "filter[from]=#{from}"  }
+      it_behaves_like 'Market responses'
+      it_behaves_like 'Market candles'
 
       context 'and with span query', vcr: { cassette_name: 'market_candles_with_span' } do
+        let(:response) { client.markets.candles(orderbook_code, from: from, span: span) }
         let(:span) { 24 }
 
-        let(:response) { client.markets.candles(orderbook_code, from: from, span: span) }
-
-        it_behaves_like 'market candles'
-
-        it { URI.unescape(response.uri.query).should eq "filter[from]=#{from}&span=#{span}" }
+        it_behaves_like 'Market candles'
       end
     end
   end

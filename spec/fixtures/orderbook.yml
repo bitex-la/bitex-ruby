@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sandbox.bitex.la/api/orderbooks
+    uri: https://bitex.la/api/orderbooks
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 09 Oct 2018 13:37:33 GMT
+      - Wed, 10 Oct 2018 19:58:26 GMT
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Transfer-Encoding:
@@ -29,8 +29,8 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d1746f8c2f42d3a21b23d029575f3d2081539092252; expires=Wed, 09-Oct-19
-        13:37:32 GMT; path=/; domain=.bitex.la; HttpOnly
+      - __cfduid=dc6811e7381be655d18c5c2272ae5b83b1539201505; expires=Thu, 10-Oct-19
+        19:58:25 GMT; path=/; domain=.bitex.la; HttpOnly
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -42,9 +42,9 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 7c8bd6af-8078-45a7-af46-f5295a3eee3c
+      - b5849d73-76f2-4b60-9801-81156789f532
       X-Runtime:
-      - '0.004942'
+      - '0.004996'
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
       Expect-Ct:
@@ -52,13 +52,10 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 46713e135f5f67a3-EZE
+      - 467ba9647d496845-EZE
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[
-        {"id":"1",
-        "type":"orderbooks",
-        "attributes":{"code":"btc_usd","base":{"code":"btc","decimals":8},"quote":{"code":"usd","decimals":2}}},{"id":"5","type":"orderbooks","attributes":{"code":"btc_ars","base":{"code":"btc","decimals":8},"quote":{"code":"ars","decimals":2}}},{"id":"8","type":"orderbooks","attributes":{"code":"bch_usd","base":{"code":"bch","decimals":8},"quote":{"code":"usd","decimals":2}}},{"id":"11","type":"orderbooks","attributes":{"code":"btc_clp","base":{"code":"btc","decimals":8},"quote":{"code":"clp","decimals":2}}},{"id":"10","type":"orderbooks","attributes":{"code":"btc_pyg","base":{"code":"btc","decimals":8},"quote":{"code":"pyg","decimals":2}}},{"id":"12","type":"orderbooks","attributes":{"code":"btc_uyu","base":{"code":"btc","decimals":8},"quote":{"code":"uyu","decimals":2}}}]}'
+      string: '{"data":[{"id":"1","type":"orderbooks","attributes":{"code":"btc_usd","base":{"code":"btc","decimals":8},"quote":{"code":"usd","decimals":2}}},{"id":"5","type":"orderbooks","attributes":{"code":"btc_ars","base":{"code":"btc","decimals":8},"quote":{"code":"ars","decimals":2}}},{"id":"8","type":"orderbooks","attributes":{"code":"bch_usd","base":{"code":"bch","decimals":8},"quote":{"code":"usd","decimals":2}}},{"id":"11","type":"orderbooks","attributes":{"code":"btc_clp","base":{"code":"btc","decimals":8},"quote":{"code":"clp","decimals":2}}},{"id":"10","type":"orderbooks","attributes":{"code":"btc_pyg","base":{"code":"btc","decimals":8},"quote":{"code":"pyg","decimals":2}}},{"id":"12","type":"orderbooks","attributes":{"code":"btc_uyu","base":{"code":"btc","decimals":8},"quote":{"code":"uyu","decimals":2}}}]}'
     http_version: 
-  recorded_at: Tue, 09 Oct 2018 13:37:32 GMT
+  recorded_at: Wed, 10 Oct 2018 19:58:25 GMT
 recorded_with: VCR 4.0.0
