@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bitex.la/api/markets/btc_usd/transactions
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/transactions?filter%5Bfrom%5D=6
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 09 Oct 2018 18:59:21 GMT
+      - Tue, 09 Oct 2018 20:11:33 GMT
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Transfer-Encoding:
@@ -29,8 +29,8 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d32a1e09e6fa8986983c8102932aa90841539111561; expires=Wed, 09-Oct-19
-        18:59:21 GMT; path=/; domain=.bitex.la; HttpOnly
+      - __cfduid=dceb40cef6ee46c9497527cd26bf9671e1539115893; expires=Wed, 09-Oct-19
+        20:11:33 GMT; path=/; domain=.bitex.la; HttpOnly
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -38,13 +38,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Etag:
-      - W/"a064c4255ef30359a3d9dcc157855648"
+      - W/"c7ddb71d0e65b039374b1e457ee5775a"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - c1048754-a44c-497f-832f-3c5db6a1fa71
+      - 103582f7-8f3c-433b-9732-e7dd5039fe9b
       X-Runtime:
-      - '0.010719'
+      - '0.009780'
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
       Expect-Ct:
@@ -52,10 +52,10 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 467315798a5e679d-EZE
+      - 46737f3dbd0c682d-EZE
     body:
       encoding: ASCII-8BIT
-      string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":null},"transactions":{"data":[{"id":"79","type":"transactions"},{"id":"78","type":"transactions"},{"id":"77","type":"transactions"},{"id":"76","type":"transactions"}]},"bids":{"data":null},"asks":{"data":null}}},"included":[{"id":"79","type":"transactions","attributes":{"timestamp":1535380533,"price":10000.0,"amount":1.49999999}},{"id":"78","type":"transactions","attributes":{"timestamp":1535423733,"price":10000.0,"amount":0.50000001}},{"id":"77","type":"transactions","attributes":{"timestamp":1535445333,"price":10000.0,"amount":0.49999999}},{"id":"76","type":"transactions","attributes":{"timestamp":1535456133,"price":9000.0,"amount":0.55555556}}]}'
+      string: '{"data":{"id":"btc_usd","type":"markets","relationships":{"candles":{"data":null},"transactions":{"data":[{"id":"77","type":"transactions"},{"id":"76","type":"transactions"}]},"bids":{"data":null},"asks":{"data":null}}},"included":[{"id":"77","type":"transactions","attributes":{"timestamp":1535445333,"price":10000.0,"amount":0.49999999}},{"id":"76","type":"transactions","attributes":{"timestamp":1535456133,"price":9000.0,"amount":0.55555556}}]}'
     http_version: 
   recorded_at: Tue, 28 Aug 2018 14:35:33 GMT
 recorded_with: VCR 4.0.0

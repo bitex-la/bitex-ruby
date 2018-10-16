@@ -6,27 +6,29 @@ describe Bitex::JsonApi::Market do
   let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
 
   describe '.find' do
-    subject { response[0] }
+    context 'with raise condition' do
+      subject { -> { response } }
 
-    context 'with invalid orderbook code' do
-      let(:response) { client.markets.find('invalid_orderbook_code') }
+      context 'with invalid orderbook code' do
+        let(:response) { client.markets.find('invalid_orderbook_code') }
 
-      it { expect { response }.to raise_exception(Bitex::UnknownOrderBook) }
-    end
-
-    context 'with invalid resources' do
-      let(:response) { client.markets.find(orderbook_code, from: from) }
-
-      context 'with no numeric value' do
-        let(:from) { '1234' }
-
-        it { expect { response }.to raise_exception(Bitex::InvalidResourceArgument) }
+        it { is_expected.to raise_exception(Bitex::UnknownOrderBook) }
       end
 
-      context 'with negative number' do
-        let(:from) { -3 }
+      context 'with invalid resources' do
+        let(:response) { client.markets.find(orderbook_code, from: from) }
 
-        it { expect { response }.to raise_exception(Bitex::InvalidResourceArgument) }
+        context 'with no numeric value' do
+          let(:from) { '1234' }
+
+          it { is_expected.to raise_exception(Bitex::InvalidResourceArgument) }
+        end
+
+        context 'with negative number' do
+          let(:from) { -3 }
+
+          it { is_expected.to raise_exception(Bitex::InvalidResourceArgument) }
+        end
       end
     end
 
@@ -40,13 +42,13 @@ describe Bitex::JsonApi::Market do
       end
 
       context 'without resources parameters', vcr: { cassette_name: 'market' } do
-        let(:response) { client.markets.find(orderbook_code) }
+        subject { client.markets.find(orderbook_code) }
 
         it_behaves_like 'Market responses'
       end
 
       context 'about included resources' do
-        let(:response) { client.markets.find(orderbook_code, resource) }
+        subject { client.markets.find(orderbook_code, resource) }
 
         context 'asks', vcr: { cassette_name: 'market_with_asks' } do
           let(:resource) { :asks }
@@ -89,23 +91,23 @@ describe Bitex::JsonApi::Market do
 
     let(:time) { Time.at(1535466933) }
 
-    subject { response[0].transactions }
-
-    shared_examples_for 'Market responses' do
-      subject { response[0] }
-
-      it { is_expected.to be_a(Bitex::JsonApi::Transaction) }
-
-      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
-      its(:id) { is_expected.to eq(orderbook_code.to_s) }
-      its(:type) { is_expected.to eq(resource_name) }
-    end
+    subject { response.transactions }
 
     shared_examples_for 'Market transactions' do
       it { is_expected.to be_a(Array) }
 
       its(:'sample.attributes.keys') { is_expected.to contain_exactly(*%w[type id timestamp price amount]) }
       its(:'sample.type') { is_expected.to eq('transactions') }
+    end
+
+    shared_examples_for 'Market responses' do
+      subject { response }
+
+      it { is_expected.to be_a(Bitex::JsonApi::Transaction) }
+
+      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
+      its(:id) { is_expected.to eq(orderbook_code.to_s) }
+      its(:type) { is_expected.to eq(resource_name) }
     end
 
     context 'without filter', vcr: { cassette_name: 'market_transactions' } do
@@ -137,23 +139,23 @@ describe Bitex::JsonApi::Market do
   end
 
   describe '.candles' do
-    subject { response[0].candles }
-
-    shared_examples_for 'Market responses' do
-      subject { response[0] }
-
-      it { is_expected.to be_a(Bitex::JsonApi::Candle) }
-
-      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
-      its(:id) { is_expected.to eq(orderbook_code.to_s) }
-      its(:type) { is_expected.to eq(resource_name) }
-    end
+    subject { response.candles }
 
     shared_examples_for 'Market candles' do
       it { is_expected.to be_a(Array) }
 
       its(:'sample.attributes.keys') { is_expected.to contain_exactly(*%w[type id timestamp low open close high volume price_before_last vwap]) }
       its(:'sample.type') { is_expected.to eq('candles') }
+    end
+
+    shared_examples_for 'Market responses' do
+      subject { response }
+
+      it { is_expected.to be_a(Bitex::JsonApi::Candle) }
+
+      its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id]) }
+      its(:id) { is_expected.to eq(orderbook_code.to_s) }
+      its(:type) { is_expected.to eq(resource_name) }
     end
 
     context 'without filter', vcr: { cassette_name: 'market_candles' } do

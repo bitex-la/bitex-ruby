@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bitex.la/api/markets/btc_usd?include=bids
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd?include=bids
     body:
       encoding: US-ASCII
       string: ''

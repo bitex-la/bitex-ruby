@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bitex.la/api/markets/btc_usd/candles?filter%5Bfrom%5D=7
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/candles?filter%5Bfrom%5D=7
     body:
       encoding: US-ASCII
       string: ''
