@@ -26,7 +26,7 @@ describe Bitex::JsonApi::ApiKey do
 
       let(:code) { '984176' }
 
-      context 'with read level api key client', vcr: { cassette_name: 'unauthorized_api_key_client' } do
+      context 'with read level api key client', vcr: { cassette_name: 'api_keys/unauthorized' } do
         subject { -> { client.api_keys.create(write: level, otp_code: code) } }
 
         let(:key) { read_api_key }
@@ -53,13 +53,13 @@ describe Bitex::JsonApi::ApiKey do
           its(:token) { is_expected.to be_present }
         end
 
-        context 'a new read level api key', vcr: { cassette_name: 'new_read_level_api_key' } do
+        context 'a new read level api key', vcr: { cassette_name: 'api_keys/new_read_level' } do
           let(:level) { read_level }
 
           it_behaves_like 'New API Key'
         end
 
-        context 'a new write level api key', vcr: { cassette_name: 'new_write_level_api_key' } do
+        context 'a new write level api key', vcr: { cassette_name: 'api_keys/new_write_level' } do
           let(:level) { write_level }
 
           it_behaves_like 'New API Key'
