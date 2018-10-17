@@ -2,7 +2,7 @@ module Bitex
   module JsonApi
     # Generic base resource for Bitex resources.
     class Base < JsonApiClient::Resource
-      self.site = 'https://bitex.la/api/'
+      self.site = 'https://dev.bitex.la:3000/api/'
 
       # type: [:public, :private]
       def self.request(type)
