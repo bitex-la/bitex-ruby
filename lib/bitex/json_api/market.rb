@@ -80,6 +80,7 @@ module Bitex
       def self.valid_argument?(arg)
         return true unless arg.present?
         return false unless arg.is_a?(Numeric)
+
         arg.positive?
       end
 
