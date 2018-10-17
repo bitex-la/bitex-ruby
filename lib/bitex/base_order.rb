@@ -53,8 +53,8 @@ module Bitex
 
     # @visibility private
     def self.create!(order_book, amount, price, wait = false)
-      order_book_id = ORDER_BOOKS[order_book]
-      raise UnknownOrderBook, "Could not find order book #{order_book}" unless order_book_id
+      order_book_id = ORDERBOOKS[order_book]
+      raise UnknownOrderbook, "Could not find order book #{order_book}" unless order_book_id
 
       params = { amount: amount, price: price, orderbook: order_book_id }
 
@@ -93,7 +93,7 @@ module Bitex
     end
 
     def self.order_books
-      ORDER_BOOKS.invert
+      ORDERBOOKS.invert
     end
 
     def self.reasons

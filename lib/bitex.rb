@@ -21,19 +21,22 @@ Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 
 # Documentation here!
 module Bitex
-  ORDER_BOOKS = { btc_usd: 1, btc_ars: 5, bch_usd: 8, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
+  ORDERBOOKS = { btc_usd: 1, btc_ars: 5, bch_usd: 8, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
 
   mattr_accessor :api_key
   mattr_accessor :sandbox
   mattr_accessor :debug
   mattr_accessor :ssl_version
 
-  class UnknownOrderBook < StandardError
+  class UnknownOrderbook < StandardError
   end
 
   class InvalidArgument < StandardError
   end
 
   class InvalidResourceArgument < StandardError
+  end
+
+  class MalformedOtpCode < StandardError
   end
 end

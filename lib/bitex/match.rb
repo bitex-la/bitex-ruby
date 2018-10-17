@@ -19,7 +19,7 @@ module Bitex
     # rubocop:enable Metrics/AbcSize
 
     def self.order_books
-      ORDER_BOOKS.invert
+      ORDERBOOKS.invert
     end
 
     private_class_method :order_books
