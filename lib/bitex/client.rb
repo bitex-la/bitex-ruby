@@ -3,23 +3,41 @@ module Bitex
   class Client
     attr_accessor :api_key, :sandbox, :debug, :ssl_version
 
-    def initialize(api_key:, sandbox: false, debug: false, ssl_version: nil)
+    def initialize(api_key: nil, sandbox: false, debug: false, ssl_version: nil)
       @api_key = api_key
       @sandbox = sandbox
       @debug = debug
       @ssl_version = ssl_version
     end
 
+    def accounts
+      with_client { JsonApi::Account }
+    end
+
     def markets
-      @markets ||= JsonApi::Market
+      with_client { JsonApi::Market }
     end
 
     def tickers
-      @tickers ||= JsonApi::Ticker
+      with_client { JsonApi::Ticker }
     end
 
-    def order_books
-      @order_books ||= JsonApi::OrderBook
+    def orderbooks
+      with_client { JsonApi::Orderbook }
+    end
+
+    def api_keys
+      with_client { JsonApi::ApiKey }
+    end
+
+    private
+
+    def with_client
+      Bitex.api_key = self.api_key
+      Bitex.sandbox = self.sandbox
+      Bitex.debug = self.debug
+      Bitex.ssl_version = self.ssl_version
+      yield
     end
   end
 
