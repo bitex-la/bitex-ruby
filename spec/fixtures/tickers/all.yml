@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bitex.la/api/tickers
+    uri: https://dev.bitex.la:3000/api/tickers
     body:
       encoding: US-ASCII
       string: ''

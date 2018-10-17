@@ -8,6 +8,9 @@ module Bitex
       #
       # @return JsonApiClient::ResultSet. It has the server response.
       # self.all
+      def self.all
+        super[0]
+      end
 
       # GET /api/tickers/:orderbook_code
       #
@@ -17,16 +20,16 @@ module Bitex
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and in its only element, market parsed to json api.
       def self.find(order_book_code)
-        raise UnknownOrderBook unless valid_code?(order_book_code)
+        raise UnknownOrderbook unless valid_code?(order_book_code)
 
-        request(:public) { super(order_book_code) }
+        request(:public) { super(order_book_code) }[0]
       end
 
       # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
       # @return [true] if order book code is valid.
       def self.valid_code?(order_book_code)
-        ORDER_BOOKS.include?(order_book_code)
+        ORDERBOOKS.include?(order_book_code)
       end
 
       private_class_method :valid_code?
