@@ -33,10 +33,10 @@ module Bitex
     private
 
     def with_client
-      Bitex.api_key = self.api_key
-      Bitex.sandbox = self.sandbox
-      Bitex.debug = self.debug
-      Bitex.ssl_version = self.ssl_version
+      Bitex.api_key = api_key
+      Bitex.sandbox = sandbox
+      Bitex.debug = debug
+      Bitex.ssl_version = ssl_version
       yield
     end
   end
