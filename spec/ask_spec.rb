@@ -1,36 +1,75 @@
 require 'spec_helper'
 
-describe Bitex::Ask do
-  let(:as_json) do
-    [
-      1,         #  0 - API class reference
-      12345678,  #  1 - id
-      946685400, #  2 - created_at
-      1,         #  3 - order_book
-      100.0,     #  4 - quantity
-      100.0,     #  5 - remaining_quantity
-      1000.0,    #  6 - price
-      1,         #  7 - status
-      0,         #  8 - reason
-      10.0,      #  9 - produced_amount
-      'User#1'   # 10 - issuer
-    ]
-  end
+describe Bitex::JsonApi::Ask do
+  let(:client) { Bitex::Client.new(api_key: key) }
+  let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
+  let(:valid_orderbook_code) { :btc_usd }
+  let(:invalid_orderbook_code) { :invalid_orderbook_code }
+  let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
+  let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
 
-  it_behaves_like 'API class'
-  it_behaves_like 'API class with a order book'
-  it_behaves_like 'JSON deserializable order'
+  describe '.create' do
+    subject { client.asks.create(orderbook_code: orderbook_code, amount: amount, price: price) }
 
-  describe 'Api calls' do
-    before(:each) { Bitex.api_key = 'valid_api_key' }
-    it_behaves_like 'Order', 'asks'
-  end
+    let(:amount) { 100.23 }
+    let(:price) { 50.2 }
 
-  { quantity: 100.0, remaining_quantity: 100.0, produced_amount: 10.0 }.each do |field, value|
-    it "sets #{field} as BigDecimal" do
-      thing = subject.class.from_json(as_json).send(field)
-      thing.should be_a BigDecimal
-      thing.should == value
+    context 'with invalid orderbook code' do
+      let(:orderbook_code) { invalid_orderbook_code }
+      let(:key) { :we_dont_care }
+
+      it { expect { subject }.to raise_exception(Bitex::UnknownOrderbook) }
+    end
+
+    context 'with valid orderbook code' do
+      let(:orderbook_code) { valid_orderbook_code }
+
+      context 'with unauthorized level key', vcr: { cassette_name: 'asks/create/unauthorized_key' } do
+        let(:key) { read_level_key }
+
+        it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotAuthorized) }
+      end
+
+      context 'with authorized level key' do
+        let(:key) { write_level_key }
+
+        shared_examples_for 'Ask' do
+          it { is_expected.to be_a(described_class) }
+
+          its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id amount remaining_amount price status]) }
+          its(:type) { is_expected.to eq(resource_name) }
+          its(:amount) { is_expected.to eq(amount) }
+          its(:price) { is_expected.to eq(price) }
+        end
+
+        context 'with zero amount' do
+          let(:amount) { 0 }
+
+          it { expect { subject }.to raise_exception(Bitex::InvalidArgument) }
+        end
+
+        context 'with amounts lower than allowed' do
+          let(:amount) { 0.00_000_001 }
+
+          it { expect { subject }.to raise_exception(Bitex::OrderNotPlaced) }
+        end
+
+        context 'insufficient funds', vcr: { cassette_name:  'asks/create/insufficient_funds' } do
+          let(:amount) { 12_000_000 }
+
+          it_behaves_like 'Ask'
+
+          its(:status) { is_expected.to eq('cancelled') }
+          its(:remaining_amount) { is_expected.to eq(amount) }
+        end
+
+        context 'enough funds', vcr: { cassette_name: 'asks/create/successful' } do
+          it_behaves_like 'Ask'
+
+          its(:status) { is_expected.to eq('executing') }
+          its(:remaining_amount) { is_expected.to eq(41.40_647_059) }
+        end
+      end
     end
   end
 end
