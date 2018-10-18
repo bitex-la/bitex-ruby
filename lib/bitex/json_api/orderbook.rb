@@ -1,10 +1,10 @@
 module Bitex
   module JsonApi
-    # Overview of current order books resume.
+    # Overview of current orderbooks resume.
     class Orderbook < Base
       # GET /api/orderbooks
       #
-      # Get all order books with your codes, base and quotes currencies.
+      # Get all orderbooks with your codes, base and quotes currencies.
       #
       # @return JsonApiClient::ResultSet. It has the server response.
       # self.all

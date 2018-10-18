@@ -24,11 +24,14 @@ module Bitex
 
       # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
-      # @return [true] if order book code is valid.
+      # @return [true] if orderbook code is valid.
       def self.valid_code?(orderbook_code)
         ORDERBOOKS.include?(orderbook_code)
       end
 
+      # @param [Float|Decimal] amount.
+      #
+      # @return [true] if amount isn't zero or negative.
       def self.valid_amount?(amount)
         amount.positive?
       end

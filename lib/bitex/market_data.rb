@@ -9,7 +9,7 @@ module Bitex
       api_get('/market/ticker').symbolize_keys
     end
 
-    # The species order book as a Hash with two keys: bids and asks.
+    # The species orderbook as a Hash with two keys: bids and asks.
     # Each of them is a list of list consisting of [price, quantity]
     # @see https://bitex.la/developers#orderbook
     def self.order_book

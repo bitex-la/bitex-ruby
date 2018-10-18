@@ -14,15 +14,15 @@ module Bitex
       #   /api/markets/:orderbook_code/transactions and /api/markets/:orderbook_code/candles respectively.
       # To get all possible orderbook_codes check Orderbooks.
       #
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Array<Symbol>] resources. Values:  [:bids, :asks, :candles, :transactions]
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and in its only element, market parsed to json api.
-      def self.find(order_book_code, *resources)
-        raise UnknownOrderbook unless valid_code?(order_book_code)
+      def self.find(orderbook_code, *resources)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidResourceArgument unless valid_resources?(*resources)
 
-        request(:public) { includes(*resources).find(order_book_code) }[0]
+        request(:public) { includes(*resources).find(orderbook_code) }[0]
       end
 
       # GET /api/markets/:orderbook_code/candles
@@ -34,16 +34,16 @@ module Bitex
       #   Query param:
       #     span: timespan for each candle. default = 1
       #
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Integer] from. Values: 1..+
       # @param [Integer] span. Values: 1..+
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and all candles parsed to json api.
-      def self.candles(order_book_code, from: nil, span: nil)
-        raise UnknownOrderbook unless valid_code?(order_book_code)
+      def self.candles(orderbook_code, from: nil, span: nil)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidArgument unless valid_argument?(from) && valid_argument?(span)
 
-        params = { market_id: order_book_code }.tap { |hash| hash.merge!(from: from) if from.present? }
+        params = { market_id: orderbook_code }.tap { |hash| hash.merge!(from: from) if from.present? }
         query = Candle.where(params)
         request(:public) { (span.present? ? query.with_params(span: span) : query).all }[0]
       end
@@ -55,23 +55,23 @@ module Bitex
       # filter:
       #   from: number of hours from where you want the transactions to be retrieved. default = 1
       #
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       # @param [Integer] from. Values: 1..+
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and all transactions parsed to json api.
-      def self.transactions(order_book_code, from: nil)
-        raise UnknownOrderbook unless valid_code?(order_book_code)
+      def self.transactions(orderbook_code, from: nil)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidArgument unless valid_argument?(from)
 
-        params = { market_id: order_book_code }.tap { |hash| hash.merge!(from: from) if from.present? }
+        params = { market_id: orderbook_code }.tap { |hash| hash.merge!(from: from) if from.present? }
         request(:public) { Transaction.where(params).all }[0]
       end
 
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
-      # @return [true] if order book code is valid.
-      def self.valid_code?(order_book_code)
-        ORDERBOOKS.include?(order_book_code)
+      # @return [true] if orderbook code is valid.
+      def self.valid_code?(orderbook_code)
+        ORDERBOOKS.include?(orderbook_code)
       end
 
       # @param [Integer|Float] arg. values: 0..+

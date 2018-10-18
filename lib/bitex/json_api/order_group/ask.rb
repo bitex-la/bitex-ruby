@@ -28,7 +28,7 @@ module Bitex
 
         # TODO BEGIN make it synchronous and atomic
         order = request(:private) { super(market_id: orderbook_code, amount: amount, price: price) }
-        raise OrderNotPlaced unless order.try(:id).present?
+        raise OrderNotPlaced.new(order.errors.full_messages.join) if order.errors.present?
 
         find(orderbook_code: orderbook_code, id: order.id)
       end

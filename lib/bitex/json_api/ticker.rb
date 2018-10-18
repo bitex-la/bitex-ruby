@@ -16,20 +16,20 @@ module Bitex
       #
       # Get the ticker of a market.
       #
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and in its only element, market parsed to json api.
-      def self.find(order_book_code)
-        raise UnknownOrderbook unless valid_code?(order_book_code)
+      def self.find(orderbook_code)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        request(:public) { super(order_book_code) }[0]
+        request(:public) { super(orderbook_code) }[0]
       end
 
-      # @param [Symbol] order_book_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
+      # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
       #
-      # @return [true] if order book code is valid.
-      def self.valid_code?(order_book_code)
-        ORDERBOOKS.include?(order_book_code)
+      # @return [true] if orderbook code is valid.
+      def self.valid_code?(orderbook_code)
+        ORDERBOOKS.include?(orderbook_code)
       end
 
       private_class_method :valid_code?

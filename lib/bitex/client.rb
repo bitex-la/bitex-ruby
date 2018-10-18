@@ -14,6 +14,10 @@ module Bitex
       with_client { JsonApi::Account }
     end
 
+    def asks
+      with_client { JsonApi::Ask }
+    end
+
     def markets
       with_client { JsonApi::Market }
     end

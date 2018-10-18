@@ -39,4 +39,7 @@ module Bitex
 
   class MalformedOtpCode < StandardError
   end
+
+  class OrderNotPlaced < StandardError
+  end
 end

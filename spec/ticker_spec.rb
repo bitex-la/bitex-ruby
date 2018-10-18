@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bitex::JsonApi::Ticker do
   let(:client) { Bitex::Client.new }
-  let(:order_book_code) { :btc_usd }
+  let(:orderbook_code) { :btc_usd }
   let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
 
   describe '.all', vcr: { cassette_name: 'tickers/all' } do
@@ -11,7 +11,7 @@ describe Bitex::JsonApi::Ticker do
     it { is_expected.to be_a(described_class) }
 
     its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id price]) }
-    its(:id) { is_expected.to eq(order_book_code.to_s) }
+    its(:id) { is_expected.to eq(orderbook_code.to_s) }
     its(:type) { is_expected.to eq(resource_name.singularize) }
   end
 
@@ -23,7 +23,7 @@ describe Bitex::JsonApi::Ticker do
     end
 
     context 'with valid orderbook code', vcr: { cassette_name: 'tickers/ticker' } do
-      subject { client.tickers.find(order_book_code) }
+      subject { client.tickers.find(orderbook_code) }
 
       its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id last open high low vwap volume bid ask price_before_last]) }
       its(:type) { is_expected.to eq(resource_name) }

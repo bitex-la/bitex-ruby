@@ -48,10 +48,10 @@ describe Bitex::JsonApi::Ask do
           it { expect { subject }.to raise_exception(Bitex::InvalidArgument) }
         end
 
-        context 'with amounts lower than allowed' do
+        context 'with amounts lower than allowed', vcr: { cassette_name: 'asks/create/lower_amount' } do
           let(:amount) { 0.00_000_001 }
 
-          it { expect { subject }.to raise_exception(Bitex::OrderNotPlaced) }
+          it { expect { subject }.to raise_exception(Bitex::OrderNotPlaced).with_message('La orden es muy pequeña') }
         end
 
         context 'insufficient funds', vcr: { cassette_name:  'asks/create/insufficient_funds' } do

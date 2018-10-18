@@ -7,16 +7,14 @@ describe Bitex::JsonApi::Market do
 
   describe '.find' do
     context 'with raise condition' do
-      subject { -> { response } }
-
       context 'with invalid orderbook code' do
-        let(:response) { client.markets.find('invalid_orderbook_code') }
+        subject { -> { client.markets.find('invalid_orderbook_code') } }
 
         it { is_expected.to raise_exception(Bitex::UnknownOrderbook) }
       end
 
       context 'with invalid resources' do
-        let(:response) { client.markets.find(orderbook_code, from: from) }
+        subject { -> { client.markets.find(orderbook_code, from: from) } }
 
         context 'with no numeric value' do
           let(:from) { '1234' }
