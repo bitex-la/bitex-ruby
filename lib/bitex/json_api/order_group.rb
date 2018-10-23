@@ -1,25 +1,57 @@
 module Bitex
   module JsonApi
     # Abstract class for Bids and Asks.
-    # order: [:bids, :asks]
     class OrderGroup < Base
-      # POST /api/markets/:orderbook_code/:order
+      belongs_to :market
+
+      # GET /api/markets/:orderbook_code/[asks|bids]/:id
+      #
+      # @param [Symbol] orderbook_code. Values: Bitex::ORDERBOOKS.keys
+      # @param [String|Integer] id.
+      #
+      # @return [Ask|Bid]
+      def self.find(orderbook_code:, id:)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
+
+        request(:private) { where(market_id: orderbook_code).find(id) }[0]
+      end
+
+      # POST /api/markets/:orderbook_code/[asks|bids]
       #
       # @param [Symbol] orderbook_code. Values: Bitex::ORDERBOOKS.keys
       # @param [BigDecimal] amount.
       # @param [BigDecimal] price.
       #
-      # See subclass specification.
+      # @return [Ask|Bid]
+      def self.create(orderbook_code:, amount:, price:)
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
+        raise InvalidArgument unless valid_amount?(amount)
 
-      # POST /api/markets/:orderbook_code/:order/cancel
+        order = request(:private) { super(market_id: orderbook_code, amount: amount, price: price) }
+        raise OrderNotPlaced, order.errors.full_messages.join if order.errors.present?
+
+        # TODO: polling to find status different as received
+        find(orderbook_code: orderbook_code, id: order.id)
+      end
+
+      custom_endpoint :cancel, on: :collection, request_method: :post
+      # POST /api/markets/:orderbook_code/[asks|bids]/cancel
       #
-      # Schedules a order for cancelation as soon as our Matching Engine unlocks it.
-      # It sets the order status to "To be cancelled (3)" immediately,
-      # and then you can check your Orders to see when it's actually cancelled.
+      # This action represents an intention to cancel an [Ask|Bid].
+      # Despite of this endpoint responding with a 204 status, the Ask may not have been cancelled if it was previously matched.
+      # In order to check the status of the ask, you can query all your active orders with the /api/orders endpoint.
       #
-      # See subclass specification.
-      def self.cancel(orderbook_code:, id:)
-        where(market_id: orderbook_code).find(id).cancel!
+      # @param [Symbol] orderbook_code. Values: Bitex::ORDERBOOKS.keys
+      # @param [Integer] id.
+      def self.cancel!(orderbook_code:, ids: [])
+        raise UnknownOrderbook unless valid_code?(orderbook_code)
+
+        request(:private) { cancel(market_id: :btc_usd, _json: json_api_body_parser(ids)) }
+      end
+
+      # @return [String] resource type name.
+      def self.resource_type
+        name.demodulize.underscore.pluralize
       end
 
       # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu
@@ -35,6 +67,22 @@ module Bitex
       def self.valid_amount?(amount)
         amount.positive?
       end
+
+      # @param [Array<String|Integer>] ids.
+      #
+      # @return [Hash] as Json API list data.
+      def self.json_api_body_parser(ids)
+        ids.map { |id| to_json_api_body(id) }
+      end
+
+      # @param [String|Integer] id.
+      #
+      # @return [Hash] as Json API data structure.
+      def self.to_json_api_body(id)
+        { data: { type: resource_type, id: id } }
+      end
+
+      private_class_method :valid_code?, :valid_amount?, :cancel, :json_api_body_parser, :to_json_api_body
     end
   end
 end

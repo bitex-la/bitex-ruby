@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://dev.bitex.la:3000/api/markets/btc_usd/asks/99
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids/99
     body:
       encoding: US-ASCII
       string: ''
@@ -33,17 +33,17 @@ http_interactions:
       Cache-Control:
       - no-cache
       Set-Cookie:
-      - _bitex_la_session=RG91MHkxei9xWC9pQUhlWVI5ODBWOStvZFpPN0pycEdnbURORnREcG9PTyswbU02YldiK0l4NTFIMnFzWTJkNjRUS2YrZk91K2NuTTNUZ1FEZkh3ZWs1UkxuL2ZaQmoyT2dJM2JiYnc3L21TM1FMSlRvNisxcXJBQlFlOXdWWk5waG5IclhWZXE4M1RzS1hJMFZBQ0Q3eDl1NXhKWStCTWhhajlrR3lpdkNjPS0tWkJ1aWlyTGpjekxQZDFpaC9PQWVWZz09--d46613d3d88e8ec228514a9307e8f6878dbaffaf;
+      - _bitex_la_session=ajJDVEp0d0VHNVpMSFh2VGhOaWJUQ09NRk8rWjNnVTI4eWNPR1FHbjVseVREWVRRVzlhbWRMOExwT2tkNHdNNFZYS05aOE02alpUQmd6aWkvT3JCNE56Z1FLRFRGYjJjR1NGZXoxZy9xVXl5aXJnSGdvTlVoOW1aQnQ5c1hYcW5iWjM4SmdHdzFjOTBpQXNRQnY5UG5NamZ5SVlRVFh3TEFlaXhQZTE2eHpzPS0tczNHMDNxT096VGZ6WFczMTBwdHIrUT09--b68e3e50a0e08c0a509ad44b5a53609e0dc04e2b;
         path=/; HttpOnly
       X-Request-Id:
-      - 4f838c51-1912-411b-a5a2-bdd3a5e28c22
+      - 324f22f1-4b19-44fb-9557-3109e6676bf2
       X-Runtime:
-      - '0.378863'
+      - '0.275517'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: '{"errors":[{"detail":null}]}'
     http_version: 
-  recorded_at: Tue, 23 Oct 2018 15:56:36 GMT
+  recorded_at: Tue, 23 Oct 2018 15:51:45 GMT
 recorded_with: VCR 4.0.0

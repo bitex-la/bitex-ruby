@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"bids","attributes":{"type":"bids","market_id":"btc_usd","amount":1.0e-08,"price":50.2}}}'
+    headers:
+      Authorization:
+      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - _bitex_la_session=QVZPeXdrT0ppelhneWZxUFBsS2xYaWpYQU45eFB3NmJKNDViU1l3RDlabUZhMXdVU2d0S05BSmNGdEE4MVcxaHd3MWxJQjRmdkVQY0hXdzBpRzdzZXFaNkhPQ2NRWVFLYnJPaFM3Wlc5REhPWE8xUUptS3g0aDlSaFllUlZaSHNDRUYrQzVBeGFsUkthZWpPMTB4dFJRNHA2VkgyRlZiR0tQZzRlVXFPTVZFPS0tb1hwYTBRWUQ2ZFdzYUUzQ3JhWVo4dz09--cc2fe4e51eeea5b270e2e6f4c48d53ef7b14398a;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 17ba8104-8e11-422f-bb1f-80d9baff0b13
+      X-Runtime:
+      - '43.088395'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJlcnJvcnMiOlt7InN0YXR1cyI6NDIyLCJ0aXRsZSI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImRldGFpbCI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImNvZGUiOiJsYV9vcmRlbl9lc19tdXlfcGVxdWVuYSIsIm1ldGEiOnsidHlwZSI6ImJpZHMifSwic291cmNlIjp7InBvaW50ZXIiOiIvZGF0YS9hdHRyaWJ1dGVzL2Jhc2UifX1dfQ==
+    http_version: 
+  recorded_at: Tue, 23 Oct 2018 14:43:25 GMT
+recorded_with: VCR 4.0.0

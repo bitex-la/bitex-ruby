@@ -15,16 +15,30 @@ describe Bitex::JsonApi::Ask do
     its(:type) { is_expected.to eq(resource_name) }
   end
 
+  shared_examples_for 'Invalid orderbook code' do
+    let(:key) { :we_dont_care }
+    let(:orderbook_code) { invalid_orderbook_code }
+    let(:order_id) { :we_dont_care }
+
+    it { expect { subject }.to raise_exception(Bitex::UnknownOrderbook) }
+  end
+
+  shared_examples_for 'Non existent Ask' do
+    let(:order_id) { '99' }
+
+    it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotFound) }
+  end
+
+  shared_examples_for 'Not enough permissions' do
+    let(:key) { read_level_key }
+
+    it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotAuthorized) }
+  end
+
   describe '.find' do
     subject { client.asks.find(orderbook_code: orderbook_code, id: order_id) }
 
-    context 'with invalid orderbook code' do
-      let(:key) { :we_dont_care }
-      let(:orderbook_code) { invalid_orderbook_code }
-      let(:order_id) { :we_dont_care }
-
-      it { expect { subject }.to raise_exception(Bitex::UnknownOrderbook) }
-    end
+    it_behaves_like 'Invalid orderbook code'
 
     context 'with valid orderbook code' do
       let(:orderbook_code) { valid_orderbook_code }
@@ -33,17 +47,13 @@ describe Bitex::JsonApi::Ask do
         let(:key) { read_level_key }
 
         context 'with non-existent id', vcr: { cassette_name: 'asks/find/non_existent_id' } do
-          let(:order_id) { '99' }
-
-          it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotFound) }
+          it_behaves_like 'Non existent Ask'
         end
 
         context 'with any level key', vcr: { cassette_name: 'asks/find/successful' } do
           let(:order_id) { '22' }
 
           it_behaves_like 'Ask'
-
-          its(:status) { is_expected.to eq('executing') }
         end
       end
     end
@@ -55,20 +65,13 @@ describe Bitex::JsonApi::Ask do
     let(:amount) { 100.23 }
     let(:price) { 50.2 }
 
-    context 'with invalid orderbook code' do
-      let(:key) { :we_dont_care }
-      let(:orderbook_code) { invalid_orderbook_code }
-
-      it { expect { subject }.to raise_exception(Bitex::UnknownOrderbook) }
-    end
+    it_behaves_like 'Invalid orderbook code'
 
     context 'with valid orderbook code' do
       let(:orderbook_code) { valid_orderbook_code }
 
       context 'with unauthorized level key', vcr: { cassette_name: 'asks/create/unauthorized_key' } do
-        let(:key) { read_level_key }
-
-        it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotAuthorized) }
+        it_behaves_like 'Not enough permissions'
       end
 
       context 'with authorized level key' do
@@ -94,7 +97,6 @@ describe Bitex::JsonApi::Ask do
           its(:amount) { is_expected.to eq(amount) }
           its(:price) { is_expected.to eq(price) }
           its(:status) { is_expected.to eq('cancelled') }
-          its(:remaining_amount) { is_expected.to eq(amount) }
         end
 
         context 'enough funds', vcr: { cassette_name: 'asks/create/successful' } do
@@ -103,7 +105,43 @@ describe Bitex::JsonApi::Ask do
           its(:amount) { is_expected.to eq(amount) }
           its(:price) { is_expected.to eq(price) }
           its(:status) { is_expected.to eq('executing') }
-          its(:remaining_amount) { is_expected.to eq(41.40_647_059) }
+        end
+      end
+    end
+  end
+
+  describe '.cancel' do
+    subject { client.asks.cancel!(orderbook_code: orderbook_code, ids: [order_id]) }
+
+    it_behaves_like 'Invalid orderbook code'
+
+    context 'with valid orderbook code' do
+      let(:orderbook_code) { valid_orderbook_code }
+
+      context 'with unauthorized level key', vcr: { cassette_name: 'asks/cancel/unauthorized_key' } do
+        let(:order_id) { '22' }
+
+        it_behaves_like 'Not enough permissions'
+      end
+
+      context 'with authorized level key' do
+        let(:key) { write_level_key }
+
+        shared_examples_for 'Cancelling Ask' do
+          it { is_expected.to be_an(Array) }
+          it { is_expected.to be_empty }
+        end
+
+        context 'with non-existent id', vcr: { cassette_name: 'asks/cancel/non_existent_id' } do
+          let(:order_id) { '99' }
+
+          it_behaves_like 'Cancelling Ask'
+        end
+
+        context 'with existent id', vcr: { cassette_name: 'asks/cancel/successful' } do
+          let(:order_id) { '22' }
+
+          it_behaves_like 'Cancelling Ask'
         end
       end
     end

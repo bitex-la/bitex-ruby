@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"bids","attributes":{"type":"bids","market_id":"btc_usd","amount":100.23,"price":50.2}}}'
+    headers:
+      Authorization:
+      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"d4ad4e607fa7e92ea9fa19f97db3aa4e"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=L29SS3lmaWZZZlh5d3BxOWo4VkUwaUZCaUtmVVloWDNybEcyYThRcWdNNStvSDJnRytzbkJ2S1h1dmMxQXNLL0ZZelVDOHpleVhJdk9kUDNPMWR2MTN2RXJya0g5SGdhSUJwYWxmczIwT1czRHdlZE5iOUZOamlZVlUvZjFVOVFiUFJqem5lWWUwSDJ1YmFVSEVGMUlYR2JjK0Zob0EvNGpKa0t4UFR5V2NBPS0tUGdvUzczeDQwNk53UVcvUUhJTTNaZz09--0443f763203ab8fd28efc033e8ea2d7a60571d2d;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 82ab5cf1-ac47-4eee-9b48-7689ec94594a
+      X-Runtime:
+      - '0.352372'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"26","type":"bids","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"pending"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+    http_version: 
+  recorded_at: Tue, 23 Oct 2018 15:02:51 GMT
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids/26
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"0952b64d2e8a42f28922b2080bde295a"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=UEI2U3JTcW0waVVmYTVCSUgwU25sbUdBM3I3anM4RzRPMWZKeHpCSXFCL3dTbVdLc25xdXVrTzh4UnFUQ09iYzB0L0NQUVFoNVpUZ0wvWkR3V2tOSUNYVEovcnZYcy9LVVoyZWtxZlE2azNSTzVZU29XUkNwUWlLa0hPRXE0WWhtZFJrY0Z0cGVyWDdyTGRFRW1hSW4wM0FPRm4xcHpGM2oxN1NreDhMY25jPS0tbDc1OGp0STN2dTRteWpQcWVnWjdpZz09--b96caa08b8c0b554553c9033b061e52a9217622d;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 478227cc-5166-434d-82ca-1b706e8b217c
+      X-Runtime:
+      - '0.272081'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"26","type":"bids","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"executing"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+    http_version: 
+  recorded_at: Tue, 23 Oct 2018 15:02:52 GMT
+recorded_with: VCR 4.0.0

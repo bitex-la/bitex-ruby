@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids/22
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"5b081801c54d1a00d1ed95a01eb1a230"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=M2tzOGJwMzZHalluRmFoSm9GSStmaXJ5OWpieXdyQWNPR1RTQnVDWGpxOFZzZEpsem9qNFRueFJwZDl1c202Vnh1VktCdWRxZFBlTUdvRE1MZzgzdUNQVzB6Wm5DMmpDQ0Z0OUlnb1BhYjgrSjRUVkJiYUJlMFNKSW1HaGNLQmxTeVUxdzFwbGZ6eE5Ob1J0UDcyUEYrWmdHV3FYTVB2WFhFKzdBUitGOG5RPS0teE44RG04TmJxemNaNnJhMjhhTnhnQT09--c056b08160d3e613136f42eae88d6e8baa7c5de2;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 4117de4f-49a0-4554-8c96-b042b6dabf06
+      X-Runtime:
+      - '0.464433'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"22","type":"bids","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"cancelled"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+    http_version: 
+  recorded_at: Tue, 23 Oct 2018 14:26:30 GMT
+recorded_with: VCR 4.0.0

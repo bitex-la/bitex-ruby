@@ -18,6 +18,10 @@ module Bitex
       with_client { JsonApi::Ask }
     end
 
+    def bids
+      with_client { JsonApi::Bid }
+    end
+
     def markets
       with_client { JsonApi::Market }
     end

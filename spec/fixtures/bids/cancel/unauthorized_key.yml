@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://dev.bitex.la:3000/api/markets/btc_usd/asks/99
+    method: post
+    uri: https://dev.bitex.la:3000/api/markets/btc_usd/bids/cancel
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"market_id":"btc_usd","_json":[{"data":{"type":"bids","id":"22"}}]}'
     headers:
       Authorization:
       - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
@@ -19,8 +19,8 @@ http_interactions:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 401
+      message: Unauthorized
     headers:
       X-Frame-Options:
       - SAMEORIGIN
@@ -32,18 +32,15 @@ http_interactions:
       - application/vnd.api+json; charset=utf-8
       Cache-Control:
       - no-cache
-      Set-Cookie:
-      - _bitex_la_session=RG91MHkxei9xWC9pQUhlWVI5ODBWOStvZFpPN0pycEdnbURORnREcG9PTyswbU02YldiK0l4NTFIMnFzWTJkNjRUS2YrZk91K2NuTTNUZ1FEZkh3ZWs1UkxuL2ZaQmoyT2dJM2JiYnc3L21TM1FMSlRvNisxcXJBQlFlOXdWWk5waG5IclhWZXE4M1RzS1hJMFZBQ0Q3eDl1NXhKWStCTWhhajlrR3lpdkNjPS0tWkJ1aWlyTGpjekxQZDFpaC9PQWVWZz09--d46613d3d88e8ec228514a9307e8f6878dbaffaf;
-        path=/; HttpOnly
       X-Request-Id:
-      - 4f838c51-1912-411b-a5a2-bdd3a5e28c22
+      - 56aa85ff-8065-434e-a338-b6082eb809b4
       X-Runtime:
-      - '0.378863'
+      - '0.212737'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"errors":[{"detail":null}]}'
+      string: '{"error":"Not enough permissions"}'
     http_version: 
-  recorded_at: Tue, 23 Oct 2018 15:56:36 GMT
+  recorded_at: Mon, 22 Oct 2018 21:22:29 GMT
 recorded_with: VCR 4.0.0

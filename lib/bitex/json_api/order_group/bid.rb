@@ -1,8 +1,8 @@
 module Bitex
   module JsonApi
+    # Trading endpoints have everything you need to place and cancel Buy orders,
+    # as well as listing your active orders and every trade you make.
     class Bid < OrderGroup
-      # POST /api/markets/:orderbook_code/bids # TODO check
-      # POST /api/markets/:orderbook_code/bids/cancel # TODO check
     end
   end
 end
