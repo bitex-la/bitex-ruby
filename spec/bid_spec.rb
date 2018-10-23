@@ -8,6 +8,41 @@ describe Bitex::JsonApi::Bid do
   let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
   let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
 
+  describe '.create' do
+    subject { client.bids.create(orderbook_code: orderbook_code, amount: amount, price: price) }
+
+    let(:amount) { 100.23 }
+    let(:price) { 50.2 }
+
+    it_behaves_like 'Invalid orderbook code'
+
+    context 'with valid orderbook code' do
+      let(:orderbook_code) { valid_orderbook_code }
+
+      context 'with unauthorized level key', vcr: { cassette_name: 'bids/create/unauthorized_key' } do
+        it_behaves_like 'Not enough permissions'
+      end
+
+      context 'with authorized level key' do
+        let(:key) { write_level_key }
+
+        it_behaves_like 'New order with zero amount'
+
+        context 'with amounts lower than allowed', vcr: { cassette_name: 'bids/create/lower_amount' } do
+          it_behaves_like 'Very small order'
+        end
+
+        context 'insufficient funds', vcr: { cassette_name:  'bids/create/insufficient_funds' } do
+          it_behaves_like 'Not enough funds'
+        end
+
+        context 'enough funds', vcr: { cassette_name: 'bids/create/successful' } do
+          it_behaves_like 'Successful new order'
+        end
+      end
+    end
+  end
+
   describe '.find' do
     subject { client.bids.find(orderbook_code: orderbook_code, id: order_id) }
 
@@ -32,57 +67,6 @@ describe Bitex::JsonApi::Bid do
     end
   end
 
-  describe '.create' do
-    subject { client.bids.create(orderbook_code: orderbook_code, amount: amount, price: price) }
-
-    let(:amount) { 100.23 }
-    let(:price) { 50.2 }
-
-    it_behaves_like 'Invalid orderbook code'
-
-    context 'with valid orderbook code' do
-      let(:orderbook_code) { valid_orderbook_code }
-
-      context 'with unauthorized level key', vcr: { cassette_name: 'bids/create/unauthorized_key' } do
-        it_behaves_like 'Not enough permissions'
-      end
-
-      context 'with authorized level key' do
-        let(:key) { write_level_key }
-
-        context 'with zero amount' do
-          let(:amount) { 0 }
-
-          it { expect { subject }.to raise_exception(Bitex::InvalidArgument) }
-        end
-
-        context 'with amounts lower than allowed', vcr: { cassette_name: 'bids/create/lower_amount' } do
-          let(:amount) { 0.00_000_001 }
-
-          it { expect { subject }.to raise_exception(Bitex::OrderNotPlaced).with_message('La orden es muy pequeña') }
-        end
-
-        context 'insufficient funds', vcr: { cassette_name:  'bids/create/insufficient_funds' } do
-          let(:amount) { 12_000_000 }
-
-          it_behaves_like 'OrderGroup'
-
-          its(:amount) { is_expected.to eq(amount) }
-          its(:price) { is_expected.to eq(price) }
-          its(:status) { is_expected.to eq('cancelled') }
-        end
-
-        context 'enough funds', vcr: { cassette_name: 'bids/create/successful' } do
-          it_behaves_like 'OrderGroup'
-
-          its(:amount) { is_expected.to eq(amount) }
-          its(:price) { is_expected.to eq(price) }
-          its(:status) { is_expected.to eq('executing') }
-        end
-      end
-    end
-  end
-
   describe '.cancel' do
     subject { client.bids.cancel!(orderbook_code: orderbook_code, ids: [order_id]) }
 
@@ -92,8 +76,6 @@ describe Bitex::JsonApi::Bid do
       let(:orderbook_code) { valid_orderbook_code }
 
       context 'with unauthorized level key', vcr: { cassette_name: 'bids/cancel/unauthorized_key' } do
-        let(:order_id) { '22' }
-
         it_behaves_like 'Not enough permissions'
       end
 
