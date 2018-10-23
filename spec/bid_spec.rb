@@ -96,4 +96,14 @@ describe Bitex::JsonApi::Bid do
       end
     end
   end
+
+  it_behaves_like '.resource_type', 'bids'
+
+  it_behaves_like '.valid_code?'
+
+  it_behaves_like '.valid_amount?'
+
+  it_behaves_like '.json_api_body_parser'
+
+  it_behaves_like '.to_json_api_body', 'bids'
 end
