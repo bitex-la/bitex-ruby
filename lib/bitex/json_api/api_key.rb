@@ -19,7 +19,7 @@ module Bitex
       def self.create(write: false, otp_code: nil)
         raise MalformedOtpCode unless valid_otp_code?(otp_code)
 
-        request(:private) { super(write: write, meta: { otp: otp_code }) }
+        private_request { super(write: write, meta: { otp: otp_code }) }
       end
 
       # GET /api/api_keys
@@ -28,7 +28,7 @@ module Bitex
       #
       # @return JsonApiClient::ResultSet. It has the server response data, and all  api key parsed to json api.
       def self.all
-        request(:private) { super }
+        private_request { super }
       end
 
       # DELETE /api/api_keys/:id
@@ -39,7 +39,7 @@ module Bitex
       #
       # TODO doc returns
       def self.destroy(id)
-        request(:private) { super(id: id) }
+        private_request { super(id: id) }
       end
 
       def self.valid_otp_code?(otp_code)

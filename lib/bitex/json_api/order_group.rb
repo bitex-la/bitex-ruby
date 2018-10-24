@@ -13,7 +13,7 @@ module Bitex
       def self.find(orderbook_code:, id:)
         raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        request(:private) { where(market_id: orderbook_code).find(id) }[0]
+        private_request { where(market_id: orderbook_code).find(id) }[0]
       end
 
       # POST /api/markets/:orderbook_code/[asks|bids]
@@ -27,7 +27,7 @@ module Bitex
         raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidArgument unless valid_amount?(amount)
 
-        order = request(:private) { super(market_id: orderbook_code, amount: amount, price: price) }
+        order = private_request { super(market_id: orderbook_code, amount: amount, price: price) }
         raise OrderNotPlaced, order.errors.full_messages.join if order.errors.present?
 
         # TODO: polling to find status different as received
@@ -46,7 +46,7 @@ module Bitex
       def self.cancel!(orderbook_code:, ids: [])
         raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        request(:private) { cancel(market_id: :btc_usd, _json: json_api_body_parser(ids)) }
+        private_request { cancel(market_id: :btc_usd, _json: json_api_body_parser(ids)) }
       end
 
       # @return [String] resource type name.

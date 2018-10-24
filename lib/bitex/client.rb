@@ -18,6 +18,10 @@ module Bitex
       with_client { JsonApi::Ask }
     end
 
+    def api_keys
+      with_client { JsonApi::ApiKey }
+    end
+
     def bids
       with_client { JsonApi::Bid }
     end
@@ -34,8 +38,8 @@ module Bitex
       with_client { JsonApi::Orderbook }
     end
 
-    def api_keys
-      with_client { JsonApi::ApiKey }
+    def orders
+      with_client { JsonApi::Order }
     end
 
     private

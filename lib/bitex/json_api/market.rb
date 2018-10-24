@@ -22,7 +22,7 @@ module Bitex
         raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidResourceArgument unless valid_resources?(*resources)
 
-        request(:public) { includes(*resources).find(orderbook_code) }[0]
+        includes(*resources).find(orderbook_code)[0]
       end
 
       # GET /api/markets/:orderbook_code/candles
@@ -45,7 +45,7 @@ module Bitex
 
         params = { market_id: orderbook_code }.tap { |hash| hash.merge!(from: from) if from.present? }
         query = Candle.where(params)
-        request(:public) { (span.present? ? query.with_params(span: span) : query).all }[0]
+        (span.present? ? query.with_params(span: span) : query).all[0]
       end
 
       # GET /api/markets/:orderbook_code/transactions
@@ -64,7 +64,7 @@ module Bitex
         raise InvalidArgument unless valid_argument?(from)
 
         params = { market_id: orderbook_code }.tap { |hash| hash.merge!(from: from) if from.present? }
-        request(:public) { Transaction.where(params).all }[0]
+        Transaction.where(params).all[0]
       end
 
       # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu

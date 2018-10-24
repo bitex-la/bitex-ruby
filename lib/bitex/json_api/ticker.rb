@@ -22,7 +22,7 @@ module Bitex
       def self.find(orderbook_code)
         raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        request(:public) { super(orderbook_code) }[0]
+        super(orderbook_code)[0]
       end
 
       # @param [Symbol] orderbook_code. Values: :btc_usd, :btc_ars, :bch_usd, :btc_pyg, :btc_clp, :btc_uyu

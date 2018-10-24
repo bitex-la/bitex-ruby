@@ -19,8 +19,12 @@ describe Bitex::JsonApi::Bid do
     context 'with valid orderbook code' do
       let(:orderbook_code) { valid_orderbook_code }
 
-      context 'with unauthorized level key', vcr: { cassette_name: 'bids/create/unauthorized_key' } do
+      context 'with unauthorized key', vcr: { cassette_name: 'bids/create/unauthorized' } do
         it_behaves_like 'Not enough permissions'
+      end
+
+      context 'with unauthorized level key', vcr: { cassette_name: 'bids/create/unauthorized_key' } do
+        it_behaves_like 'Not enough level permissions'
       end
 
       context 'with authorized level key' do
@@ -36,7 +40,7 @@ describe Bitex::JsonApi::Bid do
           it_behaves_like 'Not enough funds'
         end
 
-        context 'enough funds', vcr: { cassette_name: 'bids/create/successful' } do
+        context 'enough funds', vcr: { cassette_name: 'bids/create/authorized' } do
           it_behaves_like 'Successful new order'
         end
       end
@@ -51,6 +55,12 @@ describe Bitex::JsonApi::Bid do
     context 'with valid orderbook code' do
       let(:orderbook_code) { valid_orderbook_code }
 
+      context 'with unauthorized key', vcr: { cassette_name: 'bids/find/unauthorized' } do
+        let(:order_id) { '22' }
+
+        it_behaves_like 'Not enough permissions'
+      end
+
       context 'with any level key' do
         let(:key) { read_level_key }
 
@@ -58,7 +68,7 @@ describe Bitex::JsonApi::Bid do
           it_behaves_like 'Non existent OrderGroup'
         end
 
-        context 'with any level key', vcr: { cassette_name: 'bids/find/successful' } do
+        context 'with any level key', vcr: { cassette_name: 'bids/find/authorized' } do
           let(:order_id) { '22' }
 
           it_behaves_like 'OrderGroup'
@@ -75,8 +85,16 @@ describe Bitex::JsonApi::Bid do
     context 'with valid orderbook code' do
       let(:orderbook_code) { valid_orderbook_code }
 
-      context 'with unauthorized level key', vcr: { cassette_name: 'bids/cancel/unauthorized_key' } do
+      context 'with unauthorized key', vcr: { cassette_name: 'bids/cancel/unauthorized' } do
+        let(:order_id) { '22' }
+
         it_behaves_like 'Not enough permissions'
+      end
+
+      context 'with unauthorized level key', vcr: { cassette_name: 'bids/cancel/unauthorized_key' } do
+        let(:order_id) { '22' }
+
+        it_behaves_like 'Not enough level permissions'
       end
 
       context 'with authorized level key' do
@@ -88,7 +106,7 @@ describe Bitex::JsonApi::Bid do
           it_behaves_like 'Cancelling OrderGroup'
         end
 
-        context 'with existent id', vcr: { cassette_name: 'bids/cancel/successful' } do
+        context 'with existent id', vcr: { cassette_name: 'bids/cancel/authorized' } do
           let(:order_id) { '22' }
 
           it_behaves_like 'Cancelling OrderGroup'

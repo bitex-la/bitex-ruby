@@ -20,8 +20,13 @@ shared_examples_for 'Non existent OrderGroup' do
 end
 
 shared_examples_for 'Not enough permissions' do
+  let(:key) { 'we_dont_care' }
+
+  it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotAuthorized) }
+end
+
+shared_examples_for 'Not enough level permissions' do
   let(:key) { read_level_key }
-  let(:order_id) { '22' }
 
   it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotAuthorized) }
 end
@@ -112,9 +117,6 @@ shared_examples_for '.json_api_body_parser' do |resource_type|
 
   it { is_expected.to be_an(Array) }
   its(:size) { is_expected.to eq(ids.size) }
-
-  context 'for a sample' do
-  end
 end
 
 shared_examples_for '.to_json_api_body' do |resource_type|

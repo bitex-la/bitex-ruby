@@ -2,20 +2,10 @@ module Bitex
   module JsonApi
     # Generic base resource for Bitex resources.
     class Base < JsonApiClient::Resource
-      self.site = 'https://dev.bitex.la:3000/api/'
+      self.site = 'https://bitex.la/api/'
 
-      # Set headers about request type
-      #
-      # @param [Symbol] type: [:public, :private].
-      #
-      # @return yield block
-      def self.request(type)
-        if type == :private
-          connection_options[:headers] = { Authorization: Bitex.api_key }
-        elsif connection_options[:headers].present?
-          connection_options[:headers].try(:delete, :Authorization)
-        end
-        yield
+      def self.private_request
+        with_headers(Authorization: Bitex.api_key) { yield }
       end
 
       def self.access_has_one(*args)
