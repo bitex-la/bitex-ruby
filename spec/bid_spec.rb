@@ -77,7 +77,7 @@ describe Bitex::JsonApi::Bid do
     end
   end
 
-  describe '.cancel' do
+  describe '.cancel!' do
     subject { client.bids.cancel!(orderbook_code: orderbook_code, ids: [order_id]) }
 
     it_behaves_like 'Invalid orderbook code'

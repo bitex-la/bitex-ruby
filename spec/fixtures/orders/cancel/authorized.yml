@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/orders/btc_usd/cancel
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - _bitex_la_session=c2VHYTFiUDU2eFhqWFUrcmR3SlV5bEN1U1BKczQyOFlDZWU1OTJoSzhoYmJrVkRNcWVNYThIN1JjMnNZVmlvcnpxZW43ZGlremxZVVdvYXh0cTE3eUJ0SHhXOEhucXJoeXA0Ni8wN1NMakRUOTNrN2pqZTlZMDVseTN2YkVyRVpQeXVvNmtpOE02dWRkNDVkWGtkN3gwWkt0SHcrLzFkZmx0MW95VTd2djdjPS0tWElqdWNwc1pnMDg4anV5K1BGVmdmQT09--53118661ab84d6224f1569a5da0703d2b21259e5;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 132c3628-63a2-45ab-b5d7-74d0e3c00c4d
+      X-Runtime:
+      - '1.155360'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 25 Oct 2018 17:11:56 GMT
+recorded_with: VCR 4.0.0

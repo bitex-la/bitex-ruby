@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://dev.bitex.la:3000/api/orders
+    method: post
+    uri: https://dev.bitex.la:3000/api/orders/btc_usd/cancel
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: "{}"
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -33,14 +33,14 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Request-Id:
-      - 0de12038-dac7-4e10-ad2c-748379bd2765
+      - b3cda0b5-8646-4a57-a0cd-e5306b293d92
       X-Runtime:
-      - '6.138406'
+      - '0.461431'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: '{"error":"Invalid Api Key"}'
     http_version: 
-  recorded_at: Wed, 24 Oct 2018 16:30:27 GMT
+  recorded_at: Thu, 25 Oct 2018 16:59:34 GMT
 recorded_with: VCR 4.0.0
