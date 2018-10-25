@@ -65,13 +65,13 @@ describe Bitex::JsonApi::Ask do
         let(:key) { read_level_key }
 
         context 'with non-existent id', vcr: { cassette_name: 'asks/find/non_existent_id' } do
-          it_behaves_like 'Non existent OrderGroup'
+          it_behaves_like 'Non existent order'
         end
 
         context 'with any level key', vcr: { cassette_name: 'asks/find/authorized' } do
           let(:order_id) { '22' }
 
-          it_behaves_like 'OrderGroup'
+          it_behaves_like 'Order'
         end
       end
     end
@@ -103,13 +103,13 @@ describe Bitex::JsonApi::Ask do
         context 'with non-existent id', vcr: { cassette_name: 'asks/cancel/non_existent_id' } do
           let(:order_id) { '99' }
 
-          it_behaves_like 'Cancelling OrderGroup'
+          it_behaves_like 'Cancelling order'
         end
 
         context 'with existent id', vcr: { cassette_name: 'asks/cancel/authorized' } do
           let(:order_id) { '22' }
 
-          it_behaves_like 'Cancelling OrderGroup'
+          it_behaves_like 'Cancelling order'
         end
       end
     end
