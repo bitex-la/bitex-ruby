@@ -30,6 +30,10 @@ module Bitex
       with_client { JsonApi::Market }
     end
 
+    def movements
+      with_client { JsonApi::Movement }
+    end
+
     def tickers
       with_client { JsonApi::Ticker }
     end
