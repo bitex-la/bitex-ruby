@@ -5,12 +5,6 @@ shared_examples_for 'Order' do
   its(:type) { is_expected.to eq(resource_name) }
 end
 
-shared_examples_for 'Non existent order' do
-  let(:order_id) { '99' }
-
-  it { expect { subject }.to raise_exception(JsonApiClient::Errors::NotFound) }
-end
-
 shared_examples_for 'Cancelling order' do
   it { is_expected.to be_an(Array) }
   it { is_expected.to be_empty }

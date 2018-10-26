@@ -48,7 +48,7 @@ describe Bitex::JsonApi::Bid do
   end
 
   describe '.find' do
-    subject { client.bids.find(orderbook_code: orderbook_code, id: order_id) }
+    subject { client.bids.find(orderbook_code: orderbook_code, id: id) }
 
     it_behaves_like 'Invalid orderbook code'
 
@@ -56,7 +56,7 @@ describe Bitex::JsonApi::Bid do
       let(:orderbook_code) { valid_orderbook_code }
 
       context 'with unauthorized key', vcr: { cassette_name: 'bids/find/unauthorized' } do
-        let(:order_id) { '22' }
+        let(:id) { 22 }
 
         it_behaves_like 'Not enough permissions'
       end
@@ -65,11 +65,11 @@ describe Bitex::JsonApi::Bid do
         let(:key) { read_level_key }
 
         context 'with non-existent id', vcr: { cassette_name: 'bids/find/non_existent_id' } do
-          it_behaves_like 'Non existent order'
+          it_behaves_like 'Non existent'
         end
 
-        context 'with any level key', vcr: { cassette_name: 'bids/find/authorized' } do
-          let(:order_id) { '22' }
+        context 'with existent id', vcr: { cassette_name: 'bids/find/authorized' } do
+          let(:id) { 22 }
 
           it_behaves_like 'Order'
         end
@@ -78,7 +78,7 @@ describe Bitex::JsonApi::Bid do
   end
 
   describe '.cancel!' do
-    subject { client.bids.cancel!(orderbook_code: orderbook_code, ids: [order_id]) }
+    subject { client.bids.cancel!(orderbook_code: orderbook_code, ids: [id]) }
 
     it_behaves_like 'Invalid orderbook code'
 
@@ -86,13 +86,13 @@ describe Bitex::JsonApi::Bid do
       let(:orderbook_code) { valid_orderbook_code }
 
       context 'with unauthorized key', vcr: { cassette_name: 'bids/cancel/unauthorized' } do
-        let(:order_id) { '22' }
+        let(:id) { 22 }
 
         it_behaves_like 'Not enough permissions'
       end
 
       context 'with unauthorized level key', vcr: { cassette_name: 'bids/cancel/unauthorized_key' } do
-        let(:order_id) { '22' }
+        let(:id) { 22 }
 
         it_behaves_like 'Not enough level permissions'
       end
@@ -101,13 +101,13 @@ describe Bitex::JsonApi::Bid do
         let(:key) { write_level_key }
 
         context 'with non-existent id', vcr: { cassette_name: 'bids/cancel/non_existent_id' } do
-          let(:order_id) { '99' }
+          let(:id) { 99 }
 
           it_behaves_like 'Cancelling order'
         end
 
         context 'with existent id', vcr: { cassette_name: 'bids/cancel/authorized' } do
-          let(:order_id) { '22' }
+          let(:id) { 22 }
 
           it_behaves_like 'Cancelling order'
         end

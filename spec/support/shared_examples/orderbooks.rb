@@ -1,7 +1,7 @@
 shared_examples_for 'Invalid orderbook code' do
   let(:key) { :we_dont_care }
   let(:orderbook_code) { invalid_orderbook_code }
-  let(:order_id) { :we_dont_care }
+  let(:id) { :we_dont_care }
 
   it { expect { subject }.to raise_exception(Bitex::UnknownOrderbook) }
 end

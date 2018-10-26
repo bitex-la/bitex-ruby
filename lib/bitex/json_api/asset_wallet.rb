@@ -13,6 +13,10 @@ module Bitex
       def self.all
         private_request { where(user_id: 'me').all }
       end
+
+      def self.find(id:)
+        private_request { where(user_id: 'me').find(id)[0] }
+      end
     end
   end
 end

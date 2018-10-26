@@ -6,6 +6,13 @@ describe Bitex::JsonApi::AssetWallet do
   let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
   let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
 
+  shared_examples_for 'Asset Wallet' do
+    it { is_expected.to be_a(described_class) }
+
+    its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id balance available currency address auto_sell_address]) }
+    its(:type) { is_expected.to eq(resource_name) }
+  end
+
   describe '.all' do
     subject { client.asset_wallets.all }
 
@@ -21,10 +28,31 @@ describe Bitex::JsonApi::AssetWallet do
       context 'taking a sample' do
         subject { super().sample }
 
-        it { is_expected.to be_a(described_class) }
+        it_behaves_like 'Asset Wallet'
+      end
+    end
+  end
 
-        its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id balance available currency address auto_sell_address]) }
-        its(:type) { is_expected.to eq(resource_name) }
+  describe '.find' do
+    subject { client.asset_wallets.find(id: id) }
+
+    context 'with unauthorized key', vcr: { cassette_name: 'asset_wallets/find/unauthorized' } do
+      let(:id) { 1 }
+
+      it_behaves_like 'Not enough permissions'
+    end
+
+    context 'with any level key' do
+      let(:key) { read_level_key }
+
+      context 'with non-existent id', vcr: { cassette_name: 'asset_wallets/find/non_existent_id' } do
+        it_behaves_like 'Non existent'
+      end
+
+      context 'with existent id', vcr: { cassette_name: 'asset_wallets/find/authorized' } do
+        let(:id) { 1 }
+
+        it_behaves_like 'Asset Wallet'
       end
     end
   end

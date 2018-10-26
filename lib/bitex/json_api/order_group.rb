@@ -13,7 +13,7 @@ module Bitex
       def self.find(orderbook_code:, id:)
         raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        private_request { where(market_id: orderbook_code).find(id) }[0]
+        private_request { where(market_id: orderbook_code).find(id)[0] }
       end
 
       # POST /api/markets/:orderbook_code/[asks|bids]
