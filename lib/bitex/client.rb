@@ -14,12 +14,16 @@ module Bitex
       with_client { JsonApi::Account }
     end
 
-    def asks
-      with_client { JsonApi::Ask }
-    end
-
     def api_keys
       with_client { JsonApi::ApiKey }
+    end
+
+    def asset_wallets
+      with_client { JsonApi::AssetWallet }
+    end
+
+    def asks
+      with_client { JsonApi::Ask }
     end
 
     def bids

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bitex::JsonApi::ApiKey do
-  let(:resource_name) { described_class.name.demodulize.underscore.pluralize } 
+  let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
   let(:client) { Bitex::Client.new(api_key: key) }
   let(:read_api_key) { '81a3008a9d0b65a31d3d16759da5a7fc3c597deac1a8f23afb671e0a8d4c29aae3b92604773d5234' }
   let(:write_api_key) { '0cbb224a57d59535bb3b0c92a99e7b2ac6d36514dbd48c667ccca09961937ca93740de334568cc05' }

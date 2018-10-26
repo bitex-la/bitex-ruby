@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Bitex::JsonApi::Ticker do
   let(:client) { Bitex::Client.new }
   let(:orderbook_code) { :btc_usd }
-  let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
+  let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
 
   describe '.all', vcr: { cassette_name: 'tickers/all' } do
     subject { client.tickers.all }

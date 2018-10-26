@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Bitex::JsonApi::Market do
   let(:client) { Bitex::Client.new }
   let(:orderbook_code) { :btc_usd }
-  let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
+  let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
 
   describe '.find' do
     context 'with raise condition' do

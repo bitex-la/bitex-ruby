@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bitex::JsonApi::Order do
   let(:client) { Bitex::Client.new(api_key: key) }
-  let(:resource_name) { described_class.name.demodulize.downcase.pluralize }
+  let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
   let(:valid_orderbook_code) { :btc_usd }
   let(:invalid_orderbook_code) { :invalid_orderbook_code }
   let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
