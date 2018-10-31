@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/withdrawal_instructions
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"withdrawal_instructions","attributes":{"type":"withdrawal_instructions","label":"label","body":{"account_type":"dont_care","address":"dont_care","bank":"dont_care","bank_account_number":"dont_care","cbu":"dont_care","country":"dont_care","cuit":"dont_care","currency":"dont_care","city":"Dimension
+        C-132","further_instructions":"A further instructions","name":"Rick Sanchez","payment_method":"domestic_bank","phone":"1122334455"}}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - we_dont_care
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 5fe99342-5673-41ed-803c-d426e06b4163
+      X-Runtime:
+      - '0.292460'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"error":"Invalid Api Key"}'
+    http_version: 
+  recorded_at: Tue, 30 Oct 2018 17:12:13 GMT
+recorded_with: VCR 4.0.0

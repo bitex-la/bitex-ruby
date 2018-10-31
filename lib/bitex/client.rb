@@ -50,6 +50,10 @@ module Bitex
       with_client { JsonApi::Order }
     end
 
+    def withdrawal_instructions
+      with_client { JsonApi::WithdrawalInstruction }
+    end
+
     private
 
     def with_client

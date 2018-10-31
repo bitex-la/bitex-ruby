@@ -1,0 +1,100 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/withdrawal_instructions
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"c892cdc5fc5d21b2b7a2ada87b239e31"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=cGZnb1c2bmI2aTdRWXJJOWRVbmtGbUpDREttcjVuVG41ckd6T3l4anJqR0FnN1JWUnZPMktOalJRcEVha1RCQVVrakFFMjNCQjMzc3Rja0JmRC9BK0xWUDdzWlRwcFlRQk9Id2czT2Z2bEJEQ2l4MEpwMUtzZi82MTVsdk1GQ2RiV3IrbWZJcHAzcXhFM3hZSldlYWNBdExrWS95L2VhM0crSmlrSmRlWVY4PS0tV0ZDU1Vya0NpL3dkRzVoRG9wR010UT09--48ee4dd3828a55341d52d8e6013f289f2aa894f1;
+        path=/; HttpOnly
+      X-Request-Id:
+      - '029f31e1-a072-4b21-83f1-859fd8b53b71'
+      X-Runtime:
+      - '0.245801'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"7","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
+        address","bank":"bco_chile","bank_account_number":"12345678","bank_address":"a
+        bank address","bank_city":"a bank city","bank_country":"CL","bank_postal_code":"AABBCC","bank_swift":"BANKUS66","postal_code":"XXYYZZ","city":"Dimension
+        C-132","country":"CL","currency":"USD","further_instructions":"A further instructions","name":"Rick
+        Sanchez","payment_method":"international_bank","phone":"1122334455"}}},{"id":"8","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"city":"Dimension
+        C-132","country":"PY","currency":"USD","further_instructions":"A further instructions","name":"Rick
+        Sanchez","payment_method":"third_party","phone":"1122334455"}}}]}'
+    http_version: 
+  recorded_at: Tue, 30 Oct 2018 19:52:46 GMT
+- request:
+    method: delete
+    uri: https://dev.bitex.la:3000/api/withdrawal_instructions/7
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 800de132-96c3-4f87-99c1-864bc3706bf3
+      X-Runtime:
+      - '0.210817'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"error":"Not enough permissions"}'
+    http_version: 
+  recorded_at: Tue, 30 Oct 2018 19:52:46 GMT
+recorded_with: VCR 4.0.0

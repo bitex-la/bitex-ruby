@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/withdrawal_instructions
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"cdaa0aca7664f7cca6b3192c89479b56"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=WDUwU3ptMVhBeDFpSnRpSnNMM0t3VU42N0h2L1hnK3N4MndyUThLcXRVSEE1dE5OaDQ2RG9GSFlXa2VRc2VQT291SGVIdTRrNjlrZmVaczhDODZSZWN4YUZRZ01rK0RmNlY5RnJnd2FjVW4xem85WFd6K2lpcjZldk84aSt6QjBNY0JTNUQ3cVM0dm91dWFOdUFiWEFHSHpxbXdOanhLa0cxalJoNUpnVlhRPS0tR0E0ZFNqczdId3hhQldkeEpONUFaUT09--c7a6ed96c3ddcaa1d244534d24224d48d686c087;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 06241be0-643d-4c32-8f1e-f43a6942ec38
+      X-Runtime:
+      - '0.254483'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"4","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
+        address","bank":"hsbc","bank_account_number":"12345678","cbu":"1234567812345678","country":"AR","cuit":"20112233344552","currency":"ARS","city":"Dimension
+        C-132","further_instructions":"A further instructions","name":"Rick Sanchez","payment_method":"domestic_bank","phone":"1122334455"}}},{"id":"5","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
+        address","bank":"bco_chile","bank_account_number":"12345678","bank_address":"a
+        bank address","bank_city":"a bank city","bank_country":"CL","bank_postal_code":"AABBCC","bank_swift":"BANKUS66","postal_code":"XXYYZZ","city":"Dimension
+        C-132","further_instructions":"A further instructions","name":"Rick Sanchez","payment_method":"international_bank","phone":"1122334455","currency":"ARS"}}},{"id":"6","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"city":"Dimension
+        C-132","further_instructions":"A further instructions","name":"Rick Sanchez","payment_method":"third_party","phone":"1122334455","currency":"ARS"}}},{"id":"7","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
+        address","bank":"bco_chile","bank_account_number":"12345678","bank_address":"a
+        bank address","bank_city":"a bank city","bank_country":"CL","bank_postal_code":"AABBCC","bank_swift":"BANKUS66","postal_code":"XXYYZZ","city":"Dimension
+        C-132","country":"CL","currency":"USD","further_instructions":"A further instructions","name":"Rick
+        Sanchez","payment_method":"international_bank","phone":"1122334455"}}},{"id":"8","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"city":"Dimension
+        C-132","country":"PY","currency":"USD","further_instructions":"A further instructions","name":"Rick
+        Sanchez","payment_method":"third_party","phone":"1122334455"}}},{"id":"9","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
+        address","bank":"hsbc","bank_account_number":"12345678","cbu":"1234567812345678","cuit":"20112233344552","city":"Dimension
+        C-132","country":"AR","currency":"USD","further_instructions":"A further instructions","name":"Rick
+        Sanchez","payment_method":"domestic_bank","phone":"1122334455"}}}]}'
+    http_version: 
+  recorded_at: Tue, 30 Oct 2018 17:57:45 GMT
+recorded_with: VCR 4.0.0

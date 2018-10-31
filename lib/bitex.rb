@@ -42,4 +42,7 @@ module Bitex
 
   class OrderNotPlaced < StandardError
   end
+
+  class PaymentError < StandardError
+  end
 end
