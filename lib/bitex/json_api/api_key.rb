@@ -37,7 +37,7 @@ module Bitex
       #
       # @param [Integer] id.
       #
-      # TODO doc returns
+      # @return [nil]
       def self.destroy(id)
         private_request { super(id: id) }
       end
