@@ -30,6 +30,10 @@ module Bitex
       with_client { JsonApi::Bid }
     end
 
+    def coin_withdrawals
+      with_client { JsonApi::CoinWithdrawal }
+    end
+
     def markets
       with_client { JsonApi::Market }
     end

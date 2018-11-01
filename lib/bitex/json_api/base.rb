@@ -10,6 +10,10 @@ module Bitex
         with_headers(Authorization: Bitex.api_key) { yield }
       end
       def_delegator self, :private_request
+
+      def self.find(*args)
+        super(*args)[0]
+      end
     end
   end
 end

@@ -45,4 +45,7 @@ module Bitex
 
   class PaymentError < StandardError
   end
+
+  class CurrencyError < StandardError
+  end
 end
