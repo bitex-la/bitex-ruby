@@ -23,7 +23,6 @@ module Bitex
         private_request { send(:'all/cancel') }
       end
 
-
       custom_endpoint :cancel, on: :collection, request_method: :post
       # POST /api/orders/:orderbook_code/cancel
       #
