@@ -6,13 +6,6 @@ describe Bitex::JsonApi::SellingBot do
   let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
   let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
 
-  shared_examples_for 'Selling Bot' do
-    it { is_expected.to be_a(described_class) }
-
-    its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type id amount remaining_amount chunk_size eta executing to_cancel]) }
-    its(:type) { is_expected.to eq(resource_name) }
-  end
-
   describe '.all' do
     subject { client.selling_bots.all }
 
@@ -29,7 +22,7 @@ describe Bitex::JsonApi::SellingBot do
         context 'taking a sample' do
           subject { super().sample }
 
-          it_behaves_like 'Selling Bot'
+          it_behaves_like 'Trading Bot'
         end
       end
     end
@@ -52,14 +45,13 @@ describe Bitex::JsonApi::SellingBot do
     context 'with authorized level key', vcr: { cassette_name: 'selling_bots/create/authorized' } do
       let(:key) { write_level_key }
 
-      it_behaves_like 'Selling Bot'
+      it_behaves_like 'Trading Bot'
       its(:amount) { is_expected.to eq(amount) }
 
-      context 'about orderbook' do
+      context 'about Orderbook' do
         subject { super().relationships.orderbook[:data] }
 
-        its([:id]) { is_expected.to eq(orderbook_id) }
-        its([:type]) { is_expected.to eq('orderbooks') }
+        it_behaves_like 'Trading Bot Orderbook'
       end
     end
   end
@@ -82,7 +74,7 @@ describe Bitex::JsonApi::SellingBot do
       end
 
       context 'with existent id', vcr: { cassette_name: 'selling_bots/find/authorized' } do
-        it_behaves_like 'Selling Bot'
+        it_behaves_like 'Trading Bot'
 
         its(:id) { is_expected.to eq(id) }
       end
@@ -112,8 +104,7 @@ describe Bitex::JsonApi::SellingBot do
       context 'with existent id', vcr: { cassette_name: 'selling_bots/cancel/authorized' } do
         let(:id) { 1 }
 
-        its(:executing) { is_expected.to be_truthy }
-        its(:to_cancel) { is_expected.to be_truthy }
+        it_behaves_like 'Cancelling bot'
       end
     end
   end
