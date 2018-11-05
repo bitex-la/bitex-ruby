@@ -70,7 +70,7 @@ describe Bitex::JsonApi::BuyingBot do
       let(:key) { read_level_key }
 
       context 'with non-existent id', vcr: { cassette_name: 'buying_bots/find/non_existent_id' } do
-        it_behaves_like 'Non existent'
+        it_behaves_like 'Not Found'
       end
 
       context 'with existent id', vcr: { cassette_name: 'buying_bots/find/authorized' } do
@@ -98,7 +98,7 @@ describe Bitex::JsonApi::BuyingBot do
       let(:key) { write_level_key }
 
       context 'with non-existent id', vcr: { cassette_name: 'buying_bots/cancel/non_existent_id' } do
-        it_behaves_like 'Non existent'
+        it_behaves_like 'Not Found'
       end
 
       context 'with existent id', vcr: { cassette_name: 'buying_bots/cancel/authorized' } do

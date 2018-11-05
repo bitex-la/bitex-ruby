@@ -41,9 +41,10 @@ module Bitex
       def self.create(amount:, orderbook_id:)
         raise UnknownOrderbook unless valid_orderbook?(orderbook_id)
 
-        new(amount: amount)
-          .tap { |bot| bot.relationships.orderbook = Orderbook.new(id: orderbook_id) }
-          .tap { |bot| private_request { bot.save  } }
+        new(amount: amount).tap do |bot|
+          bot.relationships.orderbook = Orderbook.new(id: orderbook_id)
+          private_request { bot.save  }
+        end
       end
 
       custom_endpoint :cancel, on: :collection, request_method: :post

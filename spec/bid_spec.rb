@@ -65,7 +65,7 @@ describe Bitex::JsonApi::Bid do
         let(:key) { read_level_key }
 
         context 'with non-existent id', vcr: { cassette_name: 'bids/find/non_existent_id' } do
-          it_behaves_like 'Non existent'
+          it_behaves_like 'Not Found'
         end
 
         context 'with existent id', vcr: { cassette_name: 'bids/find/authorized' } do

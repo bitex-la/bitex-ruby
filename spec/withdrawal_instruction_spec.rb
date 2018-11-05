@@ -168,7 +168,7 @@ describe Bitex::JsonApi::WithdrawalInstruction do
         let(:resource) { all.find { |rsc| rsc.id == '6' } }
 
         # For some reason the resource is no longer available
-        it_behaves_like 'Non existent'
+        it_behaves_like 'Not Found'
       end
 
       context 'with existent id', vcr: { cassette_name: 'withdrawal_instructions/destroy/authorized' } do

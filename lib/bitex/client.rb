@@ -34,6 +34,10 @@ module Bitex
       with_client { JsonApi::BuyingBot }
     end
 
+    def cash_withdrawals
+      with_client { JsonApi::CashWithdrawal }
+    end
+
     def coin_withdrawals
       with_client { JsonApi::CoinWithdrawal }
     end
