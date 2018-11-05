@@ -18,7 +18,7 @@ module Bitex
       # POST /api/selling_bots
       #
       # A selling bot is an assistant that puts Sell orders for you. It uses a strategy of dividing the amount and making the
-      # orders smaller, to get the best price. 
+      # orders smaller, to get the best price.
       # orders smaller, to get the best price.
       #
       # @param [Float|String] amount:
