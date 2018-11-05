@@ -39,7 +39,7 @@ module Bitex
       def self.create(amount:, orderbook_id:)
         raise UnknownOrderbook unless valid_orderbook?(orderbook_id)
 
-        new(amount: 100)
+        new(amount: amount)
           .tap { |bot| bot.relationships.orderbook = Orderbook.new(id: orderbook_id) }
           .tap { |bot| private_request { bot.save  } }
       end
@@ -62,7 +62,7 @@ module Bitex
       #
       # @return [true] if orderbook id is valid.
       def self.valid_orderbook?(id)
-        ORDERBOOKS.values.include?(id.to_i)
+        ORDERBOOKS.value?(id.to_i)
       end
 
       private_class_method :valid_orderbook?
