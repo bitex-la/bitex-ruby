@@ -17,7 +17,8 @@ module Bitex
       # There are 3 withdrawal methdos allowed: 'domestic_bank', 'international_bank' and 'third_party'.
       #
       # With each one, the body should have different fields:
-      #   Domestic bank, Store a new set of instructions to be used when requesting cash withdrawals from Bitex or other brokers/exchanges in the Bitex Concierge network.
+      #   Domestic bank, Store a new set of instructions to be used when requesting cash withdrawals from Bitex or other
+      #   brokers/exchanges in the Bitex Concierge network.
       #     requires these fields:
       #       account_type, address, bank, bank_account_number, cbu, city, country, cuit, currency, further_instructions, name &
       #       phone.
@@ -131,7 +132,7 @@ module Bitex
       end
 
       private_class_method :valid_payment?, :valid_method?, :valid_body?, :domestic_bank_body, :international_bank_body,
-        :third_party_body, :shared_body_bank, :shared_body
+                           :third_party_body, :shared_body_bank, :shared_body
     end
   end
 end
