@@ -1,5 +1,7 @@
 module Bitex
   module JsonApi
+    # Store a set of instructions to be used when requesting cash withdrawals from Bitex or other brokers/exchanges in the
+    # Bitex Concierge network.
     class WithdrawalInstruction < Base
       # GET /api/withdrawal_instructions
       #
@@ -15,14 +17,20 @@ module Bitex
       # There are 3 withdrawal methdos allowed: 'domestic_bank', 'international_bank' and 'third_party'.
       #
       # With each one, the body should have different fields:
-      #   Domestic bank requires these fields:
-      #     account_type, address, bank, bank_account_number, cbu, city, country, cuit, currency, further_instructions, name &
-      #     phone.
-      #   International bank requires these fields:
-      #     account_type, address, bank, bank_account_number, bank_address, bank_country, bank_city, bank_postal_code,
-      #     bank_swift, city, country, currency, further_instructions, name, phone & postal_code.
-      #   Third party requires these fields:
-      #     city, country, currency, further_instructions, name & phone.
+      #   Domestic bank, Store a new set of instructions to be used when requesting cash withdrawals from Bitex or other brokers/exchanges in the Bitex Concierge network.
+      #     requires these fields:
+      #       account_type, address, bank, bank_account_number, cbu, city, country, cuit, currency, further_instructions, name &
+      #       phone.
+      #
+      #   International bank, Bitex.la can issue withdrawals as international bank transfers.
+      #     Requires these fields:
+      #       account_type, address, bank, bank_account_number, bank_address, bank_country, bank_city, bank_postal_code,
+      #       bank_swift, city, country, currency, further_instructions, name, phone & postal_code.
+      #
+      #   Third party, Bitex.la is open to work with third parties of your choice to issue withdrawals anywhere in the world if
+      #   possible. We'll contact the beneficiary and work out the details.
+      #     Requires these fields:
+      #       city, country, currency, further_instructions, name & phone.
       #
       # Some fields only accept certain values:
       #   account_type: checking or savings

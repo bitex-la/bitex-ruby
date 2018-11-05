@@ -1,5 +1,6 @@
 module Bitex
   module JsonApi
+    # User's addresses to deposit any crypto currency.
     class AssetWallet < Base
       belongs_to :user
 

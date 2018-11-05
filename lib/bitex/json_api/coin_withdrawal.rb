@@ -1,5 +1,8 @@
 module Bitex
   module JsonApi
+    # Request a Specie withdrawal to a given address.
+    # All Withdrawals are accepted in the 'Received (1)' state, and are moved into the 'Pending (2)' state immediately if you
+    # have enough funds, then they're moved the 'Accepted (2)' or 'Rejected (3)' state when processed by our account officials.
     class CoinWithdrawal < Base
       # POST /api/coin_withdrawals
       #
