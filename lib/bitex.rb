@@ -27,6 +27,7 @@ Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 # Documentation here!
 module Bitex
   ORDERBOOKS = { btc_usd: 1, btc_ars: 5, bch_usd: 8, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
+  VERSION = '2.0'.freeze
 
   mattr_accessor :api_key
   mattr_accessor :sandbox
