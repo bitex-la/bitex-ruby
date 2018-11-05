@@ -3,6 +3,8 @@ module Bitex
     class BuyingBot < TradingBot
       # GET /api/buying_bots
       #
+      # Get all Buying Bots.
+      #
       # @return [Array<BuyingBot>]
       # self.all
 
@@ -22,6 +24,7 @@ module Bitex
       #   The amount of quote money that you intend to spend buying base money.
       #   Both the quote and the base currencies are determined by the Orderbook selected.
       #   (e.g. A buying bot with amount = 100 and orderbook = BTC/USD, will spend 100 dollars in buying as much BTC as it can).
+      #
       # @param [Integer|String] orderbook_id:
       #   To get all possible orderbook_codes check Orderbooks
       #

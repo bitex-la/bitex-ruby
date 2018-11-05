@@ -46,6 +46,10 @@ module Bitex
       with_client { JsonApi::Movement }
     end
 
+    def selling_bots
+      with_client { JsonApi::SellingBot }
+    end
+
     def tickers
       with_client { JsonApi::Ticker }
     end

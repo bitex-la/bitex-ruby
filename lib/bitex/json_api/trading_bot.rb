@@ -19,6 +19,8 @@ module Bitex
 
       # GET /api/:trading_bots
       #
+      # Get all Trading Bots.
+      #
       # @return [Array<TradingBot>]
       def self.all
         private_request { super }
