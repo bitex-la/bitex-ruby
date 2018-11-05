@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/buying_bots
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"8206991d0054d826ff8edcd86a899f5f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=M3NGNUsyNEc2RHlveWZpSERzazlST05LaXFBaWhMRVRlVi8zM1VyQllJSXNkdjhFZkV1VHplVm9BWHg0S1k1VDMxaHQzdENkSzJFNGFQQmlzZFA3WXVNRUwzeWcvRGxzOU1nb3RwRFFCd1YrUk9SV0xqVzJTMWI2ME5VRk5FWkxPRmJZdzNRWnJjcGdMM2YzTEdENy92Y0ZwenhnOFJnUjZWMEJOT1dFTFlJPS0tZmFoZkRadkUwUlV4eGlRekRFSE8zZz09--9ac7b31228bd2be71969627a5a35edee4a77bd36;
+        path=/; HttpOnly
+      X-Request-Id:
+      - a03888c2-71ce-4205-9ff2-bfcc08a068d2
+      X-Runtime:
+      - '2.696643'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"1","type":"buying_bots","attributes":{"amount":100.0,"remaining_amount":100.0,"chunk_size":5.0,"eta":"2018-11-02T20:13:27.930Z","executing":true,"to_cancel":false},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}},{"id":"2","type":"buying_bots","attributes":{"amount":100.0,"remaining_amount":100.0,"chunk_size":5.0,"eta":"2018-11-02T20:16:08.730Z","executing":true,"to_cancel":false},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}},{"id":"3","type":"buying_bots","attributes":{"amount":100.0,"remaining_amount":100.0,"chunk_size":5.0,"eta":"2018-11-02T20:18:56.016Z","executing":true,"to_cancel":false},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}]}'
+    http_version: 
+  recorded_at: Fri, 02 Nov 2018 19:55:08 GMT
+recorded_with: VCR 4.0.0
