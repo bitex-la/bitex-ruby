@@ -17,6 +17,9 @@ module Bitex
         private_request { super(label: label, amount: amount, currency: currency, to_addresses: to_addresses) }
       end
 
+      # @param [Symbol] currency. Values: :bch, :btc
+      #
+      # @return [true] if currency code is valid.
       def self.valid_currency?(currency)
         %i[bch btc].include?(currency)
       end
