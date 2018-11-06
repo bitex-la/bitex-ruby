@@ -8,21 +8,27 @@ module Bitex
       #
       # Ask for a Cryptocurrency Withdrawal.
       #
-      # @param [Symbol] currency: Currently, the possible values are :btc and :bch.
+      # @param [String] label: single tag for operation.
+      # @param [Float|String] amount: amount to withdraw.
+      # @param [String] currency: Currently, the possible values are btc and bch.
+      # @param [String] to_address: crypto address to our wallet.
+      # @param [String] otp: One Time Password.
       #
       # @return [CoinWithdrawal>].
-      def self.create(label:, amount:, currency:, to_addresses:)
+      def self.create(label:, amount:, currency:, to_addresses:, otp:)
         raise CurrencyError unless valid_currency?(currency)
 
-        private_request { super(label: label, amount: amount, currency: currency, to_addresses: to_addresses) }
+        private_request(otp: otp) { super(label: label, amount: amount, currency: currency, to_addresses: to_addresses) }
       end
 
-      # @param [Symbol] currency. Values: :bch, :btc
+      # @param [String] currency. Values: bch, btc
       #
       # @return [true] if currency code is valid.
       def self.valid_currency?(currency)
-        %i[bch btc].include?(currency)
+        %w[bch btc].include?(currency)
       end
+
+      private_class_method :valid_currency?
     end
   end
 end

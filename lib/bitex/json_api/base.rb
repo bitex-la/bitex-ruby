@@ -16,8 +16,8 @@ module Bitex
       end
 
       def self.headers(otp = nil)
-        { Authorization: Bitex.api_key }.tap do |headers|
-          headers.merge!(version: VERSION, 'One-Time-Password' => otp) if otp.present?
+        { Authorization: Bitex.api_key }.tap do |header|
+          header.merge!(version: VERSION, 'One-Time-Password' => otp) if otp.present?
         end
       end
 
