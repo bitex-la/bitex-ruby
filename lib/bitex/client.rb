@@ -62,6 +62,10 @@ module Bitex
       with_client { JsonApi::Payment }
     end
 
+    def pos
+      with_client { JsonApi::Pos }
+    end
+
     def selling_bots
       with_client { JsonApi::SellingBot }
     end

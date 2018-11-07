@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/merchants/pos
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"pos","attributes":{"type":"pos","merchant_keep":10,"merchant_logo":"https://myawesomesite.com/logo","merchant_name":"My
+        Awesome Site","merchant_site":"https://myawesomesite.com","merchant_slug":"my-awesome-site"}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"24a72c0c52e30b0075d49bbee5a55fbe"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=MnFhWFhRUDVlTDNBemE1N2NvazFzaUx6YmtMcVJXdkJmUWhYL3RTNWRWTTVSbXBXZTdXbU56eldlS2U3SzNOZTVhclZhNUx1SXpvVmJhakFnZm9FVGY4OVRVN1VwOEs4K1hBUUQxMG1oMWtiY2lsRjhzZWtmN2kzU3RYcm1jejdrcEEzcUlKOTlxbU5aVFd2a05lZ0hpVDhMTDZianBzODFkQVhNS0JXbkNRPS0tU2diMUtUNVRtY2ZjdkdkL0pDOW9rdz09--fbd5c91eb019649540e89af0de0acec3e0f610a5;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 3699bee8-3e09-445b-897d-5c4a7c5ef1b4
+      X-Runtime:
+      - '0.359560'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"1","type":"pos","attributes":{"merchant_slug":"my-awesome-site","merchant_keep":10.0,"merchant_name":"My
+        Awesome Site","merchant_logo":"https://myawesomesite.com/logo","merchant_site":"https://myawesomesite.com"}}}'
+    http_version: 
+  recorded_at: Wed, 07 Nov 2018 15:33:10 GMT
+recorded_with: VCR 4.0.0

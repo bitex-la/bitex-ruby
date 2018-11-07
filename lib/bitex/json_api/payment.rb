@@ -23,7 +23,7 @@ module Bitex
     class Payment < Base
       has_many :bitcoin_addresses
 
-      def self.table_name
+      def self.resource_path
         'merchants/payments'
       end
 
