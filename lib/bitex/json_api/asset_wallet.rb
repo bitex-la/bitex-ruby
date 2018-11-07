@@ -15,6 +15,11 @@ module Bitex
         private_request { where(user_id: 'me').all }
       end
 
+      # GET /api/users/me/asset_wallets/:id
+      #
+      # Get Asset Wallets.
+      #
+      # @return [AssetWallet]
       def self.find(id:)
         private_request { where(user_id: 'me').find(id)[0] }
       end

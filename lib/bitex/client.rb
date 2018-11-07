@@ -50,20 +50,24 @@ module Bitex
       with_client { JsonApi::Movement }
     end
 
-    def selling_bots
-      with_client { JsonApi::SellingBot }
-    end
-
-    def tickers
-      with_client { JsonApi::Ticker }
-    end
-
     def orderbooks
       with_client { JsonApi::Orderbook }
     end
 
     def orders
       with_client { JsonApi::Order }
+    end
+
+    def payments
+      with_client { JsonApi::Payment }
+    end
+
+    def selling_bots
+      with_client { JsonApi::SellingBot }
+    end
+
+    def tickers
+      with_client { JsonApi::Ticker }
     end
 
     def withdrawal_instructions

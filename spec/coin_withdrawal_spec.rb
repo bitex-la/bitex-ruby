@@ -30,7 +30,7 @@ describe Bitex::JsonApi::CoinWithdrawal do
   end
 
   describe '.create' do
-    subject { client.coin_withdrawals.create(label: label, amount: amount,currency: currency, to_addresses: to_addresses, otp: otp) }
+    subject { client.coin_withdrawals.create(label: label, amount: amount, currency: currency, to_addresses: to_addresses, otp: otp) }
 
     let(:label) { 'we_dont_care' }
     let(:amount) { 100 }

@@ -16,7 +16,7 @@ module Bitex
       # relationships attribute.
       #
       # @return [WithdrawalInstruction]
-      def self.create(amount:, fiat:, otp:, withdrawal_instruction_id:)
+      def self.create(amount:, fiat:, withdrawal_instruction_id:, otp:)
         new(amount: amount, fiat: fiat).tap do |withdrawal|
           withdrawal.relationships.withdrawal_instruction = WithdrawalInstruction.new(id: withdrawal_instruction_id)
           private_request(otp: otp) { withdrawal.save }

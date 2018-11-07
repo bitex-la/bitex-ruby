@@ -18,7 +18,7 @@ describe Bitex::JsonApi::CashWithdrawal do
   end
 
   describe '.create' do
-    subject { client.cash_withdrawals.create(amount: amount, fiat: fiat, otp: otp, withdrawal_instruction_id: id) }
+    subject { client.cash_withdrawals.create(amount: amount, fiat: fiat, withdrawal_instruction_id: id, otp: otp) }
 
     let(:amount) { 1_000 }
     let(:fiat) { :ars }
@@ -26,10 +26,12 @@ describe Bitex::JsonApi::CashWithdrawal do
     let(:otp) { '111111' }
 
     context 'with unauthorized key', vcr: { cassette_name: 'cash_withdrawals/create/unauthorized' } do
+      let(:key) { :we_dont_care }
+
       it_behaves_like 'Not enough permissions'
     end
 
-    context 'with unauthorized key', vcr: { cassette_name: 'cash_withdrawals/create/unauthorized_key' } do
+    context 'with unauthorized level key', vcr: { cassette_name: 'cash_withdrawals/create/unauthorized_key' } do
       it_behaves_like 'Not enough level permissions'
     end
 

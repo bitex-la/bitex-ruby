@@ -1,125 +1,135 @@
 require 'spec_helper'
 
-describe Bitex::Payment do
-  before(:each) { Bitex.api_key = 'valid_api_key' }
+describe Bitex::JsonApi::Payment do
+  let(:client) { Bitex::Client.new(api_key: key) }
+  let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
+  let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
+  let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
 
-  let(:params_for_create) do
-    {
-      currency_id: 3,
-      amount: 1000,
-      callback_url: 'https://example.com/ipn',
-      keep: 25.0,
-      customer_reference: 'An Alto latte, no sugar',
-      merchant_reference: 'invoice#1234'
-    }
+  shared_examples_for 'Payment' do
+    it { is_expected.to be_a(described_class) }
+
+    its(:'attributes.keys') do
+      is_expected.to contain_exactly(
+        *%w[type amount currency keep callback_url customer_reference merchant_reference id confirmed_quantity expected_quantity
+        kept last_quoted_on overpaid quote_valid_until settlement_amount settlement_currency status unconfirmed_quantity
+        valid_until]
+      )
+    end
+    its(:type) { is_expected.to eq(resource_name) }
   end
 
-  let(:as_json) do
-    {
-      id: 1,
-      user_id:  1,
-      amount: 100.00,
-      currency_id:  1,
-      expected_quantity:  0.02,
-      previous_expected_quantity: 0.018,
-      confirmed_quantity: 0.0,
-      unconfirmed_quantity: 0.0,
-      valid_until:  1430226201,
-      quote_valid_until:  1430226201,
-      last_quoted_on: 1430220201,
-      status: 'pending',
-      address: {
-        'id': 4,
-        'public_address': '1ABC...',
-      },
-      settlement_currency_id: 2,
-      settlement_amount:  100,
-      keep: 1.5,
-      merchant_reference: 'Invoice#1234',
-      customer_reference: 'Frappuchino',
-    }
-  end
-
-  let(:as_malformed_json) { { bad_key: 'i should not be setted' } }
-
-  let(:callback_params) do
-    { 'api_key' => 'valid_api_key', 'payment' => as_json }
-  end
-
-  {
-    id: 1,
-    user_id:  1,
-    amount: 100.00,
-    currency_id:  1,
-    expected_quantity:  0.02,
-    previous_expected_quantity: 0.018,
-    confirmed_quantity: 0.0,
-    unconfirmed_quantity: 0.0,
-    valid_until:  Time.at(1430226201),
-    quote_valid_until:  Time.at(1_430_226_201),
-    last_quoted_on: Time.at(1_430_220_201),
-    status: 'pending',
-    address: {
-      'id': 4,
-      'public_address': '1ABC...',
-    },
-    settlement_currency_id: 2,
-    settlement_amount:  100,
-    keep: 1.5,
-    merchant_reference: 'Invoice#1234',
-    customer_reference: 'Frappuchino'
-  }.each do |field, value|
-      it "sets #{field}" do
-        subject.class.from_json(as_json).send(field).should eq value
-      end
-
-      it "not sets #{field}" do
-        subject.class.from_json(as_malformed_json).send(field).should be_nil
-      end
+  describe '.create' do
+    subject do
+      client.payments.create(
+        amount: amount,
+        currency_code: currency_code,
+        keep: keep,
+        callback_url: callback_url,
+        customer_reference: customer_reference,
+        merchant_reference: merchant_reference
+      )
     end
 
-  it 'creates a new payment' do
-    stub_private(:post, '/private/payments', 'payment', params_for_create)
+    let(:amount) { 100 }
+    let(:callback_url) { 'https://myawesomesite.com/webhook' }
+    let(:currency_code) { :btc }
+    let(:customer_reference) { 'Purchase at My Store' }
+    let(:keep) { 10 }
+    let(:merchant_reference) { 'Sale id: 2212' }
 
-    Bitex::Payment.create!(params_for_create).should be_a Bitex::Payment
+    context 'with invalid currency' do
+      let(:key) { 'we_dont_care' }
+      let(:currency_code) { :invalid_currency }
+
+      it { expect { subject }.to raise_error(Bitex::CurrencyError) }
+    end
+
+    context 'with unauthorized key', vcr: { cassette_name: 'payments/create/unauthorized' } do
+      it_behaves_like 'Not enough permissions'
+    end
+
+    context 'with unauthorized level key', vcr: { cassette_name: 'payments/create/unauthorized_key' } do
+      it_behaves_like 'Not enough level permissions'
+    end
+
+    context 'with authorized level key', vcr: { cassette_name: 'payments/create/authorized' } do
+      let(:key) { write_level_key }
+
+      it_behaves_like 'Payment'
+
+      its(:amount) { is_expected.to eq(amount) }
+      its(:callback_url) { is_expected.to eq(callback_url) }
+      its(:currency) { is_expected.to eq(currency_code.to_s) }
+      its(:customer_reference) { is_expected.to eq(customer_reference) }
+      its(:keep) { is_expected.to eq(keep) }
+      its(:merchant_reference) { is_expected.to eq(merchant_reference) }
+    end
   end
 
-  it 'finds a single payment' do
-    stub_private(:get, '/private/payments/1', 'payment')
+  describe '.find' do
+    subject { client.payments.find(id: id) }
 
-    Bitex::Payment.find(1).should be_a Bitex::Payment
+    let(:id) { 1 }
+
+    context 'with unauthorized key', vcr: { cassette_name: 'payments/find/unauthorized' } do
+      it_behaves_like 'Not enough permissions'
+    end
+
+    context 'with any level key' do
+      let(:key) { read_level_key }
+
+      context 'with non-existent id', vcr: { cassette_name: 'payments/find/non_existent_id' } do
+        it_behaves_like 'Not Found'
+      end
+
+      context 'with existent id', vcr: { cassette_name: 'payments/find/authorized' } do
+        it_behaves_like 'Payment'
+
+        its(:id) { is_expected.to eq(id.to_s) }
+      end
+    end
   end
 
-  it 'lists all payments' do
-    stub_private(:get, '/private/payments', 'payments')
+  describe '.valid_currency?' do
+    subject { described_class.send(:valid_currency?, code) }
 
-    payments = Bitex::Payment.all
+    context 'with valid currency' do
+      let(:code) { %i[btc usd ars uyu eur clp pen brl cop mxn pyg cny inr bch].sample }
 
-    payments.should be_an Array
-    payments.all? { |payment| payment.should be_a Bitex::Payment }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'with invalid currency' do
+      let(:code) { :we_dont_care }
+
+      it { is_expected.to be_falsey }
+    end
   end
 
-  it 'accepts a callback' do
-    Bitex::Payment
-      .from_callback(callback_params)
-      .should be_a Bitex::Payment
+  describe '.currency_id' do
+    subject { described_class.send(:currency_id, code) }
+
+    context 'with valid currency' do
+      let(:code) { %i[btc usd ars uyu eur clp pen brl cop mxn pyg cny inr bch].sample }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'with invalid currency' do
+      let(:code) { :we_dont_care }
+
+      it { is_expected.to be_falsey }
+    end
   end
 
-  it 'raises exception if invalid api key' do
-    Bitex::Payment
-      .from_callback(callback_params.merge('api_key' => 'bogus'))
-      .should be_nil
-  end
+  describe '.currencies' do
+    subject { described_class.send(:currencies) }
 
-  it 'configures store' do
-    pos_params = {
-      'merchant_name' => 'Tierra Buena',
-      'merchant_slug' => 'tierrabuena',
-      'merchant_logo' => 'https://t.co/logo.png',
-      'merchant_keep' => 0
-    }
-    stub_private(:post, '/private/payments/pos_setup', 'pos_setup', pos_params.dup)
+    let(:codes) { %i[btc usd ars uyu eur clp pen brl cop mxn pyg cny inr bch] }
 
-    Bitex::Payment.pos_setup!(pos_params).should == pos_params
+    it 'has a index for thids code currencies' do
+      codes.all? { |code| expect(subject[code]).to be_present }
+    end
   end
 end

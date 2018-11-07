@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/merchants/payments/1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"32a125ef364064180e792144a88c7b9f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=MFJLbzQyZEwxTmo2VUdyVnh6K2I5MGVVWjhqYlFRc0IwaG8ySElnYlJEbktvOWdab3FjMkhacHczdUtkWWF0ckFYRG93QWlNRFVFK3VxOWE5OUVJaisvS0dHUUR1SHQrRWswTkIyNS9TOXk3UlJzdUhOTktYSTFoaXBtZVdDOEhjYi9RVnNoNk1QODcyNjRJd0NpSmlwWEJwOE5tTDU0U1hDTXBCSFU4czhvPS0tdmt3K3FCMHFud21PS2FPSkVtZTZpUT09--0e1610e9a6c61b1d53aa120436f1fe71eb459ef4;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 65042081-30de-441e-b326-ee53d8faac38
+      X-Runtime:
+      - '0.295751'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"1","type":"payments","attributes":{"amount":100.0,"callback_url":"https://myawesomesite.com/webhook","confirmed_quantity":0.0,"currency":"btc","customer_reference":"Purchase
+        at My Store","expected_quantity":100.0,"keep":10.0,"kept":null,"last_quoted_on":"2018-11-06T20:18:44.695Z","merchant_reference":"Sale
+        id: 2212","overpaid":null,"quote_valid_until":"2018-11-06T21:18:44.029Z","settlement_amount":null,"settlement_currency":null,"status":"pending","unconfirmed_quantity":0.0,"valid_until":"2018-11-06T21:18:44.029Z"},"relationships":{"address":{"data":{"id":"5","type":"bitcoin_addresses"}}}},"included":[{"id":"5","type":"bitcoin_addresses","attributes":{"auto_sell":false,"public_address":"mvq2BWRJiDLnbHf2dJ6JgCnrCpaoT1cmTW"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"payment":{"data":{"id":"1","type":"payments"}}}}]}'
+    http_version: 
+  recorded_at: Wed, 07 Nov 2018 13:11:05 GMT
+recorded_with: VCR 4.0.0
