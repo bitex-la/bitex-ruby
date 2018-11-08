@@ -3,6 +3,7 @@ require 'active_support/core_ext'
 
 require 'bigdecimal'
 require 'bigdecimal/util'
+require 'string'
 
 require 'curl'
 require 'json'
@@ -43,7 +44,7 @@ module Bitex
   class InvalidResourceArgument < StandardError
   end
 
-  class MalformedOtpCode < StandardError
+  class MalformedOtp < StandardError
   end
 
   class OrderNotPlaced < StandardError

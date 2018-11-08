@@ -12,14 +12,15 @@ module Bitex
       # Create an Api Key.
       # This endpoint always requires an OTP. Users that don't have the 2FA enabled, will not be able to create Api Keys.
       #
-      # @param [Boolean] write.
-      # @param [String] otp_code.
+      # @param [Symbol] level: [:read, :write]
+      # @param [String] otp: your One Time Password.
       #
-      # @return JsonApiClient::ResultSet. It has the server response data, and created api key parsed to json api.
-      def self.create(write: false, otp_code: nil)
-        raise MalformedOtpCode unless valid_otp_code?(otp_code)
+      # @return [ApiKey]
+      def self.create(level: :read, otp: nil)
+        raise MalformedOtp unless valid_otp?(otp)
+        raise InvalidArgument unless valid_level?(level)
 
-        private_request { super(write: write, meta: { otp: otp_code }) }
+        private_request(otp: otp) { super(write: key_levels[level]) }
       end
 
       # GET /api/api_keys
@@ -38,14 +39,23 @@ module Bitex
       # @param [Integer] id.
       #
       # @return [nil]
-      def self.destroy(id)
-        private_request { super(id: id) }
+      def destroy
+        private_request { super }
       end
 
-      def self.valid_otp_code?(otp_code)
-        return false if otp_code.nil? || otp_code.blank?
-        return false unless otp_code.try(:to_i).is_a?(Numeric)
+      def self.valid_otp?(otp_code)
+        otp_code.present? && otp_code.is_numeric?
       end
+
+      def self.valid_level?(key_level)
+        key_levels.include?(key_level)
+      end
+
+      def self.key_levels
+        { read: false, write: true }
+      end
+
+      private_class_method :valid_otp?, :valid_level?, :key_levels
     end
   end
 end

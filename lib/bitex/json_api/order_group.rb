@@ -63,7 +63,7 @@ module Bitex
 
       # @param [Float|Decimal] amount.
       #
-      # @return [true] if amount isn't zero or negative.
+      # @return [Boolean] if amount isn't zero or negative.
       def self.valid_amount?(amount)
         amount.positive?
       end

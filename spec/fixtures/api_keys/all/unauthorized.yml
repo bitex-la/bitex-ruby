@@ -1,16 +1,18 @@
 ---
 http_interactions:
 - request:
-    method: post
+    method: get
     uri: https://dev.bitex.la:3000/api/api_keys
     body:
-      encoding: UTF-8
-      string: '{"data":{"type":"api_keys","attributes":{"type":"api_keys","write":false,"meta":{"otp":"984176"}}}}'
+      encoding: US-ASCII
+      string: ''
     headers:
-      Authorization:
-      - 81a3008a9d0b65a31d3d16759da5a7fc3c597deac1a8f23afb671e0a8d4c29aae3b92604773d5234
       User-Agent:
       - Faraday v0.9.2
+      Authorization:
+      - we_dont_care
+      Version:
+      - '2.0'
       Content-Type:
       - application/vnd.api+json
       Accept:
@@ -33,14 +35,12 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Request-Id:
-      - 9c2edf92-debe-4c8b-acea-71ff104284cf
+      - 3f81429c-52d6-4487-b6eb-880d338d2ae5
       X-Runtime:
-      - '0.746137'
-      Transfer-Encoding:
-      - chunked
+      - '23.770472'
     body:
       encoding: UTF-8
-      string: '{"error":"Not enough permissions"}'
+      string: '{"error":"Invalid Api Key"}'
     http_version: 
-  recorded_at: Fri, 12 Oct 2018 19:15:22 GMT
+  recorded_at: Thu, 08 Nov 2018 15:19:26 GMT
 recorded_with: VCR 4.0.0

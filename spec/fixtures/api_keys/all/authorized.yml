@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dev.bitex.la:3000/api/api_keys
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - 81a3008a9d0b65a31d3d16759da5a7fc3c597deac1a8f23afb671e0a8d4c29aae3b92604773d5234
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"b8237ecfbda09ff2779ce76ff548c711"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=LzgrcWR5Szg2d0dWckkra0owTnVTaTNwMXNaSDNWU1ltZ280VkdvTlRIcVFkdmQ2QStkRXpaN28zNTR6OThVY0w2cVNBSHRiSlRvQ1laTnlsbFFnVHR6dUkrZkNGYnY2Q3N3ek9XbFdvZno5UEtZTGl4N3VNTEtEQU9sQW13VllkQUJLRDNzN09PQ0VKL0N3NUFESkRxemFZUks2K2k3YnRKWWd3eHRJZ0d3PS0tZFdDc2RpdEY3QzdRcEpvSEdHYXdnQT09--39982054353eeedb9069b4627b8adac7f88f92f7;
+        path=/; HttpOnly
+      X-Request-Id:
+      - b09b62b9-f5b8-4ccc-915c-1cb9f037f768
+      X-Runtime:
+      - '5.179007'
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"1","type":"api_keys","attributes":{"write":false,"token":"**********************************************************************04773d5234"}},{"id":"3","type":"api_keys","attributes":{"write":true,"token":"**********************************************************************334568cc05"}},{"id":"4","type":"api_keys","attributes":{"write":false,"token":"**********************************************************************ee7b623f98"}},{"id":"5","type":"api_keys","attributes":{"write":false,"token":"**********************************************************************4d22277576"}},{"id":"6","type":"api_keys","attributes":{"write":true,"token":"**********************************************************************57e6594a35"}},{"id":"7","type":"api_keys","attributes":{"write":false,"token":"**********************************************************************a68c0dd709"}},{"id":"8","type":"api_keys","attributes":{"write":true,"token":"**********************************************************************5e2b82da50"}}]}'
+    http_version: 
+  recorded_at: Thu, 08 Nov 2018 15:00:23 GMT
+recorded_with: VCR 4.0.0
