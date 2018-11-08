@@ -1,63 +1,8 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://dev.bitex.la:3000/api/withdrawal_instructions
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Authorization:
-      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
-      Content-Type:
-      - application/vnd.api+json
-      Accept:
-      - application/vnd.api+json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Content-Type-Options:
-      - nosniff
-      Content-Type:
-      - application/vnd.api+json; charset=utf-8
-      Etag:
-      - W/"edfe0807e0b10b2351fcd3422103916c"
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Set-Cookie:
-      - _bitex_la_session=bmVzcWNnUDlURG5HUUpwZ3NIaGx0SWZNeHJVSjZUeVFSMzBKa2Q3a0o0T0c1YnZEcUF4NzBmeVZmQ2hmNDR6S09OaWh6bXc4aHpzVG5NWWY3VzVyeTJESUtMTWhqZDdURWgzQXM1QXE3ck5ycTU2TmZQNXVwamZHaDNTTVZTU2lLM2VlUnFKQjFNRGs2RERGci9MRk9pU01ONURkcWNxM1UxYWVZejJoaXRjPS0teGZlSnNpVTdPUHk2amtsNHNqUkNCUT09--62da95a6f6a6f1bbc8e5a1cd21f27044d6f1bd77;
-        path=/; HttpOnly
-      X-Request-Id:
-      - fc9fa207-4508-4c9f-a362-f0423f76ba49
-      X-Runtime:
-      - '0.256290'
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"data":[{"id":"6","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"city":"Dimension
-        C-132","further_instructions":"A further instructions","name":"Rick Sanchez","payment_method":"third_party","phone":"1122334455","currency":"ARS"}}},{"id":"7","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"account_type":"savings","address":"a
-        address","bank":"bco_chile","bank_account_number":"12345678","bank_address":"a
-        bank address","bank_city":"a bank city","bank_country":"CL","bank_postal_code":"AABBCC","bank_swift":"BANKUS66","postal_code":"XXYYZZ","city":"Dimension
-        C-132","country":"CL","currency":"USD","further_instructions":"A further instructions","name":"Rick
-        Sanchez","payment_method":"international_bank","phone":"1122334455"}}},{"id":"8","type":"withdrawal_instructions","attributes":{"label":"label","schema":"bitex","body":{"city":"Dimension
-        C-132","country":"PY","currency":"USD","further_instructions":"A further instructions","name":"Rick
-        Sanchez","payment_method":"third_party","phone":"1122334455"}}}]}'
-    http_version: 
-  recorded_at: Tue, 30 Oct 2018 19:38:56 GMT
-- request:
     method: delete
-    uri: https://dev.bitex.la:3000/api/withdrawal_instructions/6
+    uri: https://dev.bitex.la:3000/api/withdrawal_instructions/99
     body:
       encoding: US-ASCII
       string: ''
@@ -65,7 +10,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - 2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35
+      - 0cbb224a57d59535bb3b0c92a99e7b2ac6d36514dbd48c667ccca09961937ca93740de334568cc05
+      Version:
+      - '2.0'
       Content-Type:
       - application/vnd.api+json
       Accept:
@@ -88,17 +35,15 @@ http_interactions:
       Cache-Control:
       - no-cache
       Set-Cookie:
-      - _bitex_la_session=U3ducGxiTHNiWFhUWW5GdjFQblBjdk4yS29EMlBQV2FyK0Y4S0Q2a0xKS3kybkU2bTZaeU9RUjJ2NkZZcVR5MHhIYWNydXkzWWtVdWUwbkpvL2hqOFB1bXdoR0t6eEJlQTlwWHh1QWwyWFJaQ1Q3cEk3TUk4WW1XUWlpNmtuVG9hSU14WjZqKzJIaTNwVjRhcGU5NThWZEJrNzd2UGpqbERDcmNXenFWRURVPS0tQVlwQVYvRkN6TXF3bXhaOXplajhDQT09--54d8f465fd6bb708273eb31cb71b1b2118e6a18c;
+      - _bitex_la_session=cWRJOURadTYvbjBVaCttK1I5S1dSWnpaTkhFd1FtQmdJbVFtaG5CdjMzUnZEUWMzUDFxR053OVkzOEt4b3hRNTcwNVRRcVEzbkFHWGlmbW9qd0dIMTVCNFd4V2ZFejRWMlNURkt0NlFTaG1ScVdrNVJVbW14b1VQeThQc3hzVjFJUTNuWnhGUHY4ZnNJU1p0cGsxT1o5WFRDWXZwckpTVFluY2dDcjhLc1VZPS0tSHV0M09MOFl5MnNrbm1zYnlsbTRVQT09--95b642fe02187cc54e356064e49c5252d2a0e704;
         path=/; HttpOnly
       X-Request-Id:
-      - c1b88a6f-ff6c-41e1-9428-fc1d096bcd35
+      - 529ac13a-c5bd-4447-8dee-5a1ccec589d5
       X-Runtime:
-      - '12.343776'
-      Transfer-Encoding:
-      - chunked
+      - '5.564912'
     body:
       encoding: UTF-8
       string: '{"errors":[{"code":null,"detail":null}]}'
     http_version: 
-  recorded_at: Tue, 30 Oct 2018 19:39:20 GMT
+  recorded_at: Thu, 08 Nov 2018 18:49:40 GMT
 recorded_with: VCR 4.0.0

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Bitex::JsonApi::WithdrawalInstruction do
   let(:client) { Bitex::Client.new(api_key: key) }
   let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
-  let(:read_level_key) { 'b47007918b1530b09bb972661c6588216a35f08e4fd9392e5c7348e0e3e4ffbd8a47ae4d22277576' }
-  let(:write_level_key) { '2648e33d822a4cc51ae4ef28efed716a1ad8c37700d6b33a4295618ba880ffcf9b57e457e6594a35' }
+  let(:read_level_key) { '81a3008a9d0b65a31d3d16759da5a7fc3c597deac1a8f23afb671e0a8d4c29aae3b92604773d5234' }
+  let(:write_level_key) { '0cbb224a57d59535bb3b0c92a99e7b2ac6d36514dbd48c667ccca09961937ca93740de334568cc05' }
 
   shared_examples_for 'Withdrawal Instruction' do
     it { is_expected.to be_a(described_class) }
@@ -142,19 +142,15 @@ describe Bitex::JsonApi::WithdrawalInstruction do
   end
 
   describe '.destroy' do
-    subject { resource.destroy }
+    subject { client.withdrawal_instructions.new(id: id).destroy }
 
-    let(:all) { client.withdrawal_instructions.all }
+    let(:id) { 13 }
 
     context 'with unauthorized key', vcr: { cassette_name: 'withdrawal_instructions/destroy/unauthorized' } do
-      let(:resource) { Bitex::Client.new(api_key: write_level_key).withdrawal_instructions.all.find { |rs| rs.id = '10' } }
-
       it_behaves_like 'Not enough permissions'
     end
 
     context 'with unauthorized level key', vcr: { cassette_name: 'withdrawal_instructions/destroy/unauthorized_key' } do
-      let(:resource) { all.find { |rsc| rsc.id == '7' } }
-
       it_behaves_like 'Not enough level permissions'
     end
 
@@ -162,18 +158,10 @@ describe Bitex::JsonApi::WithdrawalInstruction do
       let(:key) { write_level_key }
 
       context 'with non-existent id', vcr: { cassette_name: 'withdrawal_instructions/destroy/non_existent_id' } do
-        let(:key) { write_level_key }
-
-        # The resource is present
-        let(:resource) { all.find { |rsc| rsc.id == '6' } }
-
-        # For some reason the resource is no longer available
         it_behaves_like 'Not Found'
       end
 
       context 'with existent id', vcr: { cassette_name: 'withdrawal_instructions/destroy/authorized' } do
-        let(:resource) { all.find { |rsc| rsc.id == '10' } }
-
         it { is_expected.to be_truthy }
       end
     end
