@@ -11,12 +11,10 @@ describe Bitex::JsonApi::ApiKey do
 
     its(:'attributes.keys') { is_expected.to contain_exactly(*%w[type write id token]) }
 
-=begin
     its(:type) { is_expected.to eq(resource_name) }
     its(:id) { is_expected.to be_present }
     its(:token) { is_expected.to be_present }
     its(:write) { is_expected.to be_boolean }
-=end
   end
 
   describe '.all' do
