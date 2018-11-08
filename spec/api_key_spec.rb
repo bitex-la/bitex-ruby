@@ -86,7 +86,6 @@ describe Bitex::JsonApi::ApiKey do
     end
   end
 
-
   describe '.destroy' do
     subject { client.api_keys.new(id: id).destroy }
 
