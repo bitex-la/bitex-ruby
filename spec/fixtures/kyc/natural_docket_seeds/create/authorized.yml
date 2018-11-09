@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/natural_docket_seeds
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"natural_docket_seeds","attributes":{"type":"natural_docket_seeds","first_name":"Rick","last_name":"Sanchez","nationality":"AR","gender_code":"male","marital_status_code":"single","politically_exposed":false,"birth_date":"1989-05-17","job_title":"scientific","job_description":"science, absolute reality","politically_exposed_reason":"I´m a rockstar"}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - cf35ed969e27d8434e865f673f9882c274370cff823a04b6b2acfc9e022fbb13882dd9a86f367a9b
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"813721a6823acaa8368cb6c19e84a529"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=L2cwcCttcWU2b3JjT0VqbWxnK1B2OUs1TC9QcmFtTkdvcjlXN0Q0VGFQYUYzMk5VcENqb21xaS85c0RtMG05LzBYMGtzZTMxOEFBT0NjTzRpK3FuSmFiL2pTMTBzekNOc1lxVDZBbDVKa2FDTFNIV2hsRzRuYUczanJ0bG1VQUNRQXJpRHNEdjN2VW5uc1ViM01Qa21BdERXMUo0ODZkcFZrNFY3ZlZ0SmJVPS0tMnlJM00vM2NuV3NKcjlVMkRCMTRQdz09--b3002c79417cefc6483f65114df8f038d345c82e;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 181002fd-a923-4480-80a2-7974770c1f20
+      X-Runtime:
+      - '5.054472'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"3","type":"natural_docket_seeds","attributes":{"first_name":"Rick","last_name":"Sanchez","nationality":"AR","gender_code":"male","marital_status_code":"single","job_title":"scientific","job_description":"science, absolute reality","politically_exposed":false,"politically_exposed_reason":"I´m a rockstar","birth_date":"1989-05-17","created_at":"2018-11-09T20:38:50.000Z","updated_at":"2018-11-09T20:38:50.000Z"},"relationships":{"issue":{"data":{"id":"3","type":"issues"}},"attachments":{"data":[]}}}}'
+    http_version: 
+  recorded_at: Fri, 09 Nov 2018 20:38:50 GMT
+recorded_with: VCR 4.0.0
