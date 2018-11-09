@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/identification_seeds
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"identification_seeds","attributes":{"type":"identification_seeds","identification_kind_code":"national_id","number":"12345678","issuer":"AR","public_registry_authority":"public
+        registry authority","public_registry_book":"public registry book","public_registry_extra_data":"public
+        registry extra data"}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - cf35ed969e27d8434e865f673f9882c274370cff823a04b6b2acfc9e022fbb13882dd9a86f367a9b
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"af4eb31a0e8583249fe55b9e736293ac"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=ejgxZExxL2d5aE1MOXUxMlZhVkcwTStEQnIzNklBZFhQOW9xMVNtR0JZSWRMVDd3NWJPV0p0NWI0b0hWUzVVemdkMWxwemVkMVVORWUwbmJ6MndDR1lCN2ZneGw0SWc3NjIweDBucC92a0tBbTJNcm94TGFRUHIxRjlhM3c3S09KZnYxeTBKdTI0dkhGUytOc2grQkl3ckx2ZWJTdmo1a1RHVkVVY3pnVVhNPS0tQXlERC9ibExxZU1UOHcxcVFYdHVtdz09--4a293ca0365e330ca7875f163a4e96fd2aa4fe7f;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 5c831c23-47b3-49fb-b7e6-18ba6db32b88
+      X-Runtime:
+      - '8.539520'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"2","type":"identification_seeds","attributes":{"identification_kind_code":"national_id","number":"12345678","issuer":"AR","public_registry_authority":null,"public_registry_book":null,"public_registry_extra_data":null,"created_at":"2018-11-09T22:59:13.000Z","updated_at":"2018-11-09T22:59:13.000Z"},"relationships":{"issue":{"data":{"id":"3","type":"issues"}},"attachments":{"data":[]}}}}'
+    http_version: 
+  recorded_at: Fri, 09 Nov 2018 22:59:13 GMT
+recorded_with: VCR 4.0.0

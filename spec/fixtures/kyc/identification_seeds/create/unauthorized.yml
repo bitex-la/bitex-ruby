@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://dev.bitex.la:3000/api/identification_seeds
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"identification_seeds","attributes":{"type":"identification_seeds","identification_kind_code":"national_id","number":"12345678","issuer":"AR","public_registry_authority":"public
+        registry authority","public_registry_book":"public registry book","public_registry_extra_data":"public
+        registry extra data"}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - we_dont_care
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 4d885699-4eb6-4e81-b171-a089b55b07b9
+      X-Runtime:
+      - '3.229721'
+    body:
+      encoding: UTF-8
+      string: '{"error":"Invalid Api Key"}'
+    http_version: 
+  recorded_at: Fri, 09 Nov 2018 22:58:45 GMT
+recorded_with: VCR 4.0.0
