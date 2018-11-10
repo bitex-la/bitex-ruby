@@ -82,6 +82,10 @@ module Bitex
       with_client { JsonApi::KYC::NaturalDocketSeed }
     end
 
+    def note_seeds
+      with_client { JsonApi::KYC::NoteSeed }
+    end
+
     def identification_seeds
       with_client { JsonApi::KYC::IdentificationSeed }
     end
