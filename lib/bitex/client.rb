@@ -78,6 +78,10 @@ module Bitex
       with_client { JsonApi::WithdrawalInstruction }
     end
 
+    def domicile_seeds
+      with_client { JsonApi::KYC::DomicileSeed }
+    end
+
     def natural_docket_seeds
       with_client { JsonApi::KYC::NaturalDocketSeed }
     end
