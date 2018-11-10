@@ -82,6 +82,10 @@ module Bitex
       with_client { JsonApi::KYC::DomicileSeed }
     end
 
+    def email_seeds
+      with_client { JsonApi::KYC::EmailSeed }
+    end
+
     def natural_docket_seeds
       with_client { JsonApi::KYC::NaturalDocketSeed }
     end
