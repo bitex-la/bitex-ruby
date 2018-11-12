@@ -1,6 +1,7 @@
 module Bitex
   module JsonApi
     module KYC
+      # pending doc TODO
       class DomicileSeed < Base
         def self.create(city:, country:, floor:, postal_code:, street_address:, street_number:, state:, apartment:)
           private_request do

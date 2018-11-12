@@ -1,7 +1,8 @@
+# Open class to add numeric checker
 class String
-  def is_numeric?
+  def numeric?
     true if Integer(self)
-  rescue
+  rescue ArgumentError
     false
   end
 end

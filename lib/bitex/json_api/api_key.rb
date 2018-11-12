@@ -44,7 +44,7 @@ module Bitex
       end
 
       def self.valid_otp?(otp_code)
-        otp_code.present? && otp_code.is_numeric?
+        otp_code.present? && otp_code.numeric?
       end
 
       def self.valid_level?(key_level)

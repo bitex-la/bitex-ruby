@@ -20,7 +20,7 @@ describe Bitex::JsonApi::KYC::IdentificationSeed do
     its(:number) { is_expected.to eq(number) }
     its(:issuer) { is_expected.to eq(issuer) }
 
-    #TODO porque devuelven nil?
+    # TODO why returns nil?
     its(:public_registry_authority) { is_expected.to be_nil }
     its(:public_registry_book) { is_expected.to be_nil }
     its(:public_registry_extra_data) { is_expected.to be_nil }
