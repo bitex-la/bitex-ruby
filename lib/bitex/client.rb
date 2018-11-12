@@ -78,6 +78,10 @@ module Bitex
       with_client { JsonApi::WithdrawalInstruction }
     end
 
+    def issues
+      with_client { JsonApi::KYC::Issue }
+    end
+
     def allowance_seeds
       with_client { JsonApi::KYC::AllowanceSeed }
     end
