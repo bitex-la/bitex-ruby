@@ -78,6 +78,10 @@ module Bitex
       with_client { JsonApi::WithdrawalInstruction }
     end
 
+    def allowance_seeds
+      with_client { JsonApi::KYC::AllowanceSeed }
+    end
+
     def argentina_invoicing_detail_seeds
       with_client { JsonApi::KYC::ArgentinaInvoicingDetailSeed }
     end
