@@ -82,6 +82,10 @@ module Bitex
       with_client { JsonApi::KYC::ArgentinaInvoicingDetailSeed }
     end
 
+    def chile_invoicing_detail_seeds
+      with_client { JsonApi::KYC::ChileInvoicingDetailSeed }
+    end
+
     def domicile_seeds
       with_client { JsonApi::KYC::DomicileSeed }
     end
