@@ -23,9 +23,6 @@ Dir[File.expand_path('bitex/json_api/trading_bot/*.rb', __dir__)].each { |f| req
 
 Dir[File.expand_path('bitex/json_api/*.rb', __dir__)].each { |f| require f }
 
-require 'bitex/match'
-require 'bitex/base_order'
-
 Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 
 # Documentation here!
