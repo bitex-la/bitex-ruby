@@ -110,6 +110,10 @@ module Bitex
       with_client { JsonApi::KYC::IdentificationSeed }
     end
 
+    def phone_seeds
+      with_client { JsonApi::KYC::PhoneSeed }
+    end
+
     private
 
     def with_client
