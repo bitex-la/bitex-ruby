@@ -36,11 +36,7 @@ describe Bitex::JsonApi::KYC::Issue do
       it_behaves_like 'Not enough permissions'
     end
 
-    context 'with unauthorized level key', vcr: { cassette_name: 'kyc/issues/current/unauthorized_key' } do
-      it_behaves_like 'Not enough level permissions'
-    end
-
-    context 'with authorized level key', vcr: { cassette_name: 'kyc/issues/current/authorized' } do
+    context 'with any level key', vcr: { cassette_name: 'kyc/issues/current/authorized' } do
       let(:key) { write_level_key }
 
       it_behaves_like 'Issue'
