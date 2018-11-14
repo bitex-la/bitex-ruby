@@ -1,9 +1,16 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'json'
-require 'curl'
+
 require 'bigdecimal'
 require 'bigdecimal/util'
+
+require 'curl'
+require 'json'
+require 'json_api_client'
+
+require 'bitex/client'
+require 'bitex/forwarder'
+
 require 'bitex/match'
 require 'bitex/base_order'
 
