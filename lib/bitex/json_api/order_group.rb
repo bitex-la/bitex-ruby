@@ -13,7 +13,7 @@ module Bitex
       def self.find(orderbook_code:, id:)
         raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-        private_request { where(market_id: orderbook_code).find(id)[0] }
+        where(market_id: orderbook_code).find(id)[0]
       end
 
       # POST /api/markets/:orderbook_code/[asks|bids]
@@ -23,15 +23,22 @@ module Bitex
       # @param [BigDecimal] price.
       #
       # @return [Ask|Bid]
-      def self.create(orderbook_code:, amount:, price:)
+      def self.create(orderbook_code:, amount:, price:, wait: true)
         raise UnknownOrderbook unless valid_code?(orderbook_code)
         raise InvalidArgument unless valid_amount?(amount)
 
-        order = private_request { super(market_id: orderbook_code, amount: amount, price: price) }
+        order = super(market_id: orderbook_code, amount: amount, price: price)
         raise OrderNotPlaced, order.errors.full_messages.join if order.errors.present?
 
-        # TODO: polling to find status different as received
-        find(orderbook_code: orderbook_code, id: order.id)
+        retries = 0
+        while wait && order.status == :received
+          sleep(0.2)
+          order = find(orderbook_code: orderbook_code, id: order.id)
+          retries += 1
+
+          # Wait 15 minutes for the order to be processed.
+          raise StandardError, "Timed out waiting for #{name} ##{order.id}" if retries > 5000
+        end
       end
 
       custom_endpoint :cancel, on: :collection, request_method: :post

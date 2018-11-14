@@ -12,9 +12,6 @@ module Bitex
       # Get all your accounts.
       #
       # @return [Array<Account>]
-      def self.all
-        private_request { super }
-      end
     end
   end
 end

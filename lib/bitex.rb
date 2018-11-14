@@ -10,6 +10,7 @@ require 'json'
 require 'json_api_client'
 
 require 'bitex/client'
+require 'bitex/forwarder'
 require 'bitex/json_api/base'
 
 require 'bitex/json_api/kyc'
@@ -28,11 +29,6 @@ Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 # Documentation here!
 module Bitex
   ORDERBOOKS = { btc_usd: 1, btc_ars: 5, bch_usd: 8, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
-
-  mattr_accessor :api_key
-  mattr_accessor :sandbox
-  mattr_accessor :debug
-  mattr_accessor :ssl_version
 
   class UnknownOrderbook < StandardError
   end

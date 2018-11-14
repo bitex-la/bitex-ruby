@@ -1,134 +1,123 @@
 module Bitex
   # This client connects via API to Bitex resources.
   class Client
-    attr_accessor :api_key, :sandbox, :debug, :ssl_version
+    attr_reader :api_key
 
-    def initialize(api_key: nil, sandbox: false, debug: false, ssl_version: nil)
+    def initialize(api_key: nil, sandbox: false)
       @api_key = api_key
-      @sandbox = sandbox
-      @debug = debug
-      @ssl_version = ssl_version
+      environment(sandbox)
+    end
+
+    def environment(sandbox)
+      JsonApi::Base.site = "https://#{'sandbox.' if sandbox }bitex.la/api/"
     end
 
     def accounts
-      with_client { JsonApi::Account }
-    end
-
-    def api_keys
-      with_client { JsonApi::ApiKey }
-    end
-
-    def asset_wallets
-      with_client { JsonApi::AssetWallet }
-    end
-
-    def asks
-      with_client { JsonApi::Ask }
-    end
-
-    def bids
-      with_client { JsonApi::Bid }
-    end
-
-    def buying_bots
-      with_client { JsonApi::BuyingBot }
-    end
-
-    def cash_withdrawals
-      with_client { JsonApi::CashWithdrawal }
-    end
-
-    def coin_withdrawals
-      with_client { JsonApi::CoinWithdrawal }
+      @accounts ||= Forwarder.new(JsonApi::Account, api_key)
     end
 
     def markets
-      with_client { JsonApi::Market }
+      @markets ||= Forwarder.new(JsonApi::Market)
+    end
+
+    def api_keys
+      @api_keys ||= Forwarder.new(JsonApi::ApiKey, api_key)
+    end
+
+    def asset_wallets
+      @asset_wallets ||= Forwarder.new(JsonApi::AssetWallet, api_key)
+    end
+
+    def asks
+      @asks ||= Forwarder.new(JsonApi::Ask, api_key)
+    end
+
+    def bids
+      @bids ||= Forwarder.new(JsonApi::Bid, api_key)
+    end
+
+    def buying_bots
+      @buying_bots ||= Forwarder.new(JsonApi::BuyingBot, api_key)
+    end
+
+    def cash_withdrawals
+      @cash_withdrawals ||= Forwarder.new(JsonApi::CashWithdrawal, api_key)
+    end
+
+    def coin_withdrawals
+      @coin_withdrawals ||= Forwarder.new(JsonApi::CoinWithdrawal, api_key)
     end
 
     def movements
-      with_client { JsonApi::Movement }
+      @movements ||= Forwarder.new(JsonApi::Movement, api_key)
     end
 
     def orderbooks
-      with_client { JsonApi::Orderbook }
+      @orderbooks ||= Forwarder.new(JsonApi::Orderbook, api_key)
     end
 
     def orders
-      with_client { JsonApi::Order }
+      @orders ||= Forwarder.new(JsonApi::Order, api_key)
     end
 
     def payments
-      with_client { JsonApi::Payment }
+      @payments ||= Forwarder.new(JsonApi::Payment, api_key)
     end
 
     def pos
-      with_client { JsonApi::Pos }
+      @pos ||= Forwarder.new(JsonApi::Pos, api_key)
     end
 
     def selling_bots
-      with_client { JsonApi::SellingBot }
+      @selling_bots ||= Forwarder.new(JsonApi::SellingBot, api_key)
     end
 
     def tickers
-      with_client { JsonApi::Ticker }
+      @tickers ||= Forwarder.new(JsonApi::Ticker, api_key)
     end
 
     def withdrawal_instructions
-      with_client { JsonApi::WithdrawalInstruction }
+      @withdrawal_instructions ||= Forwarder.new(JsonApi::WithdrawalInstruction, api_key)
     end
 
     def issues
-      with_client { JsonApi::KYC::Issue }
+      @issues ||= Forwarder.new(JsonApi::KYC::Issue, api_key)
     end
 
     def allowance_seeds
-      with_client { JsonApi::KYC::AllowanceSeed }
+      @allowance_seeds ||= Forwarder.new(JsonApi::KYC::AllowanceSeed, api_key)
     end
 
     def argentina_invoicing_detail_seeds
-      with_client { JsonApi::KYC::ArgentinaInvoicingDetailSeed }
+      @argentina_invoicing_detail_seeds ||= Forwarder.new(JsonApi::KYC::ArgentinaInvoicingDetailSeed, api_key)
     end
 
     def chile_invoicing_detail_seeds
-      with_client { JsonApi::KYC::ChileInvoicingDetailSeed }
+      @chile_invoicing_detail_seeds ||= Forwarder.new(JsonApi::KYC::ChileInvoicingDetailSeed, api_key)
     end
 
     def domicile_seeds
-      with_client { JsonApi::KYC::DomicileSeed }
+      @domicile_seeds ||= Forwarder.new(JsonApi::KYC::DomicileSeed, api_key)
     end
 
     def email_seeds
-      with_client { JsonApi::KYC::EmailSeed }
+      @email_seeds ||= Forwarder.new(JsonApi::KYC::EmailSeed, api_key)
     end
 
     def natural_docket_seeds
-      with_client { JsonApi::KYC::NaturalDocketSeed }
+      @natural_docket_seeds ||= Forwarder.new(JsonApi::KYC::NaturalDocketSeed, api_key)
     end
 
     def note_seeds
-      with_client { JsonApi::KYC::NoteSeed }
+      @note_seeds ||= Forwarder.new(JsonApi::KYC::NoteSeed, api_key)
     end
 
     def identification_seeds
-      with_client { JsonApi::KYC::IdentificationSeed }
+      @identification_seeds ||= Forwarder.new(JsonApi::KYC::IdentificationSeed, api_key)
     end
 
     def phone_seeds
-      with_client { JsonApi::KYC::PhoneSeed }
+      @phone_seeds ||= Forwarder.new(JsonApi::KYC::PhoneSeed, api_key)
     end
-
-    private
-
-    def with_client
-      Bitex.api_key = api_key
-      Bitex.sandbox = sandbox
-      Bitex.debug = debug
-      Bitex.ssl_version = ssl_version
-      yield
-    end
-  end
-
-  class ClientError < StandardError
   end
 end
