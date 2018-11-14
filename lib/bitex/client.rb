@@ -5,10 +5,10 @@ module Bitex
 
     def initialize(api_key: nil, sandbox: false)
       @api_key = api_key
-      environment(sandbox)
+      setup_environment(sandbox)
     end
 
-    def environment(sandbox)
+    def setup_environment(sandbox)
       Base.site = "https://#{'sandbox.' if sandbox}bitex.la/api/"
     end
 

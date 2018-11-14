@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Bitex::Forwarder do
   class SomeResource < Bitex::Base
+    def self.some_method
+    end
   end
 
   let(:forwarder) { described_class.new(resource, api_key) }
@@ -9,23 +11,19 @@ describe Bitex::Forwarder do
   let(:api_key) { 'my_secret_a_api_key' }
 
   describe '#method_missing' do
-    before(:each) { resource.stub(:respond_to?).with(method).and_return(response) }
-
     subject { forwarder.method_missing(method, *args, &block) }
 
     let(:args) { [:arg1, :arg2, :arg3, { kwarg: :arg4 }] }
-    let(:block) { {} }
+    let(:block) { Proc.new {} }
 
     context 'missing method' do
-      let(:response) { false }
       let(:method) { :a_missing_method }
 
       it { expect { subject }.to raise_error(NameError) }
     end
 
     context 'present method' do
-      let(:response) { true }
-      let(:method) { :a_present_method }
+      let(:method) { :some_method }
 
       it do
         allow(resource).to receive(method)

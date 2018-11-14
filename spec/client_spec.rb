@@ -10,8 +10,8 @@ describe Bitex::Client do
     it { is_expected.to have_attributes(api_key: api_key) }
   end
 
-  describe '#environment' do
-    subject { client.environment(sandbox) }
+  describe '#setup_environment' do
+    subject { client.setup_environment(sandbox) }
 
     shared_examples_for 'Environment' do
       it do
