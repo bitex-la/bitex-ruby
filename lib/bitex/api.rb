@@ -37,6 +37,7 @@ module Bitex
         end
         fields += options.map do |k, v|
           next unless v
+
           Curl::PostField.content(k.to_s, v)
         end.compact
         curl.send("http_#{verb.downcase}", *fields)
@@ -61,6 +62,7 @@ module Bitex
 
     def self.private(verb, path, options = {}, files = {})
       raise StandardError, 'No api_key available to make private key calls' if Bitex.api_key.nil?
+
       response = curl(verb, path, options.merge(api_key: Bitex.api_key), files)
       JSON.parse(response.body)
     end
