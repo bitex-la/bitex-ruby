@@ -8,6 +8,7 @@ require 'curl'
 require 'json'
 require 'json_api_client'
 
+require 'bitex/base'
 require 'bitex/client'
 require 'bitex/forwarder'
 
