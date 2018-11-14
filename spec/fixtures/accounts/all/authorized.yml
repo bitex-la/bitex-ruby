@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.bitex.la/api/accounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - read_level_key
+      Version:
+      - '2.0'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"f83b97861b4bc5db0a8be91aa5c8d0da"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=V2lqRy9HVE1PTXVOV2VuNCs4Yi9SdUkrTUJ5ZXpHZCtCY3Y4d29CR212ekdVZlVFMnpCSUJoaDZ4V0c5SnpXcG1zUEFnMjY4ZXlzSGdrd254S2tvVUJzSkJMV0thRjlqcVIyaUlwVGNhSDFxWXBhaEdJa1lrd0dXRTY3QXp1QzRodFAyczRIZGVCTmFaQ0RTTW55TkNDN2wvZE8xQytBb1c2SmhReE1hSUZFPS0tMzEzMGdOVDhZeU0xeGN4VFhwMXdJdz09--f3cca9333c879b6c70ee814702dd92624dc7712c;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 8b2b7a58-e959-45fe-b11a-f8dd12d8070f
+      X-Runtime:
+      - '0.849034'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"1","type":"accounts","attributes":{"balances":{"btc":{"total":318.60571758,"available":318.60571758},"usd":{"total":10969616.47097297,"available":10969616.47097297},"ars":{"total":0.0,"available":0.0},"clp":{"total":0.0,"available":0.0},"bch":{"total":0.0,"available":0.0},"pyg":{"total":0.0,"available":0.0},"uyu":{"total":0.0,"available":0.0}},"country":"AR"},"relationships":{"movements":{"data":[]},"pending_movements":{"data":[]},"user":{"data":{"id":"1","type":"users"}}}}],"included":[{"id":"1","type":"users","attributes":{"name":"testuser@example.com","email":"testuser@example.com","kyc_accepted":true,"otp_enabled":true,"do_not_email":false,"trezor_login_enabled":false}}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 20:39:27 GMT
+recorded_with: VCR 4.0.0
