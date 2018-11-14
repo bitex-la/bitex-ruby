@@ -11,5 +11,9 @@ module Bitex
     def setup_environment(sandbox)
       Base.site = "https://#{'sandbox.' if sandbox}bitex.la/api/"
     end
+
+    def api_keys
+      @api_keys ||= Forwarder.new(ApiKey, api_key)
+    end
   end
 end

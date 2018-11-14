@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.bitex.la/api/api_keys
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"api_keys","attributes":{"type":"api_keys","write":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - write_level_authorization
+      Version:
+      - '2.0'
+      One-Time-Password:
+      - '984176'
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"c19498f3b452debb80867c252e769375"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=KytWNGpJYkNwSUNHWlNtVGNBaXVxWWVTUWo3S21XVllUWFp5N0YrYkFDYXQ4SU1NWGtGVXFMU3N2TXRZUmhrMFlUR2xpRG1IZHM3ZXJzWkZncC9KY2w3NHc2cDB4NmN1WHFURjlqTENaYmdMVWptVG9odWVtSFlLdHNKY3hnQjB5UTZmOTQ5MUJHdGl5Qkp4VXRaemVTM1NqMGlVV1p5UHp1ZU0wRmdMcXBVPS0tYXF1U1FpN2RsNWoraHE4d1FxL0p4dz09--e7cca858e1fe1ac9696b43606cac9d8e70323e15;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 4ad7973d-ea25-406f-81b8-07ea1098208a
+      X-Runtime:
+      - '59.186400'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"7","type":"api_keys","attributes":{"write":false,"token":"c789face946683b83ce3e18aa84cf642e4cfb116745a290f41435ba886824c33d734cba68c0dd709"}}}'
+    http_version: 
+  recorded_at: Wed, 07 Nov 2018 19:54:35 GMT
+recorded_with: VCR 4.0.0
