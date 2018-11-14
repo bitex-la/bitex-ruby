@@ -6,7 +6,7 @@ module Bitex
       @api_key = api_key
     end
 
-    def method_missing(method_name, *args,  &block)
+    def method_missing(method_name, *args, &block)
       return super unless @resource.respond_to?(method_name)
 
       options = args.extract_options!
