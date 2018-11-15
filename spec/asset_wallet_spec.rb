@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bitex::AssetWallet do
-  let(:client) { Bitex::Client.new(api_key: key) }
+  let(:client) { Bitex::Client.new(api_key: key, sandbox: true) }
   let(:resource_name) { described_class.name.demodulize.underscore.pluralize }
   let(:read_level_key) { 'read_level_key' }
 
