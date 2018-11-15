@@ -11,6 +11,11 @@ require 'json_api_client'
 require 'bitex/client'
 require 'bitex/forwarder'
 
+require 'bitex/base'
+
+require 'bitex/trading_bot'
+Dir[File.expand_path('bitex/trading_bot/*.rb', __dir__)].each { |f| require f }
+
 require 'bitex/match'
 require 'bitex/base_order'
 
@@ -25,7 +30,8 @@ module Bitex
   mattr_accessor :debug
   mattr_accessor :ssl_version
 
-  ORDER_BOOKS = { btc_usd: 1, btc_ars: 5, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
+  ORDERBOOKS = { btc_usd: 1, btc_ars: 5, btc_pyg: 10, btc_clp: 11, btc_uyu: 12 }.freeze
+
   class UnknownOrderBook < StandardError
   end
 end
