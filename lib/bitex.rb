@@ -16,9 +16,6 @@ require 'bitex/base'
 require 'bitex/trading_bot'
 Dir[File.expand_path('bitex/trading_bot/*.rb', __dir__)].each { |f| require f }
 
-require 'bitex/match'
-require 'bitex/base_order'
-
 Dir[File.expand_path('bitex/*.rb', __dir__)].each { |f| require f }
 
 ##
