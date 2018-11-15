@@ -31,18 +31,15 @@ module Bitex
       raise OrderNotPlaced, order.errors.full_messages.join if order.errors.present?
 
       find(orderbook_code: orderbook_code, id: order.id)
-=begin
-      TODO
-      retries = 0
-      while wait && order.status == :received
-        sleep(0.2)
-        order = find(orderbook_code: orderbook_code, id: order.id)
-        retries += 1
-
-        # Wait 15 minutes for the order to be processed.
-        raise StandardError, "Timed out waiting for #{name} ##{order.id}" if retries > 5000
-      end
-=end
+      #   TODO
+      #   retries = 0
+      #   while(wait && order.status == :received) do
+      #     sleep(0.2)
+      #     order = find(orderbook_code: orderbook_code, id: order.id)
+      #     retries += 1
+      #     # Wait 15 minutes for the order to be processed.
+      #     raise StandardError, "Timed out waiting for #{name} ##{order.id}" if retries > 5000
+      #   end
     end
 
     custom_endpoint :cancel, on: :collection, request_method: :post
@@ -57,7 +54,7 @@ module Bitex
     def self.cancel!(orderbook_code:, ids: [])
       raise UnknownOrderbook unless valid_code?(orderbook_code)
 
-     cancel(market_id: :btc_usd, _json: json_api_body_parser(ids))
+      cancel(market_id: :btc_usd, _json: json_api_body_parser(ids))
     end
 
     # @return [String] resource type name.
