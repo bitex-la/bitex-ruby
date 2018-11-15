@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/bids
     body:
       encoding: UTF-8
-      string: '{"data":{"type":"asks","attributes":{"type":"asks","market_id":"btc_usd","amount":1.0e-08,"price":50.2}}}'
+      string: '{"data":{"type":"bids","attributes":{"type":"bids","market_id":"btc_usd","amount":1.0e-08,"price":50.2}}}'
     headers:
       Authorization:
       - write_level_key
@@ -35,18 +35,18 @@ http_interactions:
       Cache-Control:
       - no-cache
       Set-Cookie:
-      - _bitex_la_session=MlBwTzdMd3RvZ1BoNFpEbldPbHg4YnJId0tiaWxrVWkvVE9pVXdrOUxwN0diMVc4Z05rc2RtOGVEenNVeVEyQzVKYjVxWVNlVGQzc2JzUk9Zam85M2tqTGJPbmVNVjl6SWREODVVTWFlektibUYxMklBbDN0WHl1ZmFRUU9zYU4wWUpVSmJPWFEwVUxhR2tXU3BJaXRRWjh6TVhkQXpmMmRTekhMVHR3R1NnPS0tQnVyOHdMNmE3VTFpRFgvdzh1VHlHdz09--f707345e95c8f70195afdfe6ed6220436b30b228;
+      - _bitex_la_session=QVZPeXdrT0ppelhneWZxUFBsS2xYaWpYQU45eFB3NmJKNDViU1l3RDlabUZhMXdVU2d0S05BSmNGdEE4MVcxaHd3MWxJQjRmdkVQY0hXdzBpRzdzZXFaNkhPQ2NRWVFLYnJPaFM3Wlc5REhPWE8xUUptS3g0aDlSaFllUlZaSHNDRUYrQzVBeGFsUkthZWpPMTB4dFJRNHA2VkgyRlZiR0tQZzRlVXFPTVZFPS0tb1hwYTBRWUQ2ZFdzYUUzQ3JhWVo4dz09--cc2fe4e51eeea5b270e2e6f4c48d53ef7b14398a;
         path=/; HttpOnly
       X-Request-Id:
-      - 4ee1d454-d853-49f5-8826-e49ad00f9449
+      - 17ba8104-8e11-422f-bb1f-80d9baff0b13
       X-Runtime:
-      - '0.269362'
+      - '43.088395'
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJlcnJvcnMiOlt7InN0YXR1cyI6NDIyLCJ0aXRsZSI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImRldGFpbCI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImNvZGUiOiJsYV9vcmRlbl9lc19tdXlfcGVxdWVuYSIsIm1ldGEiOnsidHlwZSI6ImFza3MifSwic291cmNlIjp7InBvaW50ZXIiOiIvZGF0YS9hdHRyaWJ1dGVzL2Jhc2UifX1dfQ==
+        eyJlcnJvcnMiOlt7InN0YXR1cyI6NDIyLCJ0aXRsZSI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImRldGFpbCI6IkxhIG9yZGVuIGVzIG11eSBwZXF1ZcOxYSIsImNvZGUiOiJsYV9vcmRlbl9lc19tdXlfcGVxdWVuYSIsIm1ldGEiOnsidHlwZSI6ImJpZHMifSwic291cmNlIjp7InBvaW50ZXIiOiIvZGF0YS9hdHRyaWJ1dGVzL2Jhc2UifX1dfQ==
     http_version: 
-  recorded_at: Thu, 18 Oct 2018 18:47:09 GMT
+  recorded_at: Tue, 23 Oct 2018 14:43:25 GMT
 recorded_with: VCR 4.0.0

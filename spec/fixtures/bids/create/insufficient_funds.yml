@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/bids
     body:
       encoding: UTF-8
-      string: '{"data":{"type":"asks","attributes":{"type":"asks","market_id":"btc_usd","amount":100.23,"price":50.2}}}'
+      string: '{"data":{"type":"bids","attributes":{"type":"bids","market_id":"btc_usd","amount":12000000,"price":50.2}}}'
     headers:
       Authorization:
       - write_level_key
@@ -33,26 +33,26 @@ http_interactions:
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Etag:
-      - W/"3caa9048d47136880d7498b8dd375a49"
+      - W/"c44066bad5bf4b9e98e0a95dd00c1ca4"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Set-Cookie:
-      - _bitex_la_session=aEMwOGpwL1RPL1VHNkRtcE9ZSkhRNTlOYVZqcFJTNGFHREdVTHRlN1E0RndFRTRmTjNrbHlPOFh3TFQ2RzZQbVd5S2traEt6VlIrVWozTGNYV0w4eHMrcjRNMVUyWVFPLzQ3cWhlZ29lQ01jMXpWczE3THZ1TFVOdE5TM1VEbFBRRDEzZkNFa2Jub0RIaDZpVXBnUFpTQ2F0U05mMDNyOG55WHNTZURDNjNrPS0td3dweVJIQUQ0S1VrRkk2Q3JsKzB2UT09--8ddf99da4803606f5bb0189047c5d9f1a95cf49d;
+      - _bitex_la_session=ZjhYbzJHc3RTVzNpelZxRlQ0YXFWTjBqVXhDa2JaZWN0UXN4UWVzWFg2ZXh5Z2F3ZTY5SUpMMWk2OHJNc2tZcGhqSlpQRExjMG9ocjFmUk9IMXJVUGxaU1dFaDQyYnVBVEovZHFqbTFEMEV1VmlCeUIzaWtNT1ZYYlBJakFKN2l0NitRMDNseENZQ0kvOFFHWVBMV3g4KzJqTTRaamEwa05BdXJFdzErdWVBPS0tUTdzMWt5K3NWamxMbXZ3bXFhWEZNdz09--e5db6759116247f314108c754d56edf6c804e2ba;
         path=/; HttpOnly
       X-Request-Id:
-      - db468da6-f932-4a2d-8e8a-0afb2e2768c8
+      - 80cbd443-188c-40af-b41a-26c272606d3c
       X-Runtime:
-      - '0.521649'
+      - '0.334012'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"data":{"id":"20","type":"asks","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"pending"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+      string: '{"data":{"id":"27","type":"bids","attributes":{"amount":12000000.0,"remaining_amount":12000000.0,"price":50.2,"status":"pending"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
     http_version: 
-  recorded_at: Thu, 18 Oct 2018 18:27:37 GMT
+  recorded_at: Tue, 23 Oct 2018 15:05:25 GMT
 - request:
     method: get
-    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks/20
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/bids/27
     body:
       encoding: US-ASCII
       string: ''
@@ -83,21 +83,21 @@ http_interactions:
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Etag:
-      - W/"52fc658f563454061a09513c92a37d55"
+      - W/"6a2787a1750d5ed083deeb67b8507aad"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Set-Cookie:
-      - _bitex_la_session=QnJaSE5VSFR0WS9JaW5ZMkw3cDhtMW91M0JkNElIZ0xuN0RWUTBkRHl3ZFRIYzVNZk9vY2QrRHVrcmtKc0lFdy9Zc2VNK09XS1Z3dzJzMm5oOWlnTDdhV1JPUm83QnQyMnJpZVh2TCszL0x2ZDlWQjZMdjFJN3FZVEMwalNHTlhDQ2l2blk0WjJnWjRhTmFmT2JhZHRZbGNLSjR1Y0tqbmtMTVVhS1k3cmxjPS0tN2Q3Y0Nrbjg5VlZESWdqWW04dGJXUT09--2bcff0ce0e283a26046030f830c1b9c048cb2dec;
+      - _bitex_la_session=VkR4MTNSd1JxaUxhRnIxeE9VS3A0QWJ3eHFQWXBuYTdDNFJFQ2FHeFdpamVOQkxkOTRVTXFCMG4wK0Q2dUZ0MERQL0ErbStTSzFEQzJRTXNyOFcvckQ0TDN3RmFqTzJwaXByOHdhWVBUTW1USUtWRWs3NS9Sd01wcEQvL0ZiNGM2akErQ0xnTStTN2FLYlNYQSthLzBkcm9QQkFaZlRGT1g1V01weXF0OHhBPS0tQ0Y4bWxGSUZkTWQvU1RDbHVDZk1NUT09--a4e2c604ce248844c54e396aef01952f600ed05f;
         path=/; HttpOnly
       X-Request-Id:
-      - cc970cd5-9279-4200-904d-4988b0a95934
+      - f9507b47-1a9e-4195-a75e-44f4572ec664
       X-Runtime:
-      - '0.348601'
+      - '0.262465'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"data":{"id":"20","type":"asks","attributes":{"amount":100.23,"remaining_amount":41.40647059,"price":50.2,"status":"executing"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+      string: '{"data":{"id":"27","type":"bids","attributes":{"amount":12000000.0,"remaining_amount":12000000.0,"price":50.2,"status":"cancelled"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
     http_version: 
-  recorded_at: Thu, 18 Oct 2018 18:29:20 GMT
+  recorded_at: Tue, 23 Oct 2018 15:05:25 GMT
 recorded_with: VCR 4.0.0

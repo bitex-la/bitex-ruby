@@ -15,5 +15,9 @@ module Bitex
     def asks
       @asks ||= Forwarder.new(Ask, api_key)
     end
+
+    def bids
+      @bids ||= Forwarder.new(Bid, api_key)
+    end
   end
 end

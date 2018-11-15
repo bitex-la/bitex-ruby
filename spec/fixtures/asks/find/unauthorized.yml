@@ -12,7 +12,7 @@ http_interactions:
       Authorization:
       - we_dont_care
       Version:
-      - '2.0'
+      - 2.0
       Content-Type:
       - application/vnd.api+json
       Accept:

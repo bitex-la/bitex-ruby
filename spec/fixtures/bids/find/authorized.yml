@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks/22
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/bids/22
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Authorization:
-      - read_level_key
+      - write_level_key
       Version:
       - 2.0
       User-Agent:
@@ -33,21 +33,21 @@ http_interactions:
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Etag:
-      - W/"4fca9813a9573cd98639aefb2a407e6a"
+      - W/"5b081801c54d1a00d1ed95a01eb1a230"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Set-Cookie:
-      - _bitex_la_session=a0xGcnBIc1VMMklZak45Q1lZMkw0TjgveGJjWW1kbFREMC9sWEtVcFZ3OGMxY0lTVFlycWVsZjRFdFptT2ZobEdMSjEzRFM2bHIyNjRsdUNmSlh4VlBMWEMvK2pQZW1RQXMyU1FDZ1N4bzd5MnY3YjNlQTlUeXYxN1puSlJRSGIzcVVVemFsVDNEYVNhK3ROVGRGOXJ3emJydEUrcU52MlBnMUJPQThzNFMwPS0tRUFscUNiOUtoU09kYmVENlRXMk82dz09--dceeea02960bf4e6ea3d3e936925c4679ca98371;
+      - _bitex_la_session=M2tzOGJwMzZHalluRmFoSm9GSStmaXJ5OWpieXdyQWNPR1RTQnVDWGpxOFZzZEpsem9qNFRueFJwZDl1c202Vnh1VktCdWRxZFBlTUdvRE1MZzgzdUNQVzB6Wm5DMmpDQ0Z0OUlnb1BhYjgrSjRUVkJiYUJlMFNKSW1HaGNLQmxTeVUxdzFwbGZ6eE5Ob1J0UDcyUEYrWmdHV3FYTVB2WFhFKzdBUitGOG5RPS0teE44RG04TmJxemNaNnJhMjhhTnhnQT09--c056b08160d3e613136f42eae88d6e8baa7c5de2;
         path=/; HttpOnly
       X-Request-Id:
-      - 37fd4b97-e752-491a-a902-0b88887497c3
+      - 4117de4f-49a0-4554-8c96-b042b6dabf06
       X-Runtime:
-      - '0.386483'
+      - '0.464433'
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"data":{"id":"22","type":"asks","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"executing"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+      string: '{"data":{"id":"22","type":"bids","attributes":{"amount":100.23,"remaining_amount":100.23,"price":50.2,"status":"cancelled"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
     http_version: 
-  recorded_at: Thu, 18 Oct 2018 20:38:00 GMT
+  recorded_at: Tue, 23 Oct 2018 14:26:30 GMT
 recorded_with: VCR 4.0.0

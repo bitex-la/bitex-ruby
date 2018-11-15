@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks/cancel
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/bids/cancel
     body:
       encoding: UTF-8
-      string: '{"market_id":"btc_usd","_json":[{"data":{"type":"asks","id":"22"}}]}'
+      string: '{"market_id":"btc_usd","_json":[{"data":{"type":"bids","id":"99"}}]}'
     headers:
       Authorization:
       - write_level_key
@@ -33,15 +33,15 @@ http_interactions:
       Cache-Control:
       - no-cache
       Set-Cookie:
-      - _bitex_la_session=NU8wVFBtUTA4UCtHWFZJWE1NUERiUE5qRnpqT2xHYXlYNUY3cy9OQnFzTmp3VzNneFNvSG1zVzU1amhxN2dmeW5zOEdxNXhlbU1sMktRcFJlVnVYWFhja3RkWWdTWjg5M3Z2c2ZrMlZYeVRyQWRLWXRTV0hzSUkwZHg3c2lpQUMrVC9ZTWlMUGNWOFMvb2hrZE1DSWRxYzU0NnJRa2ZUbCtwZzdIaE5ObXRJPS0tdzdoQi9ZMGwxZHEybjN6YWZpU20xZz09--1381d6c4f97f0ffc6ccd27eeb4da44901577eadf;
+      - _bitex_la_session=Z1E3Q2tFVERSMGsxRFVacVFyZlRGSWxVVEE0TGRXcklGQnRTeGlDdEl0VUxuckNTeWh6ZmZ6M01sb2N4MVRWU1FXejgwdklyY1AvMnl2eWZzTmIzTnNFUm14emxMbkJ1N1Niamo5OC9wcjNZWTl5eDBENFpNSm5ibEVoY2ZCeGJJelRGMVl5MXlCbzBaRTBrcjB0TWFyR3Vic2diUEJjTWlKSmVjVTdhTVJFPS0tRUw2ZWU4K3p2NWZ6R0VBOFEyUjVrQT09--50e25f994e970e777ede90694b1fa4390df43e0b;
         path=/; HttpOnly
       X-Request-Id:
-      - 191824c2-80e0-493a-857c-0123c3a31a96
+      - 87e562b0-d0eb-46b3-8e51-8b9ab9443a38
       X-Runtime:
-      - '0.230506'
+      - '39.141808'
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 22 Oct 2018 21:04:12 GMT
+  recorded_at: Tue, 23 Oct 2018 15:48:10 GMT
 recorded_with: VCR 4.0.0
