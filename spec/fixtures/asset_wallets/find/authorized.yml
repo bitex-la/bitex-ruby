@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.bitex.la/api/users/me/asset_wallets/1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - read_level_key
+      Version:
+      - 2.0
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"1df23f420ffa9a3906d8718a30bf1c07"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=YlNDZThSaGE2dnBNamNjdzlrYVoweFlqazhnNXJlK0M3ZnRoUVhuNWgwSHZmeUhwSEIxaFVYQ1RpcmJ6U202eEgvTlRVODhtVFZ3bXFPSkpkL1JzdVorWlZJY0ZDQVk2TUJ2L2JhMnJEeURwc1d6dzB0em5KcWtRU2NSM1hmcVpoWHVaWW1pcEJXTjhrWEdEUEYrcXBlc0VlM3dSYVA5blhIUzlqZElhUGxRPS0tMG9kR0VxQW9YSnB1VmpJeWZuWlF2QT09--ef734b34fd7ae10eb903469bfb399a95472213b0;
+        path=/; HttpOnly
+      X-Request-Id:
+      - fab9fb45-b255-4732-8dc4-7b72a3321bae
+      X-Runtime:
+      - '37.766949'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"1","type":"asset_wallets","attributes":{"balance":318.60571758,"available":318.60571758,"currency":"btc","address":"mnkzungYoJb8HMVSCmtQ5gmE9tksVqwdpf","auto_sell_address":"mz48gEvVRCNWn3B8yKs7SdnvraPJT3a2w7"},"relationships":{"app":{"data":{"id":"1","type":"exchange_apps"}}}},"included":[{"id":"1","type":"exchange_apps"}]}'
+    http_version: 
+  recorded_at: Fri, 26 Oct 2018 19:35:49 GMT
+recorded_with: VCR 4.0.0

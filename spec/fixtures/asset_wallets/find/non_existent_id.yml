@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.bitex.la/api/users/me/asset_wallets/99
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - read_level_key
+      Version:
+      - 2.0
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - _bitex_la_session=dzFBbjgrT3IvTUNNMUNhZ05mWUc5azJXUVpwN1JESDVES1BUUUhiU1B0RlhnakpiYXV5b29WRmduQ0taOXdCU082cVZjUlhBN1Azam51OTk1c1EyTDRHc3J1akhPdk5CRWZNSHRvNUFwRGJsa2ZrZXQxZXFhTHBKQmpOZkY4WFRES1dWeTB2MTRqWjFZYzhVRkVObkpKNHZXVVJQeDhWQ0F4YlJBMHduOGRzPS0teVMvR2l3Szg0UTArSElGbm9pb3Bwdz09--442eb6ffe75aa2811b4cd878725920a96d31bd35;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 8e6edd04-c3b9-4054-9db7-eba6e60f2396
+      X-Runtime:
+      - '13.880471'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":null,"detail":null}]}'
+    http_version: 
+  recorded_at: Fri, 26 Oct 2018 20:41:01 GMT
+recorded_with: VCR 4.0.0

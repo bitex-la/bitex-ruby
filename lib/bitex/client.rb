@@ -11,5 +11,9 @@ module Bitex
     def setup_environment(sandbox)
       Base.site = "https://#{'sandbox.' if sandbox}bitex.la/api/"
     end
+
+    def asset_wallets
+      @asset_wallets ||= Forwarder.new(AssetWallet, api_key)
+    end
   end
 end
