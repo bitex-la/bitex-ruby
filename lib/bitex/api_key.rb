@@ -11,15 +11,14 @@ module Bitex
     # Create an Api Key.
     # This endpoint always requires an OTP. Users that don't have the 2FA enabled, will not be able to create Api Keys.
     #
-    # @param [Symbol] level: [:read, :write]
+    # @param [Symbol] permissions: { write: true }, { write: false }
     # @param [String] otp: your One Time Password.
     #
     # @return [ApiKey]
-    def self.create(level: :read, otp: nil)
+    def self.create(permissions: {}, otp: nil)
       raise MalformedOtp unless valid_otp?(otp)
-      raise InvalidArgument unless valid_level?(level)
 
-      super(write: key_levels[level])
+      super(permissions)
     end
 
     # GET /api/api_keys
@@ -42,14 +41,6 @@ module Bitex
       otp_code.present? && otp_code.numeric?
     end
 
-    def self.valid_level?(key_level)
-      key_levels.include?(key_level)
-    end
-
-    def self.key_levels
-      { read: false, write: true }
-    end
-
-    private_class_method :valid_otp?, :valid_level?, :key_levels
+    private_class_method :valid_otp?
   end
 end
