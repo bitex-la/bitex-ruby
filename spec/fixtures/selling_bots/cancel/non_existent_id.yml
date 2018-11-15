@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.bitex.la/api/selling_bots/99/cancel
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - write_level_key
+      Version:
+      - 2.0
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - _bitex_la_session=VmxWWkpndGRiZ3FNVGhnQkZuQlB2ZmZLakFvZVRQRGFKbSs2YUFJbW9XN2FQVU5XNmVUZVNsS2Erajd5NFBoNFkwd3NQTEVOb004dFdONEFNMWt1blZRRERTQ3hwanQrTzAxK2hMYkU2NXpLWmFONnFUVWJIYllPVDBRUklCenVNU0RwbU1qbE9FRmI3eGJqNldSa21laXQvQVBqMWxuTENlZHI3ZUl3YWR3PS0tcDRxcnY3WVdRazczc0JURUZrMW5xZz09--81103453a595c30e183c5b37208aafb141be36ee;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 05d7d335-9569-4f8b-880f-497c0b6de84d
+      X-Runtime:
+      - '2.561614'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":null,"detail":null}]}'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 17:25:01 GMT
+recorded_with: VCR 4.0.0
