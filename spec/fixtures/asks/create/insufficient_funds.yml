@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks
+    body:
+      encoding: UTF-8
+      string: '{"data":{"type":"asks","attributes":{"type":"asks","market_id":"btc_usd","amount":12000000,"price":50.2}}}'
+    headers:
+      Authorization:
+      - write_level_key
+      Version:
+      - '2.0'
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"cee5612e39b3aac7d73d720254bff8ca"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=RmhTQ09ZYXIvMjM1Zi9Talozd0hqZnJkVzRDd0s2ODRjTWFFWWpELzhWa29LVStGZHlkU1lva25kcXZQaXQ1ZGk0U2QwalJ2d1k3RmhTaW9hemFBZldMVWtaV1I4RnBJOUxTL1B3Ni9jWDdZS2k2RVJHV0lSMHhuRnd2eXJ2WElMRTlsUGg1QnBCcTBzVE51OFMwdWNud21NeFJkNCs1djhwdWtLajdlaEd3PS0tYmZuZlBISlA1Ris3SXVCNXZyMWlaUT09--3aabdb6fc5613113331b5e2c8657bf8acf8b4eff;
+        path=/; HttpOnly
+      X-Request-Id:
+      - '08dac66c-c31a-4639-953c-51d624e9d828'
+      X-Runtime:
+      - '0.323357'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"18","type":"asks","attributes":{"amount":12000000.0,"remaining_amount":12000000.0,"price":50.2,"status":"pending"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+    http_version: 
+  recorded_at: Thu, 18 Oct 2018 18:05:59 GMT
+- request:
+    method: get
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks/18
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - write_level_key
+      Version:
+      - '2.0'
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Etag:
+      - W/"386c0288639cf2f1fc623f64daaebcbc"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Set-Cookie:
+      - _bitex_la_session=aHZrakszTVRBR2N4c3JSM1dURE9TYzU2aktvWTY5MzBMdlgvNEh0ZWJucURWYlJwWktyeGZMTHJjME5ldnVxRGI1eGlrNkRHelgwaWFWOEZoR21qQUNKWGZaQWxuaVhBREUzWVdCaUpRWDRwTzk4VjNOdkFEdEZoSEFCUGNsVXVVaFZCa0ZIV0gvWDd6TzgzNVMvQUp4VGcyMnhDQ0UvMk5sRnN4VjFRR2RNPS0tMjFYVktsQXZlYVFiQWpTUklZZjZxZz09--63fd06e0677fa49b3f77a850777c60c3a62113d5;
+        path=/; HttpOnly
+      X-Request-Id:
+      - d42ab207-fb34-4424-bab4-6fa66ad5e65a
+      X-Runtime:
+      - '0.281211'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"18","type":"asks","attributes":{"amount":12000000.0,"remaining_amount":12000000.0,"price":50.2,"status":"cancelled"},"relationships":{"user":{"data":{"id":"1","type":"users"}},"orderbook":{"data":{"id":"1","type":"orderbooks"}}}}}'
+    http_version: 
+  recorded_at: Thu, 18 Oct 2018 18:06:32 GMT
+recorded_with: VCR 4.0.0

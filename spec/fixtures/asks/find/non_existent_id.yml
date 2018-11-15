@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sandbox.bitex.la/api/markets/btc_usd/asks/99
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - read_level_key
+      Version:
+      - '2.0'
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/vnd.api+json
+      Accept:
+      - application/vnd.api+json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Set-Cookie:
+      - _bitex_la_session=RG91MHkxei9xWC9pQUhlWVI5ODBWOStvZFpPN0pycEdnbURORnREcG9PTyswbU02YldiK0l4NTFIMnFzWTJkNjRUS2YrZk91K2NuTTNUZ1FEZkh3ZWs1UkxuL2ZaQmoyT2dJM2JiYnc3L21TM1FMSlRvNisxcXJBQlFlOXdWWk5waG5IclhWZXE4M1RzS1hJMFZBQ0Q3eDl1NXhKWStCTWhhajlrR3lpdkNjPS0tWkJ1aWlyTGpjekxQZDFpaC9PQWVWZz09--d46613d3d88e8ec228514a9307e8f6878dbaffaf;
+        path=/; HttpOnly
+      X-Request-Id:
+      - 4f838c51-1912-411b-a5a2-bdd3a5e28c22
+      X-Runtime:
+      - '0.378863'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"detail":null}]}'
+    http_version: 
+  recorded_at: Tue, 23 Oct 2018 15:56:36 GMT
+recorded_with: VCR 4.0.0
