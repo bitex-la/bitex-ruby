@@ -1,3 +1,9 @@
+# This is Deprecated
+
+This API library is deprecated as it uses Bitex's legacy API.
+
+The new project, using Bitex's new JSON-API endpoints is available at: https://github.com/bitex-la/bitex-sdk-ruby
+
 # Bitex
 
 [Bitex.la](https://bitex.la/developers) API Client library.
