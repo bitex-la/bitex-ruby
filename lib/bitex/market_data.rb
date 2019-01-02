@@ -56,4 +56,11 @@ module Bitex
       'btc'
     end
   end
+
+  # A {MarketData} for Bitcoin Cash.
+  class BitcoinCashMarketData < MarketData
+    def self.specie
+      'bch'
+    end
+  end
 end
